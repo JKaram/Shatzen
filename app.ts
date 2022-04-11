@@ -6,7 +6,7 @@ import { addUser, removeUser, users } from "./users";
 const express = require("express");
 const socketIO = require("socket.io");
 const http = require("http");
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 
