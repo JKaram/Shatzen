@@ -1,6 +1,7 @@
+import { stat } from "fs";
 import { Socket } from "socket.io";
 import { addEstimate, claculateAverage, clearEstimates, estimates, removeUserEstimate } from "./estimates";
-import { changeStatus, Status, status } from "./status";
+import { changeStatus, Status, appStatus } from "./status";
 import { addUser, removeUser, users } from "./users";
 
 const express = require("express");
@@ -23,10 +24,12 @@ const io = socketIO(server, {
 io.on("connection", (socket: Socket) => {
   io.emit("estimates", estimates);
   io.emit("users", users);
-  io.emit("status", status);
+  io.emit("status", appStatus);
+  io.emit("reveal", claculateAverage());
 
   socket.on("add user", (name) => {
     addUser({ name: name, id: socket.id });
+    io.emit("status", appStatus);
     io.emit("users", users);
     io.emit("estimates", estimates);
   });
@@ -34,6 +37,7 @@ io.on("connection", (socket: Socket) => {
   socket.on("remove", () => {
     removeUser(socket.id);
     removeUserEstimate(socket.id);
+    io.emit("status", appStatus);
     io.emit("users", users);
     io.emit("estimates", estimates);
   });
@@ -44,19 +48,17 @@ io.on("connection", (socket: Socket) => {
   });
 
   socket.on("reveal", () => {
+    changeStatus("revealing");
+    console.log(appStatus);
     io.emit("reveal", claculateAverage());
-    io.emit("status", "revealing");
+    io.emit("status", appStatus);
   });
 
   socket.on("estimate", () => {
+    changeStatus("estimating");
     clearEstimates();
     io.emit("estimates", estimates);
-    io.emit("status", "estimating");
-  });
-
-  socket.on("change status", (status: Status) => {
-    changeStatus(status);
-    io.emit("status", status);
+    io.emit("status", appStatus);
   });
 
   socket.on("disconnect", (reason) => {
@@ -65,6 +67,7 @@ io.on("connection", (socket: Socket) => {
     removeUserEstimate(socket.id);
     io.emit("estimates", estimates);
     io.emit("users", users);
+    io.emit("status", appStatus);
   });
 });
 
