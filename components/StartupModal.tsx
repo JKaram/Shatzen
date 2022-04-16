@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import useLocalStorage from "../hooks/useLocalStorage";
-import { NameInput } from "./input";
+
 import { useSockets } from "./provider/SocketProvider";
 type Props = {
   show: boolean;
@@ -14,14 +13,18 @@ export default function MyModal(props: Props) {
 
   return (
     <>
-      <Dialog open={show} onClose={() => toggle()} className="fixed z-10 inset-0 overflow-y-auto">
+      <Dialog
+        open={show}
+        onClose={() => {}}
+        className="fixed inset-0 z-10 overflow-y-auto flex justify-center items-start m-8"
+      >
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-        <div className="relative bg-white rounded max-w-sm mx-auto">
-          <Dialog.Title>Welcome</Dialog.Title>
+        <div className="bg-white z-20 rounded px-8 py-4  border-2 ">
+          <Dialog.Title className="text-lg font-bold">Willkommen</Dialog.Title>
           <Dialog.Description>Hey can you give me your name</Dialog.Description>
-          <div>
+          <div className="flex flex-col space-y-1">
             <label htmlFor="name" className="sr-only">
-              Email
+              Name
             </label>
             <input
               type="name"
@@ -29,10 +32,14 @@ export default function MyModal(props: Props) {
               id="name"
               onChange={(e) => setName(e.target.value)}
               value={name}
-              className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+              className="shadow-sm py-2 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-400 rounded"
               placeholder="Michael Scott"
             />
+          </div>
+          <div>
             <button
+              disabled={!name}
+              className="mt-2 disabled:bg-gray-100 "
               onClick={() => {
                 addUser(name);
                 toggle();

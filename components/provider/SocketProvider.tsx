@@ -1,15 +1,23 @@
 import React, { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import useLocalStorage from "../../hooks/useLocalStorage";
-import { Estimate, User } from "../../types/aliases";
+import { Estimate, Status, User } from "../../types/aliases";
 
 type Values = {
   users: User[];
   estimates: Estimate[];
   average: undefined | number;
-  id: string | undefined;
+  user: User | undefined;
+  status: Status;
 };
-const initalValues: Values = { users: [], estimates: [], average: undefined, id: undefined };
+const initalValues: Values = {
+  users: [],
+  estimates: [],
+  average: undefined,
+  user: undefined,
+
+  status: "estimating",
+};
 
 export const SocketContext = createContext<Values>(initalValues);
 
@@ -24,15 +32,31 @@ export default function SocketProvider(props: Props) {
   const [users, setUsers] = useState<User[]>([]);
   const [estimates, setEstimates] = useState<Estimate[]>([]);
   const [average, setAverage] = useState<number | undefined>(undefined);
+  const [status, setStatus] = useState<Status>("estimating");
+  const [name, setName] = useState<string>("");
 
   useEffect(() => {
-    socket.on("users", (users) => setUsers(users));
-    socket.on("estimates", (estimates) => setEstimates(estimates));
-    socket.on("reveal", (average) => setAverage(average));
+    socket.on("users", (users: User[] | undefined) => {
+      if (!users) return;
+      setUsers(users);
+      const userName = users.find((user) => user.id === socket.id)?.name;
+      setName(userName || "");
+    });
+    socket.on("estimates", (estimates: Estimate[]) => setEstimates(estimates));
+    socket.on("reveal", (average: number) => setAverage(average));
+    socket.on("status", (status: Status) => setStatus(status));
   }, [socket]);
 
   return (
-    <SocketContext.Provider value={{ users: users, estimates: estimates, average: average, id: socket.id }}>
+    <SocketContext.Provider
+      value={{
+        users: users,
+        estimates: estimates,
+        average: average,
+        user: { id: socket.id, name: name },
+        status: status,
+      }}
+    >
       {children}
     </SocketContext.Provider>
   );
@@ -47,6 +71,7 @@ export const useSockets = () => {
   const disconnect = () => socket.emit("remove");
   const addEstimate = (estimate: number) => socket.emit("add estimate", estimate);
   const reveal = () => socket.emit("reveal");
+  const estimateMode = () => socket.emit("estimate");
 
-  return { addUser, disconnect, addEstimate, reveal };
+  return { addUser, disconnect, addEstimate, reveal, estimateMode };
 };
