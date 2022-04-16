@@ -1,17 +1,17 @@
 import { Socket } from "socket.io";
-import { addEstimate, claculateAverage, estimates, removeUserEstimate } from "./estimates";
+import { addEstimate, claculateAverage, clearEstimates, estimates, removeUserEstimate } from "./estimates";
+import { changeStatus, Status, status } from "./status";
 import { addUser, removeUser, users } from "./users";
 
 const express = require("express");
 const socketIO = require("socket.io");
 const http = require("http");
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const app = express();
 const server = http.createServer(app);
 
-// respond with "hello world" when a GET request is made to the homepage
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("Shatzen");
 });
 
 const io = socketIO(server, {
@@ -23,10 +23,12 @@ const io = socketIO(server, {
 io.on("connection", (socket: Socket) => {
   io.emit("estimates", estimates);
   io.emit("users", users);
+  io.emit("status", status);
 
   socket.on("add user", (name) => {
     addUser({ name: name, id: socket.id });
     io.emit("users", users);
+    io.emit("estimates", estimates);
   });
 
   socket.on("remove", () => {
@@ -43,6 +45,18 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("reveal", () => {
     io.emit("reveal", claculateAverage());
+    io.emit("status", "revealing");
+  });
+
+  socket.on("estimate", () => {
+    clearEstimates();
+    io.emit("estimates", estimates);
+    io.emit("status", "estimating");
+  });
+
+  socket.on("change status", (status: Status) => {
+    changeStatus(status);
+    io.emit("status", status);
   });
 
   socket.on("disconnect", (reason) => {
