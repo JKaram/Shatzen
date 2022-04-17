@@ -22,7 +22,7 @@ const App = () => {
     <div className="min-h-screen min-w-full bg-white ">
       <UserModal show={show} toggle={() => setShow(false)} />
       {/* Nav Component */}
-      <div className="flex justify-end">
+      <div className="flex justify-end text-2xl">
         {/* <h1>Shatzen</h1> */}
         {/* <Options /> */}
         <span
@@ -42,10 +42,13 @@ const App = () => {
             setName("");
             window.location.reload();
           }}
-          title="Reset All"
+          title="Do not press this"
         >
           💀
         </span>
+        <a href="https://hatjitsu.toolforge.org" title="Bail and go to hatjitsu" target="_blank">
+          🗻
+        </a>
       </div>
       <div className="flex flex-col justify-center">
         {/* UserPanel Component */}
