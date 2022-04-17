@@ -15,7 +15,7 @@ export const UserCard = ({ user }: Props) => {
     <div className="flex flex-col items-center">
       <div
         className={`w-10 h-16 rounded flex justify-center items-center ${
-          estimate !== false ? "bg-white" : "shadow-inner"
+          estimate !== false ? "bg-cyan-600" : "shadow-inner"
         } ${appUser?.id === user.id && estimate !== false ? "bg-green-200" : ""}`}
       >
         <span className={`${status === "estimating" ? "hidden" : ""}`}>{estimate ? estimate : null}</span>
