@@ -2,7 +2,7 @@ import { stat } from "fs";
 import { Socket } from "socket.io";
 import { addEstimate, claculateAverage, clearEstimates, estimates, removeUserEstimate } from "./estimates";
 import { changeStatus, Status, appStatus } from "./status";
-import { addUser, removeUser, users } from "./users";
+import { addUser, removeAllUsers, removeUser, users } from "./users";
 
 const express = require("express");
 const socketIO = require("socket.io");
@@ -65,6 +65,16 @@ io.on("connection", (socket: Socket) => {
     console.log("Disconnect", reason);
     removeUser(socket.id);
     removeUserEstimate(socket.id);
+    io.emit("estimates", estimates);
+    io.emit("users", users);
+    io.emit("status", appStatus);
+  });
+
+  socket.on("reset", () => {
+    removeAllUsers();
+    clearEstimates();
+    changeStatus("estimating");
+
     io.emit("estimates", estimates);
     io.emit("users", users);
     io.emit("status", appStatus);

@@ -17,3 +17,5 @@ export const removeUser = (id: string) => {
   const indexOfUser = findIndex(users, { id: id });
   users.splice(indexOfUser, 1);
 };
+
+export const removeAllUsers = () => users.splice(0, users.length);
