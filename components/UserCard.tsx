@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const UserCard = ({ user }: Props) => {
-  const { status, estimates } = useContext(SocketContext);
+  const { status, estimates, user: appUser } = useContext(SocketContext);
   const estimate = userEstimate(user.id, estimates);
 
   return (
@@ -16,11 +16,11 @@ export const UserCard = ({ user }: Props) => {
       <div
         className={`w-10 h-16 rounded flex justify-center items-center ${
           estimate !== false ? "bg-white" : "shadow-inner"
-        }`}
+        } ${appUser?.id === user.id && estimate !== false ? "bg-green-200" : ""}`}
       >
         <span className={`${status === "estimating" ? "hidden" : ""}`}>{estimate ? estimate : null}</span>
       </div>
-      <span title={`User ID: ${user.id}`}>{user.name}</span>
+      <span title={`User ID: ${user.id}`}>{appUser?.id === user.id ? "Me" : user.name}</span>
     </div>
   );
 };

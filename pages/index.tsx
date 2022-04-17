@@ -4,23 +4,49 @@ import { SocketContext, useSockets } from "../components/provider/SocketProvider
 import { useCheckUser } from "../hooks/useCheckForUser";
 import { possibleEstimates } from "../types/constants";
 import { userEstimate } from "../utils/helpers";
-import { Status } from "../types/aliases";
 import { UserCard } from "../components/UserCard";
 import { EstimateCard } from "../components/EstimateCard";
+import useLocalStorage from "../hooks/useLocalStorage";
+
 const App = () => {
   const { users, estimates, average, user, status } = useContext(SocketContext);
-  const { addEstimate, reveal, estimateMode } = useSockets();
+  const { addEstimate, reveal, estimateMode, reset } = useSockets();
   const isExistingUser = useCheckUser();
   const [show, setShow] = useState(!isExistingUser);
+  const [, setName] = useLocalStorage("name", "");
 
   // TODO Check user
-  if (!user) return "No user";
+  if (!user || !status) return "No user or status";
 
   return (
-    <div className="min-h-screen min-w-full bg-slate-100 border-8">
+    <div className="min-h-screen min-w-full bg-white ">
       <UserModal show={show} toggle={() => setShow(false)} />
       {/* Nav Component */}
-      <h1>Shatzen</h1>
+      <div className="flex justify-end">
+        {/* <h1>Shatzen</h1> */}
+        {/* <Options /> */}
+        <span
+          className="cursor-pointer"
+          onClick={() => {
+            setName("");
+            window.location.reload();
+          }}
+          title="Change name"
+        >
+          🥸
+        </span>
+        <span
+          className="cursor-pointer"
+          onClick={() => {
+            reset();
+            setName("");
+            window.location.reload();
+          }}
+          title="Reset All"
+        >
+          💀
+        </span>
+      </div>
       <div className="flex flex-col justify-center">
         {/* UserPanel Component */}
         <div className="flex flex-col items-center">
@@ -62,7 +88,7 @@ const App = () => {
         {/* User Guesses Component */}
         <div className="flex justify-center space-x-4 items-center">
           {users
-            .filter((fileredUser) => fileredUser.id !== user.id)
+            .sort((a) => (a.id === user.id ? -1 : 1))
             .map((user) => {
               return <UserCard key={user.id} user={user} />;
             })}

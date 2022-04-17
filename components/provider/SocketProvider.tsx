@@ -8,7 +8,7 @@ type Values = {
   estimates: Estimate[];
   average: undefined | number;
   user: User | undefined;
-  status: Status;
+  status: Status | undefined;
 };
 const initalValues: Values = {
   users: [],
@@ -32,7 +32,7 @@ export default function SocketProvider(props: Props) {
   const [users, setUsers] = useState<User[]>([]);
   const [estimates, setEstimates] = useState<Estimate[]>([]);
   const [average, setAverage] = useState<number | undefined>(undefined);
-  const [status, setStatus] = useState<Status>("estimating");
+  const [status, setStatus] = useState<Status | undefined>(undefined);
   const [name, setName] = useState<string>("");
 
   useEffect(() => {
@@ -72,6 +72,7 @@ export const useSockets = () => {
   const addEstimate = (estimate: number) => socket.emit("add estimate", estimate);
   const reveal = () => socket.emit("reveal");
   const estimateMode = () => socket.emit("estimate");
+  const reset = () => socket.emit("reset");
 
-  return { addUser, disconnect, addEstimate, reveal, estimateMode };
+  return { addUser, disconnect, addEstimate, reveal, estimateMode, reset };
 };
