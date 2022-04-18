@@ -90,11 +90,9 @@ const App = () => {
         </div>
         {/* User Guesses Component */}
         <div className="flex justify-center space-x-4 items-center">
-          {users
-            .sort((a) => (a.id === user.id ? -1 : 1))
-            .map((user) => {
-              return <UserCard key={user.id} user={user} />;
-            })}
+          {users.map((user) => {
+            return <UserCard key={user.id} user={user} />;
+          })}
         </div>
       </div>
     </div>

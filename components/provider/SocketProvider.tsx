@@ -43,7 +43,12 @@ export default function SocketProvider(props: Props) {
       setName(userName || "");
     });
     socket.on("estimates", (estimates: Estimate[]) => setEstimates(estimates));
-    socket.on("reveal", (average: number) => setAverage(average));
+    socket.on("reveal", (average: number | null) => {
+      // Check if average is returned. If yes; check if whole number, if not round to first decimal point
+      if (!average) return setAverage(undefined);
+      const roundAverage = average % 1 !== 0 ? average : parseInt(average.toFixed(1));
+      setAverage(roundAverage);
+    });
     socket.on("status", (status: Status) => setStatus(status));
   }, [socket]);
 
