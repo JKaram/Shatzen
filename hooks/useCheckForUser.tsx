@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
-import { useSockets } from "../components/provider/SocketProvider";
-import useLocalStorage from "./useLocalStorage";
+import { User } from "../types/aliases";
 
-export const useCheckUser = () => {
-  const [name] = useLocalStorage("name", "");
-  const { addUser } = useSockets();
-  const [userExsits, setUserExsits] = useState(!!name);
+// TODO Keep name locally
+
+export const useCheckUser = (user: User | undefined) => {
+  const [userExsits, setUserExsits] = useState(!!user?.name);
 
   useEffect(() => {
-    if (name) {
-      addUser(name);
+    if (userExsits) {
       setUserExsits(true);
     } else {
       setUserExsits(false);
     }
-  }, []);
+  }, [userExsits]);
 
   return userExsits;
 };

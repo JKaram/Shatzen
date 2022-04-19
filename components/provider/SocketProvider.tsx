@@ -1,6 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import { Estimate, Status, User } from "../../types/aliases";
 
 type Values = {
@@ -73,13 +72,9 @@ export default function SocketProvider(props: Props) {
 }
 
 export const useSockets = () => {
-  const [, setStorageName] = useLocalStorage("name", "");
-  const addUser = (name: string) => {
-    socket.emit("add user", name);
-    setStorageName(name);
-  };
-  const disconnect = () => socket.emit("remove");
+  const addUser = (name: string) => socket.emit("add user", name);
   const addEstimate = (estimate: number) => socket.emit("add estimate", estimate);
+  const disconnect = () => socket.emit("remove");
   const reveal = () => socket.emit("reveal");
   const estimateMode = () => socket.emit("estimate");
   const reset = () => socket.emit("reset");

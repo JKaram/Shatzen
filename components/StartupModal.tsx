@@ -1,6 +1,5 @@
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-
+import { Dialog } from "@headlessui/react";
+import { useState } from "react";
 import { useSockets } from "./provider/SocketProvider";
 type Props = {
   show: boolean;
@@ -20,7 +19,7 @@ export default function MyModal(props: Props) {
       >
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
         <div className="bg-white z-20 rounded px-8 py-4  border-2 ">
-          <Dialog.Title className="text-lg font-bold">Willkommen</Dialog.Title>
+          <Dialog.Title className="text-lg font-bold">Welcome</Dialog.Title>
           <Dialog.Description>Hey can you give me your name</Dialog.Description>
           <div className="flex flex-col space-y-1">
             <label htmlFor="name" className="sr-only">

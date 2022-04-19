@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserModal from "../components/StartupModal";
-import { SocketContext, useSockets } from "../components/provider/SocketProvider";
+import { SocketContext } from "../components/provider/SocketProvider";
 import { useCheckUser } from "../hooks/useCheckForUser";
-
-import useLocalStorage from "../hooks/useLocalStorage";
 import { UserPanel } from "../components/UserPanel";
 import { RevealBox } from "../components/RevealBox";
 import { EstimatesBox } from "../components/EstimatesBox";
@@ -11,7 +9,7 @@ import { Nav } from "../components/Nav";
 
 const App = () => {
   const { user, status } = useContext(SocketContext);
-  const isExistingUser = useCheckUser();
+  const isExistingUser = useCheckUser(user);
   const [show, setShow] = useState(!isExistingUser);
 
   // TODO Check user
