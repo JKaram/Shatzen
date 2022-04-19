@@ -15,7 +15,6 @@ const initalValues: Values = {
   estimates: [],
   average: undefined,
   user: undefined,
-
   status: "estimating",
 };
 
