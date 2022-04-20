@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { possibleEstimates } from "../types/constants";
+import { numberToNewValue, possibleEstimates } from "../types/constants";
 import { userEstimate } from "../utils/helpers";
 import { EstimateCard } from "./EstimateCard";
 import { SocketContext, useSockets } from "./provider/SocketProvider";
@@ -21,7 +21,7 @@ export const UserPanel = () => {
             const whichNumber = hasEstimated !== false ? hasEstimated : undefined;
             return (
               <EstimateCard isSelected={whichNumber === estimate} onClick={() => addEstimate(estimate)} key={estimate}>
-                {estimate}
+                {numberToNewValue(estimate) || estimate}
               </EstimateCard>
             );
           })}

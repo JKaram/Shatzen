@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { User } from "../types/aliases";
+import { numberToNewValue } from "../types/constants";
 import { userEstimate } from "../utils/helpers";
 import { SocketContext } from "./provider/SocketProvider";
 
@@ -18,7 +19,9 @@ export const UserCard = ({ user }: Props) => {
           estimate !== false ? "bg-cyan-600" : "shadow-inner"
         } ${appUser?.id === user.id && estimate !== false ? "bg-green-200" : ""}`}
       >
-        <span className={`${status === "estimating" ? "hidden" : ""}`}>{estimate ? estimate : null}</span>
+        <span className={`${status === "estimating" ? "hidden" : ""}`}>
+          {estimate ? numberToNewValue(estimate) || estimate : null}
+        </span>
       </div>
       <span title={`User ID: ${user.id}`}>{appUser?.id === user.id ? "Me" : user.name}</span>
     </div>

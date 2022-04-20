@@ -15,28 +15,31 @@ export default function MyModal(props: Props) {
       <Dialog
         open={show}
         onClose={() => {}}
-        className="fixed inset-0 z-10 overflow-y-auto flex justify-center items-start m-8"
+        className="fixed inset-0 z-10 overflow-y-auto flex justify-center items-start mt-8"
       >
-        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-        <div className="bg-white z-20 rounded px-8 py-4  border-2 ">
-          <Dialog.Title className="text-lg font-bold">Welcome</Dialog.Title>
-          <Dialog.Description>Hey can you give me your name</Dialog.Description>
-          <div className="flex flex-col space-y-1">
-            <label htmlFor="name" className="sr-only">
-              Name
-            </label>
-            <input
-              type="name"
-              name="name"
-              id="name"
-              onChange={(e) => setName(e.target.value)}
-              value={name}
-              className="shadow-sm py-2 px-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-400 rounded"
-              placeholder="Michael Scott"
-            />
-          </div>
-          <div>
+        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30 " />
+        <div className="bg-white z-20 rounded px-8 py-4 w-full md:w-1/2 mx-2 transition-all border-2 ">
+          <Dialog.Title className="text-2xl font-bold text-center">Welcome 👋</Dialog.Title>
+          <Dialog.Description className="mt-4">Please enter your name</Dialog.Description>
+
+          <form className="">
+            <fieldset>
+              <label htmlFor="name" className="sr-only">
+                Name
+              </label>
+              <input
+                type="name"
+                name="name"
+                id="name"
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                className="shadow-sm py-2 px-1  block w-full sm:text-sm border-gray-400 rounded"
+                placeholder="Michael Scott"
+              />
+            </fieldset>
+
             <button
+              type="submit"
               disabled={!name}
               className="mt-2 disabled:bg-gray-100 "
               onClick={() => {
@@ -44,9 +47,9 @@ export default function MyModal(props: Props) {
                 toggle();
               }}
             >
-              Submit
+              Enter
             </button>
-          </div>
+          </form>
         </div>
       </Dialog>
     </>

@@ -3,6 +3,7 @@ import { SocketContext, useSockets } from "./provider/SocketProvider";
 
 export const RevealBox = () => {
   const { estimates, average, status } = useContext(SocketContext);
+  console.log("🚀 ~ file: RevealBox.tsx ~ line 6 ~ RevealBox ~ average", average);
   const { reveal, estimateMode } = useSockets();
 
   return (
