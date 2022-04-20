@@ -26,4 +26,5 @@ export const removeUserEstimate = (userId: string) => {
 
 export const clearEstimates = () => estimates.splice(0, estimates.length);
 
-export const claculateAverage = () => estimates.reduce((total, b) => total + b.estimate, 0) / estimates.length;
+export const claculateAverage = () =>
+  estimates.filter((estimate) => estimate.estimate > -1).reduce((total, b) => total + b.estimate, 0) / estimates.length;

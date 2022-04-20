@@ -1,4 +1,5 @@
 import { findIndex } from "lodash";
+import { removeUserEstimate } from "./estimates";
 
 export const users: User[] = [];
 
@@ -15,6 +16,7 @@ export const addUser = (newUser: User) => {
 
 export const removeUser = (id: string) => {
   const indexOfUser = findIndex(users, { id: id });
+  removeUserEstimate(id);
   users.splice(indexOfUser, 1);
 };
 
