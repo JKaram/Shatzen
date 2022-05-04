@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
 import { SocketContext } from "./provider/SocketProvider";
+import React, { useContext } from "react";
 
 type Props = {
   isSelected: boolean;
@@ -8,11 +8,11 @@ type Props = {
 };
 
 export const EstimateCard = ({ isSelected, onClick, children }: Props) => {
-  const { status } = useContext(SocketContext);
+  const { roomStatus } = useContext(SocketContext);
 
   return (
     <button
-      disabled={status === "revealing"}
+      disabled={roomStatus === "revealing"}
       onClick={onClick}
       className={` ${isSelected ? "bg-green-100 hover:bg-green-100" : "bg-gray-100"}`}
     >

@@ -1,7 +1,5 @@
-import React, { Fragment } from "react";
-import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
 import { useSockets } from "./provider/SocketProvider";
+import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 function classNames(...classes: any) {

@@ -1,14 +1,19 @@
 import { Dialog } from "@headlessui/react";
-import { useState } from "react";
+import { useCookies } from "react-cookie";
 import { useSockets } from "./provider/SocketProvider";
+import { useState } from "react";
+
 type Props = {
   show: boolean;
   toggle: Function;
+  room: string;
 };
+
 export default function MyModal(props: Props) {
-  const { show, toggle } = props;
+  const { show, toggle, room } = props;
   const { addUser } = useSockets();
   const [name, setName] = useState("");
+  const [, setCookie] = useCookies(["name"]);
 
   return (
     <>
@@ -43,7 +48,8 @@ export default function MyModal(props: Props) {
               disabled={!name}
               className="mt-2 disabled:bg-gray-100 "
               onClick={() => {
-                addUser(name);
+                setCookie("name", name);
+                addUser(name, room);
                 toggle();
               }}
             >

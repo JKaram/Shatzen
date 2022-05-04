@@ -1,15 +1,15 @@
-import React, { useContext } from "react";
-import { User } from "../types/aliases";
 import { numberToNewValue } from "../types/constants";
-import { userEstimate } from "../utils/helpers";
 import { SocketContext } from "./provider/SocketProvider";
+import { User } from "../types/aliases";
+import { userEstimate } from "../utils/helpers";
+import React, { useContext } from "react";
 
 type Props = {
   user: User;
 };
 
 export const UserCard = ({ user }: Props) => {
-  const { status, estimates, user: appUser } = useContext(SocketContext);
+  const { roomStatus, estimates, user: appUser } = useContext(SocketContext);
   const estimate = userEstimate(user.id, estimates);
 
   return (
@@ -19,7 +19,7 @@ export const UserCard = ({ user }: Props) => {
           estimate !== false ? "bg-cyan-600" : "shadow-inner"
         } ${appUser?.id === user.id && estimate !== false ? "bg-green-200" : ""}`}
       >
-        <span className={`${status === "estimating" ? "hidden" : ""}`}>
+        <span className={`${roomStatus === "estimating" ? "hidden" : ""}`}>
           {estimate ? numberToNewValue(estimate) || estimate : null}
         </span>
       </div>

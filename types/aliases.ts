@@ -9,3 +9,5 @@ export type User = {
 };
 
 export type Status = "estimating" | "revealing";
+
+export type AppStatus = "loading" | "ready";

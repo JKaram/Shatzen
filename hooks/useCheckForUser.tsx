@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
-import { User } from "../types/aliases";
+import { useCookies } from "react-cookie";
+import { useSockets } from "../components/provider/SocketProvider";
 
-// TODO Keep name locally
+export const useCheckUser = (): [boolean, "loading" | "success", () => void] => {
+  const [cookies] = useCookies(["name"]);
+  const [status, setStatus] = useState<"loading" | "success">("loading");
+  const [isUser, setIsUser] = useState(true);
+  const { addUser } = useSockets();
 
-export const useCheckUser = (user: User | undefined) => {
-  const [userExsits, setUserExsits] = useState(!!user?.name);
+  const changeName = () => {
+    setIsUser(false);
+  };
 
   useEffect(() => {
-    if (userExsits) {
-      setUserExsits(true);
+    if (cookies.name) {
+      // addUser(cookies.name);
+      setIsUser(true);
+      setStatus("success");
     } else {
-      setUserExsits(false);
+      setStatus("success");
+      setIsUser(false);
     }
-  }, [userExsits]);
+  }, []);
 
-  return userExsits;
+  return [isUser, status, changeName];
 };
