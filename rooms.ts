@@ -5,10 +5,14 @@ import { User } from "./users";
 
 type Room = { name: string; users: User[]; estimates: Estimate[]; status: Status };
 
-export const rooms: Room[] = [
-  { name: "puretest", users: [], estimates: [], status: "estimating" },
-  { name: "mars", users: [], estimates: [], status: "estimating" },
-];
+const hardcodedRooms = ["mars", "puretest", "sbo", "shoebox", "glu"];
+
+export const rooms: Room[] = hardcodedRooms.map((room) => ({
+  name: room,
+  users: [],
+  estimates: [],
+  status: "estimating",
+}));
 
 export const addRoom = (roomName: string) =>
   rooms.push({ name: roomName, users: [], estimates: [], status: "estimating" });
