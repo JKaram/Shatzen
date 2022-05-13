@@ -8,9 +8,10 @@ import {
   findRoom,
   removeUserEstimate,
   removeUserFromRoom,
+  rooms,
 } from "./rooms";
 import { Status } from "./status";
-import { addUser, removeUser, findUser } from "./users";
+import { addUser, removeUser, findUser, allUsers } from "./users";
 
 const express = require("express");
 const socketIO = require("socket.io");
@@ -39,13 +40,15 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("add_user", (params: [string, string]) => {
     const [userName, roomName] = params;
+    socket.join(roomName);
     addUser({ name: userName, id: socket.id, room: roomName });
     addUserToRoom(roomName, { name: userName, id: socket.id });
 
-    io.emit("estimates", findRoom(roomName).estimates);
-    io.emit("join_room", roomName);
-    io.emit("status", findRoom(roomName).status);
-    io.emit("users", findRoom(roomName).users);
+    const updatedRoom = findRoom(roomName);
+
+    io.to(roomName).emit("estimates", updatedRoom.estimates);
+    io.to(roomName).emit("status", updatedRoom.status);
+    io.to(roomName).emit("users", updatedRoom.users);
   });
 
   socket.on("add_estimate", (estimate: number) => {
@@ -57,9 +60,9 @@ io.on("connection", (socket: Socket) => {
 
     const updatedRoom = findRoom(user.room);
 
-    io.emit("estimates", updatedRoom.estimates);
-    io.emit("status", updatedRoom.status);
-    io.emit("users", updatedRoom.users);
+    io.to(updatedRoom.name).emit("estimates", updatedRoom.estimates);
+    io.to(updatedRoom.name).emit("status", updatedRoom.status);
+    io.to(updatedRoom.name).emit("users", updatedRoom.users);
   });
 
   socket.on("change_room_status", (status: Status) => {
@@ -75,10 +78,10 @@ io.on("connection", (socket: Socket) => {
 
     const updatedRoom = findRoom(user.room);
 
-    io.emit("estimates", updatedRoom.estimates);
-    io.emit("reveal", claculateAverage(updatedRoom.estimates));
-    io.emit("status", updatedRoom.status);
-    io.emit("users", updatedRoom.users);
+    io.to(updatedRoom.name).emit("estimates", updatedRoom.estimates);
+    io.to(updatedRoom.name).emit("reveal", claculateAverage(updatedRoom.estimates));
+    io.to(updatedRoom.name).emit("status", updatedRoom.status);
+    io.to(updatedRoom.name).emit("users", updatedRoom.users);
   });
 
   socket.on("disconnect", (reason) => {
@@ -94,9 +97,9 @@ io.on("connection", (socket: Socket) => {
 
     const updatedRoom = findRoom(user.room);
 
-    io.emit("estimates", updatedRoom.estimates);
-    io.emit("status", updatedRoom.status);
-    io.emit("users", updatedRoom.users);
+    io.to(updatedRoom.name).emit("estimates", updatedRoom.estimates);
+    io.to(updatedRoom.name).emit("status", updatedRoom.status);
+    io.to(updatedRoom.name).emit("users", updatedRoom.users);
   });
 });
 
