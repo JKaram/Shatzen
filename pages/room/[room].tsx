@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
-import { useSockets } from "../../components/provider/SocketProvider";
 import { Nav } from "../../components/Nav";
 import { UserPanel } from "../../components/UserPanel";
 import { EstimatesBox } from "../../components/EstimatesBox";
@@ -11,10 +10,6 @@ const Room = () => {
   const router = useRouter();
   const { room } = router.query;
   const [show, setShow] = useState(true);
-
-  const { addUser } = useSockets();
-
-  useEffect(() => {}, []);
 
   if (!room) return <p>Loading...</p>;
 

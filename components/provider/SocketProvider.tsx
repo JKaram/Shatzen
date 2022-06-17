@@ -7,7 +7,7 @@ type Values = {
   estimates: Estimate[];
   average: undefined | number;
   user: User | undefined;
-  roomStatus: Status | undefined;
+  roomStatus: Status;
   room: string;
 };
 const initalValues: Values = {

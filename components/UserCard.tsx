@@ -6,14 +6,20 @@ import React, { useContext } from "react";
 
 type Props = {
   user: User;
+  oddManOut: boolean;
 };
 
-export const UserCard = ({ user }: Props) => {
+const shameEmojis = ["🤥", "🤮", "🙊", "💩"];
+
+export const UserCard = ({ user, oddManOut }: Props) => {
   const { roomStatus, estimates, user: appUser } = useContext(SocketContext);
   const estimate = userEstimate(user.id, estimates);
 
+  const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
+
   return (
     <div className="flex flex-col items-center">
+      {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
         className={`w-10 h-16 rounded flex justify-center items-center ${
           estimate !== false ? "bg-cyan-600" : "shadow-inner"
