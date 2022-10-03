@@ -27,7 +27,6 @@ export function userLeave(id) {
   if (index !== -1) {
     users.splice(index, 1);
   }
-
   return disconnectingUser;
 }
 

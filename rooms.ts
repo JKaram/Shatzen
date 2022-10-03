@@ -15,7 +15,7 @@ type Room = { name: string; users: User[]; estimates: Estimate[]; status: Status
 export const rooms = [];
 
 export function roomIndex(id) {
-  return rooms.indexOf((room) => room.id === id);
+  return rooms.map((room) => room.id).indexOf(id);
 }
 
 export function createRoom(id) {
@@ -23,7 +23,7 @@ export function createRoom(id) {
 }
 
 export function isNewRoom(id) {
-  return !rooms.includes((room) => room.id === id);
+  return !rooms.some((room) => room.id === id);
 }
 
 export function userRoom(id) {

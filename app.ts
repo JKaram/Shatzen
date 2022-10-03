@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { changeStatus, createRoom, isNewRoom, userRoom } from "./rooms";
+import { changeStatus, createRoom, isNewRoom, rooms, userRoom } from "./rooms";
 import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser } from "./users";
 
 const express = require("express");
@@ -22,12 +22,12 @@ const io = socketIO(server, {
 io.on("connection", (socket: Socket) => {
   socket.on("userJoin", ({ name, room }) => {
     const user = userJoin(socket.id, name, room);
+
     socket.join(user.room);
 
     if (isNewRoom(user.room)) {
       createRoom(user.room);
     }
-    console.log(allRoomUsers(user.room));
 
     io.to(user.room).emit("users", allRoomUsers(user.room));
     io.to(socket.id).emit("roomStatus", userRoom(user.room).status);
@@ -50,7 +50,9 @@ io.on("connection", (socket: Socket) => {
   socket.on("disconnect", () => {
     const user = userLeave(socket.id);
 
-    io.to(user.room).emit("users", allRoomUsers(user.room));
+    if (user?.room) {
+      io.to(user.room).emit("users", allRoomUsers(user.room));
+    }
   });
 });
 
