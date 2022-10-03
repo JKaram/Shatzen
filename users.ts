@@ -1,4 +1,4 @@
-const users = [];
+export const users = [];
 
 export type User = {
   id: string;
@@ -36,4 +36,13 @@ export function addEstimate(id, estimate) {
   if (users[index].estimate === estimate) users[index] = { ...users[index], estimate: null };
 
   users[index] = { ...users[index], estimate };
+}
+
+export function clearUserEstimates(roomId) {
+  console.log("🚀 ~ file: users.ts ~ line 42 ~ clearUserEstimates ~ roomId", roomId);
+  for (const user in users) {
+    if (users[user].room === roomId) {
+      users[user].estimate = null;
+    }
+  }
 }

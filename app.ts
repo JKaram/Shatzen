@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
 import { changeStatus, createRoom, isNewRoom, rooms, userRoom } from "./rooms";
-import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser } from "./users";
+import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser, users } from "./users";
 
 const express = require("express");
 const socketIO = require("socket.io");
@@ -33,16 +33,20 @@ io.on("connection", (socket: Socket) => {
     io.to(socket.id).emit("roomStatus", userRoom(user.room).status);
   });
 
-  socket.on("estimate", ({ estimate, room }) => {
+  socket.on("estimate", ({ estimate }) => {
+    const user = getCurrentUser(socket.id);
+
     addEstimate(socket.id, estimate);
 
-    io.to(room).emit("users", allRoomUsers(room));
+    io.to(user.room).emit("users", allRoomUsers(user.room));
   });
 
   socket.on("changeStatus", ({ status }) => {
     const user = getCurrentUser(socket.id);
 
     changeStatus(user.room, status);
+
+    console.log(users, "😆");
 
     io.to(user.room).emit("roomStatus", userRoom(user.room).status);
   });

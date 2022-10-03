@@ -1,16 +1,4 @@
-import { findIndex } from "lodash";
-import { Estimate } from "./estimates";
-import { Status } from "./status";
-import { User } from "./users";
-
-type Room = { name: string; users: User[]; estimates: Estimate[]; status: Status };
-
-// export const rooms: Room[] = hardcodedRooms.map((room) => ({
-//   name: room,
-//   users: [],
-//   estimates: [],
-//   status: "estimating",
-// }));
+import { clearUserEstimates } from "./users";
 
 export const rooms = [];
 
@@ -34,4 +22,8 @@ export function changeStatus(id, newStatus) {
   const index = roomIndex(id);
 
   rooms[index] = { ...rooms[index], status: newStatus };
+
+  if (newStatus === "estimating") {
+    clearUserEstimates(rooms[index].id);
+  }
 }
