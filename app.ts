@@ -21,6 +21,7 @@ const io = socketIO(server, {
 
 io.on("connection", (socket: Socket) => {
   socket.on("userJoin", ({ name, room }) => {
+    console.log(socket.id, "Connected to room ", room);
     const user = userJoin(socket.id, name, room);
 
     socket.join(user.room);
@@ -46,12 +47,11 @@ io.on("connection", (socket: Socket) => {
 
     changeStatus(user.room, status);
 
-    console.log(users, "😆");
-
     io.to(user.room).emit("roomStatus", userRoom(user.room).status);
   });
 
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (reason) => {
+    console.log(socket.id, reason);
     const user = userLeave(socket.id);
 
     if (user?.room) {
