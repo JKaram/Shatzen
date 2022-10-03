@@ -1,17 +1,6 @@
 import { Socket } from "socket.io";
-import { claculateAverage } from "./estimates";
-import {
-  addUserEstimate,
-  addUserToRoom,
-  changeRoomStatus,
-  clearRoomEstimates,
-  findRoom,
-  removeUserEstimate,
-  removeUserFromRoom,
-  rooms,
-} from "./rooms";
-import { Status } from "./status";
-import { addUser, removeUser, findUser, allUsers } from "./users";
+import { changeStatus, createRoom, isNewRoom, userRoom } from "./rooms";
+import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser } from "./users";
 
 const express = require("express");
 const socketIO = require("socket.io");
@@ -31,75 +20,37 @@ const io = socketIO(server, {
 });
 
 io.on("connection", (socket: Socket) => {
-  // const usersCurrentRoom = getRoom(roomName);
+  socket.on("userJoin", ({ name, room }) => {
+    const user = userJoin(socket.id, name, room);
+    socket.join(user.room);
 
-  // io.emit("estimates", usersCurrentRoom.estimates);
-  // io.emit("users", usersCurrentRoom.users);
-  // io.emit("status", usersCurrentRoom.status);
-  // io.emit("reveal", claculateAverage(usersCurrentRoom.estimates));
-
-  socket.on("add_user", (params: [string, string]) => {
-    const [userName, roomName] = params;
-    socket.join(roomName);
-    addUser({ name: userName, id: socket.id, room: roomName });
-    addUserToRoom(roomName, { name: userName, id: socket.id });
-
-    const updatedRoom = findRoom(roomName);
-
-    io.to(roomName).emit("estimates", updatedRoom.estimates);
-    io.to(roomName).emit("status", updatedRoom.status);
-    io.to(roomName).emit("users", updatedRoom.users);
-  });
-
-  socket.on("add_estimate", (estimate: number) => {
-    const user = findUser(socket.id);
-
-    if (!user) return console.log("Could not add estimate, user not found");
-
-    addUserEstimate(user.room, { estimate: estimate, id: socket.id });
-
-    const updatedRoom = findRoom(user.room);
-
-    io.to(updatedRoom.name).emit("estimates", updatedRoom.estimates);
-    io.to(updatedRoom.name).emit("status", updatedRoom.status);
-    io.to(updatedRoom.name).emit("users", updatedRoom.users);
-  });
-
-  socket.on("change_room_status", (status: Status) => {
-    const user = findUser(socket.id);
-
-    if (!user) return console.log("Could not change room status, user not cfound");
-
-    changeRoomStatus(user.room, status);
-
-    if (status === "estimating") {
-      clearRoomEstimates(user.room);
+    if (isNewRoom(user.room)) {
+      createRoom(user.room);
     }
+    console.log(allRoomUsers(user.room));
 
-    const updatedRoom = findRoom(user.room);
-
-    io.to(updatedRoom.name).emit("estimates", updatedRoom.estimates);
-    io.to(updatedRoom.name).emit("reveal", claculateAverage(updatedRoom.estimates));
-    io.to(updatedRoom.name).emit("status", updatedRoom.status);
-    io.to(updatedRoom.name).emit("users", updatedRoom.users);
+    io.to(user.room).emit("users", allRoomUsers(user.room));
+    io.to(socket.id).emit("roomStatus", userRoom(user.room).status);
   });
 
-  socket.on("disconnect", (reason) => {
-    console.log("Disconnect", reason);
+  socket.on("estimate", ({ estimate, room }) => {
+    addEstimate(socket.id, estimate);
 
-    const user = findUser(socket.id);
+    io.to(room).emit("users", allRoomUsers(room));
+  });
 
-    if (!user) return console.log("Could not disconnect user, user not found");
+  socket.on("changeStatus", ({ status }) => {
+    const user = getCurrentUser(socket.id);
 
-    removeUser(user);
-    removeUserEstimate(user);
-    removeUserFromRoom(user);
+    changeStatus(user.room, status);
 
-    const updatedRoom = findRoom(user.room);
+    io.to(user.room).emit("roomStatus", userRoom(user.room).status);
+  });
 
-    io.to(updatedRoom.name).emit("estimates", updatedRoom.estimates);
-    io.to(updatedRoom.name).emit("status", updatedRoom.status);
-    io.to(updatedRoom.name).emit("users", updatedRoom.users);
+  socket.on("disconnect", () => {
+    const user = userLeave(socket.id);
+
+    io.to(user.room).emit("users", allRoomUsers(user.room));
   });
 });
 
