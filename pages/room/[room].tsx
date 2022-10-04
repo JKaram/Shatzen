@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { UserPanel } from "../../components/UserPanel";
 import { SocketContext, useSockets } from "../../components/provider/SocketProvider";
 import React, { useContext, useEffect } from "react";
+import PageLayout from "../../components/PageLayout";
 
 const Room = () => {
   const router = useRouter();
@@ -17,14 +18,14 @@ const Room = () => {
     }
   }, [user, router.isReady]);
 
+  if (!router.isReady) return <div>Loading</div>;
+
   return (
-    <div>
-      <div className="flex flex-col justify-center">
-        <EstimatesBox />
-        <RevealBox />
-        <UserPanel />
-      </div>
-    </div>
+    <PageLayout>
+      <EstimatesBox />
+      <RevealBox />
+      <UserPanel />
+    </PageLayout>
   );
 };
 

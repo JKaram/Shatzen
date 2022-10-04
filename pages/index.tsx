@@ -3,6 +3,7 @@ import { ROOM_STRING_SIZE } from "../types/constants";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import React from "react";
+import PageLayout from "../components/PageLayout";
 
 const App = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ const App = () => {
   }
 
   return (
-    <div className="min-w-full min-h-screen bg-[#e3e3e3] ">
+    <PageLayout>
       <h1>Shatzen</h1>
       <h2>Scrum Poker</h2>
       <div>
@@ -21,7 +22,7 @@ const App = () => {
         <input />
         <Link href="/test">test</Link>
       </div>
-    </div>
+    </PageLayout>
   );
 };
 

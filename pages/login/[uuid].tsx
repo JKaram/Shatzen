@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import { useSockets } from "../../components/provider/SocketProvider";
+import PageLayout from "../../components/PageLayout";
 
 const Login = () => {
   const router = useRouter();
@@ -9,12 +10,17 @@ const Login = () => {
 
   const [name, setName] = useState("");
 
+  function updateName(e: React.ChangeEvent<HTMLInputElement>) {
+    const value = e.target.value;
+    setName(value);
+  }
+
   const sanitizeUuid = typeof uuid === "string" ? uuid : "Uh oh";
 
   return (
-    <div>
+    <PageLayout>
       Login {uuid} {name}
-      <input onChange={(e) => setName(e.target.value)} />
+      <input onChange={updateName} />
       <button
         onClick={() => {
           userJoin(name, sanitizeUuid);
@@ -23,7 +29,7 @@ const Login = () => {
       >
         Join Room
       </button>
-    </div>
+    </PageLayout>
   );
 };
 
