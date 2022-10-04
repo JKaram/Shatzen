@@ -1,6 +1,7 @@
+import { Room } from "./types";
 import { clearUserEstimates } from "./users";
 
-export const rooms = [];
+export const rooms: Room[] = [];
 
 export function roomIndex(id) {
   return rooms.map((room) => room.id).indexOf(id);

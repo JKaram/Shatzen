@@ -21,7 +21,7 @@ const io = socketIO(server, {
 
 io.on("connection", (socket: Socket) => {
   socket.on("userJoin", ({ name, room }) => {
-    console.log(socket.id, "Connected to room ", room);
+    console.log(socket.id, name, "Connected to room ", room);
     const user = userJoin(socket.id, name, room);
 
     socket.join(user.room);
@@ -38,6 +38,7 @@ io.on("connection", (socket: Socket) => {
     const user = getCurrentUser(socket.id);
 
     addEstimate(socket.id, estimate);
+    console.log(allRoomUsers(user.room));
 
     io.to(user.room).emit("users", allRoomUsers(user.room));
   });
@@ -46,8 +47,13 @@ io.on("connection", (socket: Socket) => {
     const user = getCurrentUser(socket.id);
 
     changeStatus(user.room, status);
+    console.log(allRoomUsers(user.room));
 
+    io.to(user.room).emit("status", { status });
     io.to(user.room).emit("roomStatus", userRoom(user.room).status);
+
+    // Could save this emit if client removes estimate when status changes to "estimating"
+    io.to(user.room).emit("users", allRoomUsers(user.room));
   });
 
   socket.on("disconnect", (reason) => {
