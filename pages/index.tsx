@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import React from "react";
 import PageLayout from "../components/PageLayout";
+import Button from "../components/Button";
 
 const App = () => {
   const router = useRouter();
@@ -15,12 +16,10 @@ const App = () => {
 
   return (
     <PageLayout>
-      <h1>Shatzen</h1>
-      <h2>Scrum Poker</h2>
+      <h1 className="text-4xl">Shatzen</h1>
+      <h2 className="text-lg">Scrum Poker</h2>
       <div>
-        <button onClick={generateRoomId}>Create a Room</button>
-        <input />
-        <Link href="/test">test</Link>
+        <Button onClick={generateRoomId}>Create a Room</Button>
       </div>
     </PageLayout>
   );
