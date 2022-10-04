@@ -1,40 +1,34 @@
 import { SocketContext, useSockets } from "./provider/SocketProvider";
-import React, { useContext, useEffect } from "react";
-import { useReward } from "react-rewards";
+import React, { useContext } from "react";
 
 export const RevealBox = () => {
-  const { estimates, average, roomStatus } = useContext(SocketContext);
-  const { reveal, estimateMode } = useSockets();
-  const { reward } = useReward("rewardId", "confetti");
+  const { users, roomStatus } = useContext(SocketContext);
+  const { changeStatus } = useSockets();
 
-  const actualEstimates = estimates.filter((user) => user.estimate > 0);
+  // Typescript not picking up that null values will be filtered
+  const average =
+    users
+      .filter((user) => user.estimate !== null && user.estimate >= 0)
+      .map((user) => user.estimate!)
+      .reduce((p, c) => p + c, 0) / users.length;
 
-  const areAllEstimatesTheSame = () =>
-    actualEstimates.length > 2 && actualEstimates.every((user) => user.estimate === estimates[0].estimate);
+  function reveal() {
+    changeStatus("revealing");
+  }
 
-  useEffect(() => {
-    if (roomStatus === "revealing" && areAllEstimatesTheSame()) {
-      reward();
-    }
-  }, [roomStatus]);
+  function estimating() {
+    changeStatus("estimating");
+  }
 
   return (
     <div className="relative flex flex-col items-center my-6">
-      <span id="rewardId" />
-      {roomStatus === "estimating" ? (
-        <div>
-          <button disabled={estimates.length === 0} className="border-2 disabled:opacity-50" onClick={() => reveal()}>
-            Reveal
-          </button>
-        </div>
-      ) : (
+      {roomStatus === "revealing" && (
         <>
-          <h1 className="text-xl">{average}</h1>
-          <span className="text-xs text-gray-600 cursor-pointer hover:text-black" onClick={() => estimateMode()}>
-            Estimate again
-          </span>
+          <span>{average}</span>
+          <button onClick={estimating}>Estimate</button>
         </>
       )}
+      {roomStatus === "estimating" && <button onClick={reveal}>Reveal</button>}
     </div>
   );
 };

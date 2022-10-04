@@ -1,27 +1,28 @@
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import { Nav } from "../../components/Nav";
-import { UserPanel } from "../../components/UserPanel";
 import { EstimatesBox } from "../../components/EstimatesBox";
 import { RevealBox } from "../../components/RevealBox";
-import UserModal from "../../components/StartupModal";
+import { useRouter } from "next/router";
+import { UserPanel } from "../../components/UserPanel";
+import { SocketContext, useSockets } from "../../components/provider/SocketProvider";
+import React, { useContext, useEffect } from "react";
 
 const Room = () => {
   const router = useRouter();
   const { room } = router.query;
-  const [show, setShow] = useState(true);
+  const { disconnect } = useSockets();
+  const { user } = useContext(SocketContext);
 
-  if (!room) return <p>Loading...</p>;
+  useEffect(() => {
+    if (!user && router.isReady) {
+      router.push(`/login/${room}`);
+    }
+  }, [user, router.isReady]);
 
   return (
     <div>
-      <Nav />
-      <UserModal room={`${room}`} show={show} toggle={() => setShow(false)} />
-
       <div className="flex flex-col justify-center">
-        <UserPanel />
-        <RevealBox />
         <EstimatesBox />
+        <RevealBox />
+        <UserPanel />
       </div>
     </div>
   );

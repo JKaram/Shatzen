@@ -1,18 +1,32 @@
 import "../styles/globals.css";
 import { CookiesProvider } from "react-cookie";
-import AppProvider from "../components/provider/AppProvider";
 import SocketProvider from "../components/provider/SocketProvider";
-// import type { AppProps } from "next/app";
+import { motion } from "framer-motion";
+import { AppProps } from "next/app";
 
-// TODO figure out AppProps instead of any
-function MyApp({ Component, pageProps }: any) {
+function MyApp({ Component, pageProps, router }: AppProps) {
   return (
     <CookiesProvider>
-      <AppProvider>
-        <SocketProvider>
+      <SocketProvider>
+        <motion.div
+          key={router.route}
+          initial="initial"
+          animate="animate"
+          variants={{
+            initial: {
+              opacity: 1,
+              x: -100,
+            },
+            animate: {
+              opacity: 1,
+              x: 0,
+            },
+          }}
+          exit={{ opacity: 0, x: 100 }}
+        >
           <Component {...pageProps} />
-        </SocketProvider>
-      </AppProvider>
+        </motion.div>
+      </SocketProvider>
     </CookiesProvider>
   );
 }

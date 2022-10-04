@@ -4,3 +4,5 @@ export const numberToNewValue = (estimate: number) =>
   ({
     "-1": "?",
   }[estimate.toString()]);
+
+export const ROOM_STRING_SIZE = 4;

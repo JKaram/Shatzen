@@ -1,11 +1,8 @@
-export type Estimate = {
-  id: string;
-  estimate: number;
-};
-
 export type User = {
+  estimate: number | null;
   id: string;
   name: string;
+  room: string;
 };
 
 export type Status = "estimating" | "revealing";
