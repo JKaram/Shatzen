@@ -1,8 +1,8 @@
 import { numberToNewValue } from "../types/constants";
 import { SocketContext } from "./provider/SocketProvider";
 import { User } from "../types/aliases";
-import { userEstimate } from "../utils/helpers";
 import React, { useContext } from "react";
+import classNames from "classnames";
 
 type Props = {
   user: User;
@@ -12,24 +12,31 @@ type Props = {
 const shameEmojis = ["🤥", "🤮", "🙊", "💩"];
 
 export const UserCard = ({ user, oddManOut }: Props) => {
-  const { roomStatus, estimates, user: appUser } = useContext(SocketContext);
-  const estimate = userEstimate(user.id, estimates);
+  const { roomStatus, users } = useContext(SocketContext);
+  const { estimate } = user;
 
   const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
+
+  const userHasEstimated = users[0].id === user.id && estimate !== null;
 
   return (
     <div className="flex flex-col items-center">
       {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
-        className={`w-10 h-16 rounded flex justify-center items-center ${
-          estimate !== false ? "bg-cyan-600" : "shadow-inner"
-        } ${appUser?.id === user.id && estimate !== false ? "bg-green-200" : ""}`}
+        style={{ background: userHasEstimated ? user.colour : !!estimate ? user.colour : undefined }}
+        className={classNames(
+          "w-10 h-16 rounded flex justify-center items-center",
+          !!estimate ? "border-2 border-black" : "shadow-inset bg-gray-200",
+          userHasEstimated ? "bg-green-200" : undefined
+        )}
       >
-        <span className={`${roomStatus === "estimating" ? "hidden" : ""}`}>
+        <span className={classNames(roomStatus === "estimating" ? "hidden" : "")}>
           {estimate ? numberToNewValue(estimate) || estimate : null}
         </span>
       </div>
-      <span title={`User ID: ${user.id}`}>{appUser?.id === user.id ? "Me" : user.name}</span>
+      <span style={{ background: user.colour }} className={classNames("px-2 mt-2")} title={`User ID: ${user.id}`}>
+        {user.name}
+      </span>
     </div>
   );
 };

@@ -1,27 +1,27 @@
+import classNames from "classnames";
 import React, { useContext } from "react";
 import { numberToNewValue, possibleEstimates } from "../types/constants";
-import { userEstimate } from "../utils/helpers";
 import { EstimateCard } from "./EstimateCard";
 import { SocketContext, useSockets } from "./provider/SocketProvider";
 
 export const UserPanel = () => {
-  const { estimates, user } = useContext(SocketContext);
-  const { addEstimate } = useSockets();
+  const { user, roomStatus } = useContext(SocketContext);
+  const { estimate } = useSockets();
 
   if (!user) return <p>loading</p>;
 
   return (
     <div className="flex flex-col items-center">
-      <h1 title={`Socket id : ${user.id}`}>{user.name}</h1>
       <div className="flex flex-col items-center">
-        <span>Make an estimate</span>
-        <div className="flex flex-wrap my-2 space-x-1">
-          {possibleEstimates.map((estimate) => {
-            const hasEstimated = userEstimate(user.id, estimates);
-            const whichNumber = hasEstimated !== false ? hasEstimated : undefined;
+        <div className={classNames("flex flex-wrap my-2 space-x-1")}>
+          {possibleEstimates.map((possibleEstimate) => {
             return (
-              <EstimateCard isSelected={whichNumber === estimate} onClick={() => addEstimate(estimate)} key={estimate}>
-                {numberToNewValue(estimate) || estimate}
+              <EstimateCard
+                isSelected={user.estimate === possibleEstimate}
+                onClick={() => estimate(possibleEstimate)}
+                key={possibleEstimate}
+              >
+                {numberToNewValue(possibleEstimate) || possibleEstimate}
               </EstimateCard>
             );
           })}

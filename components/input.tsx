@@ -1,18 +1,16 @@
-export function NameInput() {
+import React from "react";
+
+type Props = {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+};
+
+export default function Input({ onChange, placeholder = undefined }: Props) {
   return (
-    <div>
-      <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-        Name Please
-      </label>
-      <div className="mt-1">
-        <input
-          type="text"
-          name="name"
-          id="name"
-          className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-          placeholder="Michael Scott"
-        />
-      </div>
-    </div>
+    <input
+      className="p-2 border-2 border-black rounded-lg w-44 focus:border-red-500 focus:outline-none"
+      onChange={onChange}
+      placeholder={placeholder}
+    />
   );
 }
