@@ -1,6 +1,11 @@
-import { User } from "./types";
+import { User, USER_COLOURS } from "./types";
 
 export const users: User[] = [];
+
+function chooseUserColour() {
+  const randomIndex = Math.floor(Math.random() * USER_COLOURS.length);
+  return USER_COLOURS[randomIndex];
+}
 
 export function getCurrentUser(id) {
   return users.find((user) => user.id === id);
@@ -8,7 +13,7 @@ export function getCurrentUser(id) {
 
 export function userJoin(id, name, room) {
   const user = { id, name, room };
-  users.push({ id, name, room, estimate: null });
+  users.push({ id, name, room, estimate: null, colour: chooseUserColour() });
   return user;
 }
 

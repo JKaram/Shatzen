@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { changeStatus, createRoom, isNewRoom, rooms, userRoom } from "./rooms";
+import { changeStatus, createRoom, isNewRoom, roomAverage, rooms, userRoom } from "./rooms";
 import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser, users } from "./users";
 
 const express = require("express");
@@ -30,15 +30,18 @@ io.on("connection", (socket: Socket) => {
       createRoom(user.room);
     }
 
+    const usersRoom = userRoom(user.room);
+
     io.to(user.room).emit("users", allRoomUsers(user.room));
-    io.to(socket.id).emit("roomStatus", userRoom(user.room).status);
+    io.to(socket.id).emit("roomStatus", usersRoom.status);
+    io.to(socket.id).emit("average", usersRoom.average);
+    io.to(socket.id).emit("firstConnect", user.room);
   });
 
   socket.on("estimate", ({ estimate }) => {
     const user = getCurrentUser(socket.id);
 
     addEstimate(socket.id, estimate);
-    console.log(allRoomUsers(user.room));
 
     io.to(user.room).emit("users", allRoomUsers(user.room));
   });
@@ -47,9 +50,11 @@ io.on("connection", (socket: Socket) => {
     const user = getCurrentUser(socket.id);
 
     changeStatus(user.room, status);
-    console.log(allRoomUsers(user.room));
 
-    io.to(user.room).emit("status", { status });
+    if (status === "revealing") {
+      io.to(user.room).emit("average", roomAverage(user.room));
+    }
+
     io.to(user.room).emit("roomStatus", userRoom(user.room).status);
 
     // Could save this emit if client removes estimate when status changes to "estimating"
