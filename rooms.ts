@@ -1,78 +1,44 @@
-import { findIndex } from "lodash";
-import { Estimate } from "./estimates";
-import { Status } from "./status";
-import { User } from "./users";
+import { Room } from "./types";
+import { clearUserEstimates, users } from "./users";
 
-type Room = { name: string; users: User[]; estimates: Estimate[]; status: Status };
+export const rooms: Room[] = [];
 
-const hardcodedRooms = ["mars", "puretest", "sbo", "shoebox", "glu"];
+export function roomIndex(id) {
+  return rooms.map((room) => room.id).indexOf(id);
+}
 
-export const rooms: Room[] = hardcodedRooms.map((room) => ({
-  name: room,
-  users: [],
-  estimates: [],
-  status: "estimating",
-}));
+export function createRoom(id) {
+  rooms.push({ id, average: -1, status: "estimating" });
+}
 
-export const addRoom = (roomName: string) =>
-  rooms.push({ name: roomName, users: [], estimates: [], status: "estimating" });
+export function roomAverage(id) {
+  const room = rooms[roomIndex(id)];
 
-export const findRoom = (roomName: string) => rooms.find((room) => room.name === roomName);
-export const findRoomIndex = (roomName: string) => rooms.findIndex((room) => room.name === roomName);
+  const realEstimates = users
+    .filter((user) => user.room === id && user.estimate !== null && user.estimate > 0)
+    .map((user) => user.estimate);
 
-export const addUserToRoom = (roomName, user) => {
-  const indexOfRoom = findIndex(rooms, { name: roomName });
-  if (indexOfRoom < 0) return console.log("Room not found, addUserToRoom");
-  if (rooms[indexOfRoom].users.find((userInRoom) => userInRoom.id === user.id))
-    return console.log("User already in Room");
-  rooms[indexOfRoom].users.push(user);
-};
+  const average = realEstimates.reduce((a, b) => a + b, 0) / realEstimates.length;
 
-export const removeUserFromRoom = (user: User) => {
-  const indexOfRoom = findIndex(rooms, { name: user.room });
-  if (indexOfRoom < 0) return console.log("Room not found, removeUserFromRoom ");
-  const indexOfUser = findIndex(rooms[indexOfRoom].users, { id: user.id });
-  rooms[indexOfRoom].users.splice(indexOfUser, 1);
-};
+  rooms[roomIndex(id)] = { ...room, average: average };
 
-export const addUserEstimate = (roomName, estimate: Estimate) => {
-  const indexOfRoom = findIndex(rooms, { name: roomName });
+  return average;
+}
 
-  if (indexOfRoom < 0) return console.log("Room not found, addUserEstimate");
+export function isNewRoom(id) {
+  return !rooms.some((room) => room.id === id);
+}
 
-  const hasEstimatedIndex = findIndex(rooms[indexOfRoom].estimates, { id: estimate.id });
+export function userRoom(id) {
+  return rooms.find((room) => room.id === id);
+}
 
-  // * If user has estimated and its the same estimate remove it (toggle).
-  // * Else replace the original estimate with the new one
-  if (hasEstimatedIndex >= 0) {
-    if (rooms[indexOfRoom].estimates[hasEstimatedIndex].estimate === estimate.estimate) {
-      return rooms[indexOfRoom].estimates.splice(hasEstimatedIndex, 1);
-    }
-    return (rooms[indexOfRoom].estimates[hasEstimatedIndex].estimate = estimate.estimate);
+export function changeStatus(id, newStatus) {
+  const index = roomIndex(id);
+
+  rooms[index] = { ...rooms[index], status: newStatus };
+
+  if (newStatus === "estimating") {
+    clearUserEstimates(rooms[index].id);
   }
-
-  rooms[indexOfRoom].estimates.push(estimate);
-};
-
-export const changeRoomStatus = (roomName, status) => {
-  const indexOfRoom = findRoomIndex(roomName);
-  if (indexOfRoom < 0) return console.log("Room not found, changeRoomStatus");
-  rooms[indexOfRoom].status = status;
-};
-
-export const clearRoomEstimates = (roomName) => {
-  const indexOfRoom = findIndex(rooms, { name: roomName });
-  if (indexOfRoom < 0) return console.log("Room not found, clearRoomEstimates");
-
-  rooms[indexOfRoom].estimates.splice(0, rooms[indexOfRoom].estimates.length);
-};
-
-export const removeUserEstimate = (user: User) => {
-  const roomIndex = findRoomIndex(user.room);
-  if (roomIndex === -1) return console.log("Could not remove estimate, room index not found");
-
-  rooms[roomIndex].estimates.splice(
-    rooms[roomIndex].estimates.findIndex((estimate) => estimate.id === user.id),
-    1
-  );
-};
+}
