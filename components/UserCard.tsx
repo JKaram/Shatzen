@@ -17,21 +17,26 @@ export const UserCard = ({ user, oddManOut }: Props) => {
 
   const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
 
+  const userHasEstimated = users[0].id === user.id && estimate !== null;
+
   return (
     <div className="flex flex-col items-center">
       {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
+        style={{ background: userHasEstimated ? user.colour : !!estimate ? user.colour : undefined }}
         className={classNames(
           "w-10 h-16 rounded flex justify-center items-center",
-          !!estimate ? "bg-cyan-600" : "shadow-inner",
-          users[0].id === user.id && estimate !== null ? "bg-green-200" : ""
+          !!estimate ? "border-2 border-black" : "shadow-inset bg-gray-200",
+          userHasEstimated ? "bg-green-200" : undefined
         )}
       >
-        <span className={`${roomStatus === "estimating" ? "hidden" : ""}`}>
+        <span className={classNames(roomStatus === "estimating" ? "hidden" : "")}>
           {estimate ? numberToNewValue(estimate) || estimate : null}
         </span>
       </div>
-      <span title={`User ID: ${user.id}`}>{users[0].id === user.id ? "Me" : user.name}</span>
+      <span style={{ background: user.colour }} className={classNames("px-2 mt-2")} title={`User ID: ${user.id}`}>
+        {user.name}
+      </span>
     </div>
   );
 };

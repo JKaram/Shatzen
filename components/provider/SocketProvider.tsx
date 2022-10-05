@@ -1,16 +1,19 @@
-import { Status, User } from "../../types/aliases";
+import { Average, Status, User } from "../../types/aliases";
 import { io } from "socket.io-client";
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
 type Values = {
-  users: User[];
-  user: User | undefined;
+  average: Average;
   roomStatus: Status;
+  user: User | undefined;
+  users: User[];
 };
 const initalValues: Values = {
-  users: [],
-  user: undefined,
+  average: null,
   roomStatus: "estimating",
+  user: undefined,
+  users: [],
 };
 
 export const SocketContext = createContext<Values>(initalValues);
@@ -23,6 +26,8 @@ const socket = io(`${process.env.NEXT_PUBLIC_SERVER}`);
 
 export default function AppProvider(props: Props) {
   const { children } = props;
+  const router = useRouter();
+  const [average, setAverage] = useState<Average>(null);
   const [status, setStatus] = useState<Status>("estimating");
   const [user, setUser] = useState<User>();
   const [users, setUsers] = useState<User[]>([]);
@@ -36,12 +41,16 @@ export default function AppProvider(props: Props) {
       setUsers(sortedUsers);
     });
 
-    socket.on("status", ({ status }) => setStatus(status));
+    socket.on("firstConnect", (roomId) => router.push(`/room/${roomId}`));
+
+    socket.on("average", (average: Average) => setAverage(average));
+    socket.on("roomStatus", (status: Status) => setStatus(status));
   }, [socket]);
 
   return (
     <SocketContext.Provider
       value={{
+        average: average,
         roomStatus: status,
         user: user,
         users: users,

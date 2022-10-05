@@ -8,6 +8,7 @@ type Props = { children: React.ReactNode };
 
 export default function PageLayout({ children }: Props) {
   const router = useRouter();
+
   return (
     <div className="min-h-screen bg-[#efefef] min-w-screen">
       <Nav />

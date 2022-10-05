@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useSockets } from "../../components/provider/SocketProvider";
 import PageLayout from "../../components/PageLayout";
 import Button from "../../components/Button";
-import Input from "../../components/input";
+import Input from "../../components/Input";
 
 const Login = () => {
   const router = useRouter();
@@ -17,21 +17,24 @@ const Login = () => {
     setName(value);
   }
 
-  const sanitizeUuid = typeof uuid === "string" ? uuid : "Uh oh";
+  const sanitizeUuid = typeof uuid === "string" ? uuid : undefined;
+
+  if (!sanitizeUuid) return "UUID Error";
 
   return (
     <PageLayout>
       Enter your name
-      <Input onChange={updateName} placeholder="Name" />
-      <Button
-        onClick={() => {
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
           userJoin(name, sanitizeUuid);
-          router.push(`/room/${sanitizeUuid}`);
         }}
-        disabled={!name}
       >
-        Join Room
-      </Button>
+        <Input onChange={updateName} placeholder="Name" />
+        <Button type="submit" disabled={!name}>
+          Join Room
+        </Button>
+      </form>
     </PageLayout>
   );
 };
