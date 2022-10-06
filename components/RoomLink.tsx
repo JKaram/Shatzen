@@ -22,7 +22,7 @@ export default function RoomLink() {
       className={classNames("flex text-slate-600 text-lg px-2 items-center")}
       onClick={() => {
         setCopied(true);
-        copy(`${window.location.hostname}${router.asPath}`);
+        copy(`https://${window.location.hostname}${router.asPath}`);
       }}
     >
       <ClipboardCopyIcon className={`h-4 w-4 text-black}`} />
