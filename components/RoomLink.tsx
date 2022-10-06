@@ -9,8 +9,6 @@ export default function RoomLink() {
   const [, copy] = useCopyToClipboard();
   const [copied, setCopied] = useState(false);
 
-  const hidden = !router.pathname.includes("/room/");
-
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (copied) setCopied(false);
@@ -21,7 +19,7 @@ export default function RoomLink() {
 
   return (
     <button
-      className={classNames("flex text-slate-600 text-sm px-2 items-center", hidden ? "hidden" : undefined)}
+      className={classNames("flex text-slate-600 text-lg px-2 items-center")}
       onClick={() => {
         setCopied(true);
         copy(`${window.location.hostname}${router.asPath}`);
