@@ -6,12 +6,14 @@ import { useRouter } from "next/router";
 type Values = {
   average: Average;
   roomStatus: Status;
+  serverReady: boolean;
   user: User | undefined;
   users: User[];
 };
 const initalValues: Values = {
   average: null,
   roomStatus: "estimating",
+  serverReady: false,
   user: undefined,
   users: [],
 };
@@ -28,11 +30,15 @@ export default function AppProvider(props: Props) {
   const { children } = props;
   const router = useRouter();
   const [average, setAverage] = useState<Average>(null);
+  // Server goes to sleep and may take a few seconds to wake up.
+  const [serverReady, setServerReady] = useState(false);
   const [status, setStatus] = useState<Status>("estimating");
   const [user, setUser] = useState<User>();
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
+    socket.on("connect", () => setServerReady(true));
+
     socket.on("users", (users: User[]) => {
       const sortedUsers = users.filter((estimate) => estimate.id !== socket.id).sort((a, b) => (a.id === b.id ? 1 : 0));
       const currentUser = users.find((user) => user.id === socket.id);
@@ -52,6 +58,7 @@ export default function AppProvider(props: Props) {
       value={{
         average: average,
         roomStatus: status,
+        serverReady: serverReady,
         user: user,
         users: users,
       }}
