@@ -31,7 +31,6 @@ io.on("connection", (socket: Socket) => {
     }
 
     const usersRoom = userRoom(user.room);
-
     io.to(user.room).emit("users", allRoomUsers(user.room));
     io.to(socket.id).emit("roomStatus", usersRoom.status);
     io.to(socket.id).emit("average", usersRoom.average);
@@ -58,6 +57,12 @@ io.on("connection", (socket: Socket) => {
     io.to(user.room).emit("roomStatus", userRoom(user.room).status);
 
     // Could save this emit if client removes estimate when status changes to "estimating"
+    io.to(user.room).emit("users", allRoomUsers(user.room));
+  });
+
+  socket.on("removeUser", () => {
+    const user = userLeave(socket.id);
+
     io.to(user.room).emit("users", allRoomUsers(user.room));
   });
 
