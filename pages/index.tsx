@@ -20,7 +20,7 @@ const App = () => {
         <h2 className="text-lg">Scrum Poker</h2>
       </header>
 
-      <Button className="mt-5" onClick={generateRoomId}>
+      <Button className="w-full mt-5" onClick={generateRoomId}>
         Create a Room
       </Button>
     </PageLayout>

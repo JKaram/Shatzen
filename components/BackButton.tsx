@@ -1,4 +1,4 @@
-import { ArrowLeftIcon } from "@heroicons/react/solid";
+import { UserIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import React, { useContext } from "react";
 import { SocketContext, useSockets } from "./provider/SocketProvider";
@@ -19,9 +19,9 @@ export default function BackButton() {
   }
 
   return (
-    <button className="flex items-center px-2 text-base text-gray-500 hover:text-black" onClick={goBack}>
-      <ArrowLeftIcon className="w-5 h-5" />
-      Back
+    <button className="flex flex-col items-center px-2 text-base text-gray-500 hover:text-black" onClick={goBack}>
+      <UserIcon className="w-9 h-9" />
+      <span>Rename</span>
     </button>
   );
 }

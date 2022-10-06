@@ -28,7 +28,7 @@ export default function PageLayout({ children }: Props) {
         }}
         exit={{ opacity: 0, x: 100 }}
       >
-        <main className="flex flex-col mx-4 my-auto pt-32 h-[calc(100vh-140px)]">{children}</main>
+        <main className="flex flex-col items-center pt-[3rem] h-[calc(100vh-140px)]">{children}</main>
       </motion.div>
       <Footer />
     </div>
