@@ -16,11 +16,14 @@ const App = () => {
 
   return (
     <PageLayout>
-      <h1 className="text-4xl">Shatzen</h1>
-      <h2 className="text-lg">Scrum Poker</h2>
-      <div>
-        <Button onClick={generateRoomId}>Create a Room</Button>
-      </div>
+      <header className="flex flex-col items-center">
+        <h1 className="text-4xl">Shatzen</h1>
+        <h2 className="text-lg">Scrum Poker</h2>
+      </header>
+
+      <Button className="mt-5" onClick={generateRoomId}>
+        Create a Room
+      </Button>
     </PageLayout>
   );
 };
