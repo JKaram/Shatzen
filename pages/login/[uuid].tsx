@@ -4,6 +4,7 @@ import { useSockets } from "../../components/provider/SocketProvider";
 import PageLayout from "../../components/PageLayout";
 import Button from "../../components/Button";
 import Input from "../../components/input";
+import { USER_NAME_SIZE } from "../../types/constants";
 
 const Login = () => {
   const router = useRouter();
@@ -14,6 +15,7 @@ const Login = () => {
 
   function updateName(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
+
     setName(value);
   }
 
@@ -23,14 +25,15 @@ const Login = () => {
 
   return (
     <PageLayout>
-      Enter your name
+      <span>Enter your name</span>
       <form
+        className="flex flex-col mt-5 space-y-4"
         onSubmit={(e) => {
           e.preventDefault();
           userJoin(name, sanitizeUuid);
         }}
       >
-        <Input onChange={updateName} placeholder="Name" />
+        <Input onChange={updateName} placeholder="Name" maxLength={USER_NAME_SIZE} />
         <Button type="submit" disabled={!name}>
           Join Room
         </Button>

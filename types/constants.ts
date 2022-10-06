@@ -7,4 +7,6 @@ export const numberToNewValue = (estimate: number) =>
 
 export const ROOM_STRING_SIZE = 4;
 
+export const USER_NAME_SIZE = 12;
+
 export const USER_COLOURS = ["#F0D95F", "#D8FFCA", "#CAFCFF", "#F09C5F", "#FFCAEA"] as const;
