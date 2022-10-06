@@ -39,7 +39,7 @@ const App = () => {
       </Button>
 
       {showStatus && !serverReady && <span className="mt-5">One moment. Waking up the server 😴</span>}
-      {showStatus && serverReady && <span className="mt-5">It's Up! Happy Estimating</span>}
+      {showStatus && serverReady && <span className="mt-5">It&#39;s Up! Happy Estimating</span>}
     </PageLayout>
   );
 };
