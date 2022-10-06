@@ -9,7 +9,6 @@ import PageLayout from "../../components/PageLayout";
 const Room = () => {
   const router = useRouter();
   const { room } = router.query;
-  const { disconnect } = useSockets();
   const { user } = useContext(SocketContext);
 
   useEffect(() => {

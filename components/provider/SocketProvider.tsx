@@ -65,8 +65,11 @@ export const useSockets = () => {
   const changeStatus = (status: string) => socket.emit("changeStatus", { status });
   const disconnect = () => socket.disconnect();
   const estimate = (estimate: number) => socket.emit("estimate", { estimate });
+  const removeUser = () => {
+    socket.emit("removeUser", {});
+  };
   const reset = () => socket.emit("reset");
   const userJoin = (name: string, room: string) => socket.emit("userJoin", { name, room });
 
-  return { userJoin, disconnect, estimate, reset, changeStatus };
+  return { changeStatus, disconnect, estimate, removeUser, reset, userJoin };
 };
