@@ -1,5 +1,10 @@
 import React from "react";
+import RoomLink from "./RoomLink";
 
 export const Nav = () => {
-  return <div className="flex justify-between text-2xl"></div>;
+  return (
+    <nav className="flex justify-end text-2xl min-h-[50px]">
+      <RoomLink />
+    </nav>
+  );
 };
