@@ -25,9 +25,9 @@ const Login = () => {
 
   return (
     <PageLayout>
-      <span>Enter your name</span>
+      <span className="text-lg">Enter your name</span>
       <form
-        className="flex flex-col mt-5 space-y-4"
+        className="flex flex-col mt-5 space-y-4 "
         onSubmit={(e) => {
           e.preventDefault();
           userJoin(name, sanitizeUuid);

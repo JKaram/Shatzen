@@ -10,7 +10,7 @@ export default function Input({ onChange, placeholder = undefined, ...rest }: Pr
   return (
     <input
       {...rest}
-      className="p-2 border-2 border-black rounded-lg w-44 focus:border-red-500 focus:outline-none"
+      className="p-2 border-2 border-black rounded-lg w-100 focus:border-red-500 focus:outline-none"
       onChange={onChange}
       placeholder={placeholder}
     />

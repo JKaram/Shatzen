@@ -17,12 +17,12 @@ export const RevealBox = () => {
   }
 
   return (
-    <div className="relative flex flex-col items-center my-8 transition-all">
+    <div className="relative flex flex-col w-full my-8 transition-all">
       {roomStatus === "revealing" && (
-        <div className="flex flex-col items-center">
-          <span className="absolute m-auto text-2xl -top-10">{average}</span>
+        <>
+          <span className="absolute m-auto text-2xl translate-x-1/2 right-1/2 -top-10">{average}</span>
           <Button onClick={estimating}>Estimate Again</Button>
-        </div>
+        </>
       )}
       {roomStatus === "estimating" && (
         <Button disabled={!atLeastOneEstimate} onClick={reveal}>

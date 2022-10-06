@@ -1,7 +1,6 @@
 import { nanoid } from "nanoid";
 import { ROOM_STRING_SIZE } from "../types/constants";
 import { useRouter } from "next/router";
-import Link from "next/link";
 import React from "react";
 import PageLayout from "../components/PageLayout";
 import Button from "../components/Button";
@@ -17,7 +16,7 @@ const App = () => {
   return (
     <PageLayout>
       <header className="flex flex-col items-center">
-        <h1 className="text-4xl">Shatzen</h1>
+        <h1 className="text-6xl">Shatzen</h1>
         <h2 className="text-lg">Scrum Poker</h2>
       </header>
 

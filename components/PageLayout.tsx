@@ -10,7 +10,7 @@ export default function PageLayout({ children }: Props) {
   const router = useRouter();
 
   return (
-    <div className="min-h-screen bg-[#efefef] min-w-screen overflow-hidden">
+    <div className="max-w-md min-h-screen m-auto overflow-hidden transition-all md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl">
       <Nav />
       <motion.div
         key={router.route}
@@ -28,7 +28,7 @@ export default function PageLayout({ children }: Props) {
         }}
         exit={{ opacity: 0, x: 100 }}
       >
-        <main className="flex flex-col items-center justify-center h-[calc(100vh-90px)] ">{children}</main>
+        <main className="flex flex-col mx-4 my-auto pt-32 h-[calc(100vh-140px)]">{children}</main>
       </motion.div>
       <Footer />
     </div>
