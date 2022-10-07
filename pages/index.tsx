@@ -1,10 +1,10 @@
 import { nanoid } from "nanoid";
 import { ROOM_STRING_SIZE } from "../types/constants";
-import { useRouter } from "next/router";
-import React, { useContext, useEffect, useState } from "react";
-import PageLayout from "../components/PageLayout";
-import Button from "../components/Button";
 import { SocketContext } from "../components/provider/SocketProvider";
+import { useRouter } from "next/router";
+import Button from "../components/Button";
+import PageLayout from "../components/PageLayout";
+import React, { useContext, useEffect, useState } from "react";
 
 const App = () => {
   const router = useRouter();
