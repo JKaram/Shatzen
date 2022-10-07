@@ -17,5 +17,14 @@ export type Room = {
   status: Status;
 };
 
-export const USER_COLOURS = ["#F0D95F", "#D8FFCA", "#CAFCFF", "#F09C5F", "#FFCAEA"] as const;
+export const USER_COLOURS = [
+  "#F0D95F",
+  "#D8FFCA",
+  "#CAFCFF",
+  "#F09C5F",
+  "#FFCAEA",
+  "#CBCAFF",
+  "#FF5B5B",
+  "#5B93FF",
+] as const;
 type UserColour = typeof USER_COLOURS[number];
