@@ -22,7 +22,7 @@ const App = () => {
     router.push(`/login/${roomName.trim()}`);
   }
 
-  function roomInput(e) {
+  function roomInput(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
     setRoomName(value);
   }
