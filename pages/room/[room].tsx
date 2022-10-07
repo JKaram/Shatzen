@@ -5,6 +5,7 @@ import { UserPanel } from "../../components/UserPanel";
 import { SocketContext, useSockets } from "../../components/provider/SocketProvider";
 import React, { useContext, useEffect } from "react";
 import PageLayout from "../../components/PageLayout";
+import Head from "next/head";
 
 const Room = () => {
   const router = useRouter();
@@ -21,6 +22,10 @@ const Room = () => {
 
   return (
     <PageLayout>
+      <Head>
+        <title>Shätzen | {room}</title>
+        <meta property="og:title" content="Estimating room" key="title" />
+      </Head>
       <EstimatesBox />
       <RevealBox />
       <UserPanel />

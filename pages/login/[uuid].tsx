@@ -5,6 +5,7 @@ import PageLayout from "../../components/PageLayout";
 import Button from "../../components/Button";
 import Input from "../../components/input";
 import { ROOM_STRING_SIZE, USER_NAME_SIZE } from "../../types/constants";
+import Head from "next/head";
 
 const Login = () => {
   const router = useRouter();
@@ -25,6 +26,10 @@ const Login = () => {
 
   return (
     <PageLayout>
+      <Head>
+        <title>Shätzen | Login</title>
+        <meta property="og:title" content="Room login" key="title" />
+      </Head>
       <span className="text-lg">Enter your name</span>
       <form
         className="flex flex-col w-full mt-5 space-y-4"

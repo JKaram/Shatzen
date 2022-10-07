@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import PageLayout from "../components/PageLayout";
 import React, { useContext, useEffect, useState } from "react";
 import Input from "../components/input";
+import Head from "next/head";
 
 const App = () => {
   const router = useRouter();
@@ -43,8 +44,12 @@ const App = () => {
 
   return (
     <PageLayout>
+      <Head>
+        <title>Shätzen</title>
+        <meta property="og:title" content="Shätzen" key="title" />
+      </Head>
       <header className="flex flex-col items-center">
-        <h1 className="text-6xl">Shatzen</h1>
+        <h1 className="text-6xl">Shätzen</h1>
         <h2 className="text-lg">Scrum Poker</h2>
       </header>
 
