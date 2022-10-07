@@ -19,7 +19,7 @@ export default function RoomLink() {
 
   return (
     <button
-      className={classNames("flex flex-col w-28  items-center px-2 text-base text-gray-500 hover:text-black")}
+      className={classNames("flex flex-col w-28  items-center px-2 text-base text-black")}
       onClick={() => {
         setCopied(true);
         copy(`https://${window.location.hostname}/login/${router.query.room}`);
