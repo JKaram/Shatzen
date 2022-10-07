@@ -17,14 +17,17 @@ const App = () => {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      if (!serverReady) {
+    // TODO: Hacky solution. Look for better alternative
+    if (!serverReady) {
+      setTimeout(() => {
         setShowStatus(true);
-      }
-      if (serverReady) {
+      }, 2000);
+    }
+    if (serverReady) {
+      setTimeout(() => {
         setShowStatus(false);
-      }
-    }, 1500);
+      }, 2000);
+    }
   }, [serverReady]);
 
   return (
@@ -39,7 +42,7 @@ const App = () => {
       </Button>
 
       {showStatus && !serverReady && <span className="mt-5">One moment. Waking up the server 😴</span>}
-      {showStatus && serverReady && <span className="mt-5">It&#39;s Up! Happy Estimating</span>}
+      {showStatus && serverReady && <span className="mt-5">Server is ready! Happy Estimating</span>}
     </PageLayout>
   );
 };
