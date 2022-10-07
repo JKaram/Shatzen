@@ -1,12 +1,17 @@
 import { HomeIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import React from "react";
+import { useSockets } from "./provider/SocketProvider";
 
 export default function HomeButton() {
+  const { removeUser } = useSockets();
   const router = useRouter();
 
   function goHome() {
     router.push("/");
+    if (router.route.includes("/room/")) {
+      removeUser();
+    }
   }
 
   return (
