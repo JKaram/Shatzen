@@ -4,7 +4,7 @@ import { useSockets } from "../../components/provider/SocketProvider";
 import PageLayout from "../../components/PageLayout";
 import Button from "../../components/Button";
 import Input from "../../components/input";
-import { USER_NAME_SIZE } from "../../types/constants";
+import { ROOM_STRING_SIZE, USER_NAME_SIZE } from "../../types/constants";
 
 const Login = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const Login = () => {
         }}
       >
         <Input autoFocus onChange={updateName} placeholder="Name" maxLength={USER_NAME_SIZE} />
-        <Button type="submit" disabled={!name}>
+        <Button type="submit" disabled={!name || !name.trim() || name.length < ROOM_STRING_SIZE}>
           Join Room
         </Button>
       </form>
