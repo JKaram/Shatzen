@@ -61,6 +61,12 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 npx turbo link
 ```
 
+## Install dependencies
+
+```
+npm install <package name> -w=<workspace to install in>
+```
+
 ## Useful Links
 
 Learn more about the power of Turborepo:

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useSockets } from "../components/provider/SocketProvider";
 
 export const useCheckUser = (): [boolean, "loading" | "success", () => void] => {
   const [cookies] = useCookies(["name"]);
