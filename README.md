@@ -4,6 +4,8 @@
 
 Monorepo for shatzen scrum poker app.
 
+More docs to come
+
 ### Develop
 
 To develop all apps and packages, run the following command:
