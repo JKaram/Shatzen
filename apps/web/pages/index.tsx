@@ -54,7 +54,11 @@ const App = () => {
       </header>
 
       <div className="flex flex-col items-center space-y-5">
-        <Button disabled={!serverReady} className="w-full mt-5" onClick={generateRoomId}>
+        <Button
+          disabled={!serverReady}
+          className="w-full mt-5"
+          onClick={generateRoomId}
+        >
           Create a Room
         </Button>
 
@@ -75,7 +79,11 @@ const App = () => {
           />
           <Button
             type="submit"
-            disabled={!roomName || !roomName.trim() || roomName.length < ROOM_STRING_SIZE}
+            disabled={
+              !roomName ||
+              !roomName.trim() ||
+              roomName.length < ROOM_STRING_SIZE
+            }
             className="w-32 mt-5"
           >
             Enter Room
@@ -83,8 +91,12 @@ const App = () => {
         </form>
       </div>
 
-      {showStatus && !serverReady && <span className="mt-5">One moment. Waking up the server 😴</span>}
-      {showStatus && serverReady && <span className="mt-5">Server is ready! Happy Estimating</span>}
+      {showStatus && !serverReady && (
+        <span className="mt-5">One moment. Waking up the server 😴</span>
+      )}
+      {showStatus && serverReady && (
+        <span className="mt-5">Server is ready! Happy Estimating</span>
+      )}
     </PageLayout>
   );
 };

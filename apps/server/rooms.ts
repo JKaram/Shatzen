@@ -15,10 +15,13 @@ export function roomAverage(id) {
   const room = rooms[roomIndex(id)];
 
   const realEstimates = users
-    .filter((user) => user.room === id && user.estimate !== null && user.estimate > 0)
+    .filter(
+      (user) => user.room === id && user.estimate !== null && user.estimate > 0
+    )
     .map((user) => user.estimate);
 
-  const average = realEstimates.reduce((a, b) => a + b, 0) / realEstimates.length;
+  const average =
+    realEstimates.reduce((a, b) => a + b, 0) / realEstimates.length;
 
   rooms[roomIndex(id)] = { ...room, average: average };
 

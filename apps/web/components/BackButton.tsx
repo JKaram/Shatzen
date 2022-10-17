@@ -19,7 +19,10 @@ export default function BackButton() {
   }
 
   return (
-    <button className="flex flex-col items-center px-2 text-base text-black hover:text-black" onClick={goBack}>
+    <button
+      className="flex flex-col items-center px-2 text-base text-black hover:text-black"
+      onClick={goBack}
+    >
       <UserIcon className="w-9 h-9" />
       <span>Rename</span>
     </button>

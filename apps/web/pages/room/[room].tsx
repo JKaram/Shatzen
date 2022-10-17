@@ -2,7 +2,10 @@ import { EstimatesBox } from "../../components/EstimatesBox";
 import { RevealBox } from "../../components/RevealBox";
 import { useRouter } from "next/router";
 import { UserPanel } from "../../components/UserPanel";
-import { SocketContext, useSockets } from "../../components/provider/SocketProvider";
+import {
+  SocketContext,
+  useSockets,
+} from "../../components/provider/SocketProvider";
 import React, { useContext, useEffect } from "react";
 import PageLayout from "../../components/PageLayout";
 import Head from "next/head";

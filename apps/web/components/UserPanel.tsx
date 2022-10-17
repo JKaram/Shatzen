@@ -11,7 +11,11 @@ export const UserPanel = () => {
   if (!user) return <p>Loading...</p>;
 
   return (
-    <div className={classNames("flex flex-wrap my-2 space-x-1 w-full justify-center")}>
+    <div
+      className={classNames(
+        "flex flex-wrap my-2 space-x-1 w-full justify-center"
+      )}
+    >
       {possibleEstimates.map((possibleEstimate) => {
         return (
           <EstimateCard

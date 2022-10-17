@@ -40,7 +40,9 @@ export default function AppProvider(props: Props) {
     socket.on("connect", () => setServerReady(true));
 
     socket.on("users", (users: User[]) => {
-      const sortedUsers = users.filter((estimate) => estimate.id !== socket.id).sort((a, b) => (a.id === b.id ? 1 : 0));
+      const sortedUsers = users
+        .filter((estimate) => estimate.id !== socket.id)
+        .sort((a, b) => (a.id === b.id ? 1 : 0));
       const currentUser = users.find((user) => user.id === socket.id);
       if (currentUser) sortedUsers.unshift(currentUser);
       setUser(currentUser);
@@ -69,14 +71,16 @@ export default function AppProvider(props: Props) {
 }
 
 export const useSockets = () => {
-  const changeStatus = (status: string) => socket.emit("changeStatus", { status });
+  const changeStatus = (status: string) =>
+    socket.emit("changeStatus", { status });
   const disconnect = () => socket.disconnect();
   const estimate = (estimate: number) => socket.emit("estimate", { estimate });
   const removeUser = () => {
     socket.emit("removeUser", {});
   };
   const reset = () => socket.emit("reset");
-  const userJoin = (name: string, room: string) => socket.emit("userJoin", { name, room });
+  const userJoin = (name: string, room: string) =>
+    socket.emit("userJoin", { name, room });
 
   return { changeStatus, disconnect, estimate, removeUser, reset, userJoin };
 };

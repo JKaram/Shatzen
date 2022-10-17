@@ -23,18 +23,30 @@ export const UserCard = ({ user, oddManOut }: Props) => {
     <div className="flex flex-col items-center">
       {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
-        style={{ background: userHasEstimated ? user.colour : !!estimate ? user.colour : undefined }}
+        style={{
+          background: userHasEstimated
+            ? user.colour
+            : !!estimate
+            ? user.colour
+            : undefined,
+        }}
         className={classNames(
           "w-10 h-16 rounded flex justify-center items-center",
           !!estimate ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
           userHasEstimated ? "bg-green-200" : undefined
         )}
       >
-        <span className={classNames(roomStatus === "estimating" ? "hidden" : "")}>
+        <span
+          className={classNames(roomStatus === "estimating" ? "hidden" : "")}
+        >
           {estimate ? numberToNewValue(estimate) || estimate : null}
         </span>
       </div>
-      <span style={{ background: user.colour }} className={classNames("px-2 mt-2")} title={`User ID: ${user.id}`}>
+      <span
+        style={{ background: user.colour }}
+        className={classNames("px-2 mt-2")}
+        title={`User ID: ${user.id}`}
+      >
         {user.name}
       </span>
     </div>

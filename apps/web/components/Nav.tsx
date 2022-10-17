@@ -12,7 +12,9 @@ export const Nav = () => {
   const roomPage = !router.pathname.includes("/room/");
 
   return (
-    <nav className={classNames("flex justify-between text-2xl min-h-[100px] p-2")}>
+    <nav
+      className={classNames("flex justify-between text-2xl min-h-[100px] p-2")}
+    >
       {roomLogin && <HomeButton />}
       {!roomPage && (
         <>

@@ -38,8 +38,16 @@ const Login = () => {
           userJoin(name, sanitizeUuid);
         }}
       >
-        <Input autoFocus onChange={updateName} placeholder="Name" maxLength={USER_NAME_SIZE} />
-        <Button type="submit" disabled={!name || !name.trim() || name.length < ROOM_STRING_SIZE}>
+        <Input
+          autoFocus
+          onChange={updateName}
+          placeholder="Name"
+          maxLength={USER_NAME_SIZE}
+        />
+        <Button
+          type="submit"
+          disabled={!name || !name.trim() || name.length < ROOM_STRING_SIZE}
+        >
           Join Room
         </Button>
       </form>

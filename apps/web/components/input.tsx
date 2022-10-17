@@ -6,7 +6,11 @@ type Props = {
   [x: string]: any;
 };
 
-export default function Input({ onChange, placeholder = undefined, ...rest }: Props) {
+export default function Input({
+  onChange,
+  placeholder = undefined,
+  ...rest
+}: Props) {
   return (
     <input
       {...rest}

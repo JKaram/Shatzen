@@ -1,6 +1,18 @@
 import { Socket, Server } from "socket.io";
-import { changeStatus, createRoom, isNewRoom, roomAverage, userRoom } from "./rooms";
-import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser } from "./users";
+import {
+  changeStatus,
+  createRoom,
+  isNewRoom,
+  roomAverage,
+  userRoom,
+} from "./rooms";
+import {
+  addEstimate,
+  userJoin,
+  allRoomUsers,
+  userLeave,
+  getCurrentUser,
+} from "./users";
 
 import express = require("express");
 import http = require("http");
@@ -75,4 +87,6 @@ io.on("connection", (socket: Socket) => {
   });
 });
 
-server.listen(PORT, () => console.log("Server running on Port ", PORT)).on("error", (err) => console.log(err));
+server
+  .listen(PORT, () => console.log("Server running on Port ", PORT))
+  .on("error", (err) => console.log(err));
