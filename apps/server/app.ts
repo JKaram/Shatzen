@@ -1,7 +1,6 @@
-import { Socket } from "socket.io";
+import { Socket, Server } from "socket.io";
 import { changeStatus, createRoom, isNewRoom, roomAverage, userRoom } from "./rooms";
 import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser } from "./users";
-import { Server } from "socket.io";
 
 import express = require("express");
 import http = require("http");

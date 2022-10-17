@@ -12,9 +12,9 @@ export function getCurrentUser(id) {
 }
 
 export function userJoin(id, name, room) {
-  const user = { id, name, room };
-  users.push({ id, name, room, estimate: null, colour: chooseUserColour() });
-  return user;
+  const userColour = chooseUserColour();
+  users.push({ id, name, room, estimate: null, colour: userColour });
+  return { id, name, room, estimate: null, colour: userColour } as User;
 }
 
 export function allRoomUsers(room) {

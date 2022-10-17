@@ -7,7 +7,7 @@ export function roomIndex(id) {
   return rooms.map((room) => room.id).indexOf(id);
 }
 
-export function createRoom(id) {
+export function createRoom(id: string) {
   rooms.push({ id, average: -1, status: "estimating" });
 }
 
@@ -25,7 +25,7 @@ export function roomAverage(id) {
   return average;
 }
 
-export function isNewRoom(id) {
+export function isNewRoom(id: string) {
   return !rooms.some((room) => room.id === id);
 }
 
