@@ -1,6 +1,6 @@
 import { Average, Status, User } from "../../types/aliases";
 import { io } from "socket.io-client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 type Values = {
