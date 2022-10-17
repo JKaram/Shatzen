@@ -1,6 +1,6 @@
 import { Socket } from "socket.io";
-import { changeStatus, createRoom, isNewRoom, roomAverage, rooms, userRoom } from "./rooms";
-import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser, users } from "./users";
+import { changeStatus, createRoom, isNewRoom, roomAverage, userRoom } from "./rooms";
+import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser } from "./users";
 
 const express = require("express");
 const socketIO = require("socket.io");
