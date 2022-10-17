@@ -1,11 +1,11 @@
 {
-  "name": "shatzen-server",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "nodemon app.ts",
+    "dev": "nodemon app.ts --port 3001",
     "start": "ts-node app.ts"
   },
   "author": "",
