@@ -67,6 +67,10 @@ npx turbo link
 npm install <package name> -w=<workspace to install in>
 ```
 
+```
+npm update <package> --workspace=<workspace>
+```
+
 ## Useful Links
 
 Learn more about the power of Turborepo:

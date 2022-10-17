@@ -1,10 +1,10 @@
 import { Socket } from "socket.io";
 import { changeStatus, createRoom, isNewRoom, roomAverage, userRoom } from "./rooms";
 import { addEstimate, userJoin, allRoomUsers, userLeave, getCurrentUser } from "./users";
+import { Server } from "socket.io";
 
-const express = require("express");
-const socketIO = require("socket.io");
-const http = require("http");
+import express = require("express");
+import http = require("http");
 const PORT = process.env.PORT || 3001;
 const app = express();
 const server = http.createServer(app);
@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.send("Shatzen");
 });
 
-const io = socketIO(server, {
+const io = new Server(server, {
   cors: {
     origin: "*",
   },
@@ -76,7 +76,4 @@ io.on("connection", (socket: Socket) => {
   });
 });
 
-server.listen(PORT, (err) => {
-  if (err) console.log(err);
-  console.log("Server running on Port ", PORT);
-});
+server.listen(PORT, () => console.log("Server running on Port ", PORT)).on("error", (err) => console.log(err));
