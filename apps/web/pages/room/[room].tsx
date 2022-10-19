@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import { UserPanel } from "../../components/UserPanel";
 import {
   SocketContext,
-  useSockets,
 } from "../../components/provider/SocketProvider";
 import React, { useContext, useEffect } from "react";
 import PageLayout from "../../components/PageLayout";

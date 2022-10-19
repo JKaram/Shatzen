@@ -26,13 +26,13 @@ export const UserCard = ({ user, oddManOut }: Props) => {
         style={{
           background: userHasEstimated
             ? user.colour
-            : !!estimate
+            : estimate > 0
             ? user.colour
             : undefined,
         }}
         className={classNames(
           "w-10 h-16 rounded flex justify-center items-center",
-          !!estimate ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
+          estimate > 0 ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
           userHasEstimated ? "bg-green-200" : undefined
         )}
       >
