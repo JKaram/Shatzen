@@ -13,5 +13,5 @@
     }
   },
   "globalDependencies": [".env.*"],
-  "globalEnv": ["NEXT_PUBLIC_SERVER", "PORT"]
+  "globalEnv": ["NEXT_PUBLIC_SERVER", "PORT", "MONGO_URL"]
 }

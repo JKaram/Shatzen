@@ -1,92 +1,14 @@
-import { Socket, Server } from "socket.io";
-import {
-  changeStatus,
-  createRoom,
-  isNewRoom,
-  roomAverage,
-  userRoom,
-} from "./rooms";
-import {
-  addEstimate,
-  userJoin,
-  allRoomUsers,
-  userLeave,
-  getCurrentUser,
-} from "./users";
+import "dotenv/config";
+import mainLoader from "./loaders";
 
-import express = require("express");
-import http = require("http");
 const PORT = process.env.PORT || 3001;
-const app = express();
-const server = http.createServer(app);
 
-app.get("/", (req, res) => {
-  res.send("Shatzen");
-});
+const main = async () => {
+  const server = await mainLoader();
 
-const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
-});
+  server
+    .listen(PORT, () => console.log("Server running on Port ", PORT))
+    .on("error", (err) => console.log(err));
+};
 
-io.on("connection", (socket: Socket) => {
-  socket.on("userJoin", ({ name, room }) => {
-    console.log(socket.id, name, "Connected to room ", room);
-    const user = userJoin(socket.id, name, room);
-
-    socket.join(user.room);
-
-    if (isNewRoom(user.room)) {
-      createRoom(user.room);
-    }
-
-    const usersRoom = userRoom(user.room);
-    io.to(user.room).emit("users", allRoomUsers(user.room));
-    io.to(socket.id).emit("roomStatus", usersRoom.status);
-    io.to(socket.id).emit("average", usersRoom.average);
-    io.to(socket.id).emit("firstConnect", user.room);
-  });
-
-  socket.on("estimate", ({ estimate }) => {
-    const user = getCurrentUser(socket.id);
-
-    addEstimate(socket.id, estimate);
-
-    io.to(user.room).emit("users", allRoomUsers(user.room));
-  });
-
-  socket.on("changeStatus", ({ status }) => {
-    const user = getCurrentUser(socket.id);
-
-    changeStatus(user.room, status);
-
-    if (status === "revealing") {
-      io.to(user.room).emit("average", roomAverage(user.room));
-    }
-
-    io.to(user.room).emit("roomStatus", userRoom(user.room).status);
-
-    // Could save this emit if client removes estimate when status changes to "estimating"
-    io.to(user.room).emit("users", allRoomUsers(user.room));
-  });
-
-  socket.on("removeUser", () => {
-    const user = userLeave(socket.id);
-
-    io.to(user.room).emit("users", allRoomUsers(user.room));
-  });
-
-  socket.on("disconnect", (reason) => {
-    console.log(socket.id, reason);
-    const user = userLeave(socket.id);
-
-    if (user?.room) {
-      io.to(user.room).emit("users", allRoomUsers(user.room));
-    }
-  });
-});
-
-server
-  .listen(PORT, () => console.log("Server running on Port ", PORT))
-  .on("error", (err) => console.log(err));
+main();
