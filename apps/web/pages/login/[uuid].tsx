@@ -4,7 +4,7 @@ import { useSockets } from "../../components/provider/SocketProvider";
 import PageLayout from "../../components/PageLayout";
 import Button from "../../components/Button";
 import Input from "../../components/input";
-import { ROOM_STRING_SIZE, USER_NAME_SIZE } from "../../types/constants";
+import { USER_NAME_SIZE, USER_STRING_MIN_SIZE } from "../../types/constants";
 import Head from "next/head";
 
 const Login = () => {
@@ -46,7 +46,7 @@ const Login = () => {
         />
         <Button
           type="submit"
-          disabled={!name || !name.trim() || name.length < ROOM_STRING_SIZE}
+          disabled={!name || !name.trim() || name.length < USER_STRING_MIN_SIZE}
         >
           Join Room
         </Button>
