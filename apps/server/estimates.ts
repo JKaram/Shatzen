@@ -3,7 +3,7 @@ export type Estimate = {
   estimate: number;
 };
 
-export const claculateAverage = (estimates: Estimate[]) => {
+export const calculateAverage = (estimates: Estimate[]) => {
   const filterOutNonEstimates = estimates.filter(
     (estimate) => estimate.estimate > -1
   );
