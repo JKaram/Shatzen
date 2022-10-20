@@ -3,7 +3,7 @@ export type User = {
   estimate: Estimate;
   id: string;
   name: string;
-  room: string;
+  roomId: string;
 };
 
 export type Estimate = number | null;

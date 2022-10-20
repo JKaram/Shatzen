@@ -1,6 +1,9 @@
 {
-  "*.{js,ts,tsx,scss,css,md}": [
+  "*.{js,ts,tsx,scss,css}": [
     "eslint",
+    "prettier --write"
+  ],
+  "*.md": [
     "prettier --write"
   ]
 }
