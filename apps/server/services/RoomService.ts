@@ -1,5 +1,5 @@
 import { Server, Socket } from "socket.io";
-import { User } from "../types";
+import { Estimate, Status, User } from "../types";
 import { chooseUserColour } from "../utils";
 
 class Room {
@@ -22,12 +22,12 @@ class Room {
     await this.socket.join(this.roomId);
     this.store = this.store.rooms.get(this.roomId);
 
-    const user = {
+    const user: User = {
+      colour: chooseUserColour(),
+      estimate: null,
       id: this.socket.id,
       name: this.username,
       roomId: this.roomId,
-      estimate: null,
-      colour: chooseUserColour(),
     };
     if (clients.length === 0) {
       this.store.users = {
@@ -63,30 +63,27 @@ class Room {
   // Listeners
 
   onChangeStatus() {
-    this.socket.on(
-      "changeStatus",
-      ({ status }: { status: "revealing" | "estimating" }) => {
-        this.store.room.status = status;
+    this.socket.on("changeStatus", ({ status }: { status: Status }) => {
+      this.store.room.status = status;
 
-        let totalCount = 0;
-        const total = Object.values(
-          this.store.users as Record<string, User>
-        ).reduce<number>((acc, cur) => {
-          if (!cur.estimate || cur.estimate <= 0) return acc;
-          totalCount += 1;
-          return acc + cur.estimate;
-        }, 0);
-        this.store.room.average = total / totalCount;
+      let totalCount = 0;
+      const total = Object.values(
+        this.store.users as Record<string, User>
+      ).reduce<number>((acc, cur) => {
+        if (!cur.estimate || cur.estimate <= 0) return acc;
+        totalCount += 1;
+        return acc + cur.estimate;
+      }, 0);
+      this.store.room.average = total / totalCount;
 
-        if (status === "revealing") {
-          this.emitAverage();
-        } else {
-          this.clearEstimates();
-        }
-        this.emitStatus();
-        this.emitUsers();
+      if (status === "revealing") {
+        this.emitAverage();
+      } else {
+        this.clearEstimates();
       }
-    );
+      this.emitStatus();
+      this.emitUsers();
+    });
   }
 
   onRemoveUser() {
@@ -97,7 +94,7 @@ class Room {
   }
 
   onEstimate() {
-    this.socket.on("estimate", ({ estimate }: { estimate: number }) => {
+    this.socket.on("estimate", ({ estimate }: { estimate: Estimate }) => {
       this.store.users[this.socket.id].estimate = estimate;
       this.emitUsers();
     });
