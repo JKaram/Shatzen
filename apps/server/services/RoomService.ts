@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { User } from "../types";
-import { chooseUserColour } from "../users";
+import { chooseUserColour } from "../utils";
 
 class Room {
   private store: any;
