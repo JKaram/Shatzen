@@ -2,7 +2,7 @@ import { User, USER_COLOURS } from "./types";
 
 export const users: User[] = [];
 
-function chooseUserColour() {
+export function chooseUserColour() {
   const randomIndex = Math.floor(Math.random() * USER_COLOURS.length);
   return USER_COLOURS[randomIndex];
 }
