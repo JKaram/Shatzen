@@ -50,8 +50,7 @@ export default function AppProvider({ children }: Props) {
   useEffect(() => {
     if (!serverReady) return;
     const newSocket = io(`${process.env.NEXT_PUBLIC_SERVER}`);
-    newSocket.on("connect", () => console.log("hello"));
-    newSocket.on("connect_error", (err) => console.log("err", err));
+    newSocket.on("connect_error", (err) => console.warn("err", err));
 
     newSocket.on("users", (users: User[]) => {
       const sortedUsers = Object.values(users)
