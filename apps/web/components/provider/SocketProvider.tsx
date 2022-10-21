@@ -1,4 +1,10 @@
-import { Average, Status, User } from "../../types/aliases";
+import {
+  Average,
+  SocketIncomingEvents,
+  SocketOutgoingEvents,
+  Status,
+  User,
+} from "../../types/aliases";
 import { io, Socket } from "socket.io-client";
 import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -39,7 +45,8 @@ type Props = {
 
 export default function AppProvider({ children }: Props) {
   const router = useRouter();
-  const [socket, setSocket] = useState<Socket>();
+  const [socket, setSocket] =
+    useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
   const [average, setAverage] = useState<Average>(null);
   // Server goes to sleep and may take a few seconds to wake up.
   const [serverReady, setServerReady] = useState(false);
@@ -72,7 +79,7 @@ export default function AppProvider({ children }: Props) {
     };
   }, [serverReady]);
 
-  const changeStatus = (status: string) => {
+  const changeStatus = (status: Status) => {
     socket.emit("changeStatus", { status });
   };
   const disconnect = () => {
@@ -82,10 +89,11 @@ export default function AppProvider({ children }: Props) {
     socket.emit("estimate", { estimate });
   };
   const removeUser = () => {
-    socket.emit("removeUser", {});
+    socket.emit("removeUser");
   };
   const reset = () => {
-    socket.emit("reset");
+    // TODO socket event doesn't exists yet
+    // socket.emit("reset");
   };
   const userJoin = (name: string, room: string) => {
     socket.emit("userJoin", { name, room });
