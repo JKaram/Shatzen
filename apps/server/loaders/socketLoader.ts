@@ -2,7 +2,8 @@ import { Server } from "http";
 import { Collection } from "mongodb";
 import { Server as SocketServer } from "socket.io";
 import { createAdapter } from "@socket.io/mongo-adapter";
-import Room from "../services/RoomService";
+import RoomService from "../services/RoomService";
+import { SocketIncomingEvents, SocketOutgoingEvents } from "../types";
 
 export type SocketLoaderArgs = {
   server: Server;
@@ -10,16 +11,19 @@ export type SocketLoaderArgs = {
 };
 
 const socketLoader = async ({ server, mongoCollection }: SocketLoaderArgs) => {
-  const io = new SocketServer(server, {
-    cors: {
-      origin: "*",
-    },
-  });
+  const io = new SocketServer<SocketIncomingEvents, SocketOutgoingEvents>(
+    server,
+    {
+      cors: {
+        origin: "*",
+      },
+    }
+  );
   io.adapter(createAdapter(mongoCollection));
 
   io.on("connection", async (socket) => {
     socket.on("userJoin", async ({ name, room: roomId }) => {
-      const room = new Room(io, socket, roomId, name);
+      const room = new RoomService(io, socket, roomId, name);
       const success = await room.init();
       if (success) {
         room.emitUsers();

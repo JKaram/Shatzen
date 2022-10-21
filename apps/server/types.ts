@@ -1,30 +1,38 @@
+import { UserColour } from "./utils/chooseUserColour";
+
+export type SocketIncomingEvents = {
+  changeStatus: (args: { status: Status }) => void;
+  estimate: (args: { estimate: number }) => void;
+  removeUser: () => void;
+  userJoin: (args: { name: string; room: string }) => void;
+};
+
+export type SocketOutgoingEvents = {
+  average: (average: number) => void;
+  firstConnect: (roomId: string) => void;
+  roomStatus: (status: Status) => void;
+  users: (users: Record<string, User>) => void;
+};
+
+export type EmitFunction = <T extends keyof SocketOutgoingEvents>(
+  message: T,
+  data: Parameters<SocketOutgoingEvents[T]>,
+  toSelf?: boolean
+) => void;
+
+export type Estimate = number | null;
+export type Average = number | null;
+export type Status = "estimating" | "revealing";
+
 export type User = {
   colour: UserColour;
   estimate: Estimate;
   id: string;
   name: string;
-  roomId: string;
 };
-
-export type Estimate = number | null;
-export type Average = number | null;
-
-export type Status = "estimating" | "revealing";
 
 export type Room = {
   average: number | null;
   id: string;
   status: Status;
 };
-
-export const USER_COLOURS = [
-  "#F0D95F",
-  "#D8FFCA",
-  "#CAFCFF",
-  "#F09C5F",
-  "#FFCAEA",
-  "#CBCAFF",
-  "#FF5B5B",
-  "#5B93FF",
-] as const;
-type UserColour = typeof USER_COLOURS[number];
