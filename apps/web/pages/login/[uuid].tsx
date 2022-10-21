@@ -22,7 +22,7 @@ const Login = () => {
 
   const sanitizeUuid = typeof uuid === "string" ? uuid : undefined;
 
-  if (!sanitizeUuid) return "UUID Error";
+  if (!sanitizeUuid) return "UUID Error!";
 
   return (
     <PageLayout>
