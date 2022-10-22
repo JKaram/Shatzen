@@ -10,7 +10,8 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky prepare"
+    "prepare": "husky prepare",
+    "build": "turbo run build"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.1.2",
