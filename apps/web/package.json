@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3000",
-    "build": "npm install && next build",
+    "build": "npm install  --only=production --ignore-scripts && next build",
     "start": "next start",
     "lint": "next lint"
   },
