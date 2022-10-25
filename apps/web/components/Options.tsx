@@ -2,12 +2,9 @@ import { useSockets } from "./provider/SocketProvider";
 import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-
-
 export const Options = () => {
   const [, setName] = useLocalStorage("name", "");
   const { reset } = useSockets();
-
 
   return (
     <select name="options" id="options">
