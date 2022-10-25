@@ -100,7 +100,12 @@ class RoomService {
 
   onEstimate() {
     this.socket.on("estimate", ({ estimate }) => {
-      this.store.users[this.socket.id].estimate = estimate;
+      // Toggle estimate if user clicks on same value
+      if (this.store.users[this.socket.id].estimate === estimate) {
+        this.store.users[this.socket.id].estimate = null;
+      } else {
+        this.store.users[this.socket.id].estimate = estimate;
+      }
       this.emitUsers();
     });
   }
