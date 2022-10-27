@@ -4,19 +4,18 @@ import { SocketContext } from "../components/provider/SocketProvider";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
 import PageLayout from "../components/PageLayout";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "../components/input";
 import Head from "next/head";
 
 const App = () => {
   const router = useRouter();
   const { serverReady } = useContext(SocketContext);
-  const [showStatus, setShowStatus] = useState(false);
   const [roomName, setRoomName] = useState("");
 
   function generateRoomId() {
-    const roomid = nanoid(ROOM_STRING_SIZE);
-    router.push(`/login/${roomid}`);
+    const roomId = nanoid(ROOM_STRING_SIZE);
+    router.push(`/login/${roomId}`);
   }
 
   function goToLogin() {
@@ -27,20 +26,6 @@ const App = () => {
     const value = e.target.value;
     setRoomName(value);
   }
-
-  useEffect(() => {
-    // TODO: Hacky solution. Look for better alternative
-    if (!serverReady) {
-      setTimeout(() => {
-        setShowStatus(true);
-      }, 2000);
-    }
-    if (serverReady) {
-      setTimeout(() => {
-        setShowStatus(false);
-      }, 2000);
-    }
-  }, [serverReady]);
 
   return (
     <PageLayout>
@@ -90,13 +75,6 @@ const App = () => {
           </Button>
         </form>
       </div>
-
-      {showStatus && !serverReady && (
-        <span className="mt-5">One moment. Waking up the server 😴</span>
-      )}
-      {showStatus && serverReady && (
-        <span className="mt-5">Server is ready! Happy Estimating</span>
-      )}
     </PageLayout>
   );
 };
