@@ -14,7 +14,7 @@ export default function Input({
   return (
     <input
       {...rest}
-      className="p-2 border-2 border-black rounded-lg w-full max-w-[13rem] mx-auto focus:border-red-500 focus:outline-none"
+      className="p-2 border-2 text-center border-black rounded-lg w-full max-w-[13rem] mx-auto focus:border-red-500 focus:outline-none"
       onChange={onChange}
       placeholder={placeholder}
     />
