@@ -1,4 +1,4 @@
-import { SocketContext, useSockets } from "./provider/SocketProvider";
+import { SocketContext, useSockets } from "./Provider/SocketProvider";
 import React, { useContext } from "react";
 import Button from "./Button";
 

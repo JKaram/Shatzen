@@ -1,4 +1,4 @@
-import { USER_COLOURS } from "./constants";
+import { USER_COLOURS, POSSIBLE_ESTIMATES } from "./constants";
 
 export type User = {
   id: string;
@@ -6,6 +6,9 @@ export type User = {
   colour: string;
   estimate: Estimate;
 };
+
+export type PossibleEstimate = typeof POSSIBLE_ESTIMATES[number];
+export type PossibleEstimates = PossibleEstimate[];
 
 export type AppStatus = "loading" | "ready";
 export type Estimate = number | null;

@@ -1,5 +1,6 @@
 import {
   Average,
+  PossibleEstimates,
   SocketIncomingEvents,
   SocketOutgoingEvents,
   Status,
@@ -9,6 +10,7 @@ import { io, Socket } from "socket.io-client";
 import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import { POSSIBLE_ESTIMATES } from "../../types/constants";
 
 type Values = {
   average: Average;
@@ -22,6 +24,8 @@ type Values = {
   removeUser: () => void;
   reset: () => void;
   userJoin: (name: string, room: string) => void;
+  estimateOptions: PossibleEstimates;
+  modifyPossibleEstimate: (estimate: number) => void;
 };
 const initalValues: Values = {
   average: null,
@@ -29,6 +33,8 @@ const initalValues: Values = {
   serverReady: false,
   user: undefined,
   users: [],
+  estimateOptions: [],
+  modifyPossibleEstimate: () => undefined,
   changeStatus: () => undefined,
   disconnect: () => undefined,
   estimate: () => undefined,
@@ -48,6 +54,8 @@ export default function AppProvider({ children }: Props) {
   const [socket, setSocket] =
     useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
   const [average, setAverage] = useState<Average>(null);
+  const [roomEstimateOptions, setRoomEstimateOptions] =
+    useState<PossibleEstimates>(POSSIBLE_ESTIMATES);
   // Server goes to sleep and may take a few seconds to wake up.
   const [serverReady, setServerReady] = useState(false);
   const [status, setStatus] = useState<Status>("estimating");
@@ -130,6 +138,10 @@ export default function AppProvider({ children }: Props) {
     };
   }, []);
 
+  function modifyPossibleEstimate(estimate: number) {
+    // TODO socket event doesn't exists yet
+  }
+
   return (
     <SocketContext.Provider
       value={{
@@ -138,6 +150,8 @@ export default function AppProvider({ children }: Props) {
         serverReady: serverReady,
         user: user,
         users: users,
+        estimateOptions: roomEstimateOptions,
+        modifyPossibleEstimate,
         changeStatus,
         disconnect,
         estimate,

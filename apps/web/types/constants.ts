@@ -1,4 +1,4 @@
-export const possibleEstimates = [-1, 0.5, 1, 2, 3, 5, 8, 13];
+export const POSSIBLE_ESTIMATES = [-1, 0.5, 1, 2, 3, 5, 8, 13] as const;
 
 export const numberToNewValue = (estimate: number) =>
   ({

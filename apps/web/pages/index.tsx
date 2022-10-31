@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { ROOM_STRING_SIZE, USER_NAME_SIZE } from "../types/constants";
-import { SocketContext } from "../components/provider/SocketProvider";
+import { SocketContext } from "../components/Provider/SocketProvider";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
 import PageLayout from "../components/PageLayout";

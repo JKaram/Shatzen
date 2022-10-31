@@ -1,4 +1,4 @@
-import { SocketContext } from "./provider/SocketProvider";
+import { SocketContext } from "./Provider/SocketProvider";
 import classNames from "classnames";
 import React, { useContext } from "react";
 

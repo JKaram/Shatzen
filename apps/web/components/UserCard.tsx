@@ -1,5 +1,5 @@
 import { numberToNewValue } from "../types/constants";
-import { SocketContext } from "./provider/SocketProvider";
+import { SocketContext } from "./Provider/SocketProvider";
 import { User } from "../types/aliases";
 import React, { useContext } from "react";
 import classNames from "classnames";

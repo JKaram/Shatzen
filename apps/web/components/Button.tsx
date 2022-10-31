@@ -3,6 +3,7 @@ import classNames from "classnames";
 
 type Props = {
   children: React.ReactNode;
+  variant?: "primary" | "secondary" | "danger";
   className?: string | undefined;
   disabled?: boolean;
   onClick?: () => void;
@@ -14,14 +15,18 @@ export default function Button({
   className = undefined,
   disabled = false,
   onClick,
+  variant,
   ...rest
 }: Props) {
   return (
     <button
       {...rest}
       className={classNames(
-        "py-2 bg-white border-2 border-black rounded-md w-full max-w-[13rem] transition active:translate-y-0 hover:-translate-y-0.5 mx-auto",
-        disabled ? "opacity-50 hover:translate-y-0 " : "",
+        "py-2 bg-white border-2 border-black rounded-md w-full transition active:translate-y-0 hover:-translate-y-0.5 mx-auto",
+        disabled ? "opacity-50 hover:translate-y-0" : "",
+        variant === "secondary"
+          ? "border-0 hover:translate-y-0 hover:bg-slate-50"
+          : undefined,
         className
       )}
       disabled={disabled}

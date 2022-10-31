@@ -1,7 +1,7 @@
 import { HomeIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
 import React from "react";
-import { useSockets } from "./provider/SocketProvider";
+import { useSockets } from "./Provider/SocketProvider";
 
 export default function HomeButton() {
   const { removeUser } = useSockets();
