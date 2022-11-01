@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React from "react";
-import BackButton from "./BackButton";
 import HomeButton from "./HomeButton";
 import OptionsModal from "./Options/OptionsModal";
 import OptionsButton from "./OptionsButton";

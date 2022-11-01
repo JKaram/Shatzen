@@ -11,7 +11,6 @@ import { io, Socket } from "socket.io-client";
 import React, { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { POSSIBLE_ESTIMATES } from "../../types/constants";
 
 type Values = {
   average: Average;
