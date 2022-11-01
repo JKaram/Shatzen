@@ -31,6 +31,15 @@ export type SocketOutgoingEvents = {
   firstConnect: (roomId: string) => void;
 };
 
+type KeyValue<T> = {
+  [P in keyof T]: {
+    key: P;
+    value: T[P];
+  };
+}[keyof T];
+
 export type RoomOptions = {
   possibleEstimates: PossibleEstimates;
 };
+
+export type RoomOption = KeyValue<RoomOptions>;

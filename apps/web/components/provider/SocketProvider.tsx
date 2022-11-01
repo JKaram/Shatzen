@@ -57,10 +57,6 @@ export default function AppProvider({ children }: Props) {
   const [average, setAverage] = useState<Average>(null);
   const [roomEstimateOptions, setRoomEstimateOptions] =
     useState<PossibleEstimates>(POSSIBLE_ESTIMATES);
-  console.log(
-    "🚀 ~ file: SocketProvider.tsx ~ line 59 ~ AppProvider ~ roomEstimateOptions",
-    roomEstimateOptions
-  );
   const [serverReady, setServerReady] = useState(false);
   const [status, setStatus] = useState<Status>("estimating");
   const [user, setUser] = useState<User>();
@@ -87,9 +83,11 @@ export default function AppProvider({ children }: Props) {
       setAverage(average);
     });
     newSocket.on("roomStatus", (status: Status) => setStatus(status));
-    newSocket.on("roomOptions", (options: RoomOptions) =>
-      setRoomEstimateOptions(options.possibleEstimates)
-    );
+
+    newSocket.on("roomOptions", (options: RoomOptions) => {
+      console.log("roomOptions", options);
+      setRoomEstimateOptions(options.possibleEstimates.sort((a, b) => a - b));
+    });
 
     setSocket(newSocket);
     return () => {

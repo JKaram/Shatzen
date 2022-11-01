@@ -1,34 +1,43 @@
-import { useState } from "react";
 import { Dialog } from "@headlessui/react";
 import Button from "./Button";
+import { motion } from "framer-motion";
 
 type Props = {
   children: React.ReactNode;
+  close: () => void;
   onSave: () => void;
+  show: boolean;
+  message?: string | string[];
 };
 
 export default function Modal(props: Props) {
-  const [isOpen, setIsOpen] = useState(true);
-
   return (
-    <Dialog open={isOpen} className="" onClose={() => setIsOpen(false)}>
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-      <div className="fixed inset-0">
-        <Dialog.Panel className="bg-white min-h-screen flex flex-col">
+    <Dialog open={props.show} className="" onClose={props.close}>
+      <motion.div
+        initial="initial"
+        animate="animate"
+        variants={{
+          initial: {
+            opacity: 0,
+          },
+          animate: {
+            opacity: 1,
+          },
+        }}
+      >
+        <div className="fixed inset-0 bg-black/10" aria-hidden="true" />
+        <Dialog.Panel className="fixed border-2 border-black inset-0 bg-white rounded-md h-screen m-auto sm:h-5/6  max-w-2xl flex flex-col">
           <Dialog.Title className="p-2 text-2xl">OPTIONS</Dialog.Title>
           <div className="p-2 flex-grow">{props.children}</div>
+          <div className="text-red-500 text-center">{props.message}</div>
           <div className="flex flex-col space-y-1 p-2">
             <Button onClick={props.onSave}>Save</Button>
-            <Button
-              className=""
-              variant="secondary"
-              onClick={() => setIsOpen(false)}
-            >
+            <Button className="" variant="secondary" onClick={props.close}>
               Cancel
             </Button>
           </div>
         </Dialog.Panel>
-      </div>
+      </motion.div>
     </Dialog>
   );
 }

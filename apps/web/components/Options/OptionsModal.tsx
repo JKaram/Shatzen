@@ -1,25 +1,41 @@
 import React, { useContext, useState } from "react";
-import { PossibleEstimates } from "../../types/aliases";
+import { RoomOptions } from "../../types/aliases";
 import Modal from "../Modal";
 import { SocketContext } from "../Provider/SocketProvider";
 import CustomEstimates from "./CustomEstimates";
 
-export default function OptionsModal() {
+type Props = {
+  close: () => void;
+  show: boolean;
+};
+
+export default function OptionsModal(props: Props) {
   const { updateRoomOptions } = useContext(SocketContext);
-  const [updatedOptions, setNewOptions] = useState({ possibleEstimates: [] });
+  const [message, setMessage] = useState("");
+  const [updatedOptions, setNewOptions] = useState<RoomOptions>({
+    possibleEstimates: [],
+  });
 
   function onSave() {
+    if (updatedOptions.possibleEstimates.length === 0) {
+      setMessage("You should at least have one estimate option!");
+      return;
+    }
     updateRoomOptions(updatedOptions);
+    props.close();
   }
 
-  function updateOptions(
-    newOptions: Record<"possibleEstimates", PossibleEstimates>
-  ) {
-    setNewOptions(newOptions);
+  function updateOptions(newOptions: Partial<RoomOptions>) {
+    setNewOptions({ ...updatedOptions, ...newOptions });
   }
 
   return (
-    <Modal onSave={onSave}>
+    <Modal
+      close={props.close}
+      show={props.show}
+      onSave={onSave}
+      message={message}
+    >
       <CustomEstimates updateOptions={updateOptions} />
     </Modal>
   );

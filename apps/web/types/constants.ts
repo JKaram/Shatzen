@@ -1,9 +1,22 @@
-export const POSSIBLE_ESTIMATES = [-1, 0.5, 1, 2, 3, 5, 8, 13] as const;
+export const POSSIBLE_ESTIMATES = [
+  -4, -3, -2, -1, 0.5, 1, 2, 3, 5, 8, 13,
+] as const;
 
 export const numberToNewValue = (estimate: number) =>
   ({
+    "-4": "❌",
+    "-3": "☕",
+    "-2": "∞",
     "-1": "?",
-  }[estimate.toString()]);
+    "0.5": "½",
+  }[estimate.toString()] || estimate);
+
+export const valueDescriptions = {
+  "-4": "Abstain from voting.",
+  "-3": "Coffee break, I think this needs more discussion.",
+  "-2": "This will take a lonnnng time",
+  "-1": "I have no idea.",
+};
 
 export const ROOM_STRING_SIZE = 4;
 

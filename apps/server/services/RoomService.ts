@@ -75,7 +75,7 @@ class RoomService {
 
   onUpdateRoomOptions() {
     this.socket.on("updateRoomOptions", (options) => {
-      this.store.room.possibleEstimates = options.estimateOptions;
+      this.store.room.possibleEstimates = options.possibleEstimates;
       this.clearEstimates();
       this.emitRoomOptions();
     });

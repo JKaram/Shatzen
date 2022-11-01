@@ -5,7 +5,7 @@ export type SocketIncomingEvents = {
   estimate: (args: { estimate: number }) => void;
   removeUser: () => void;
   userJoin: (args: { name: string; room: string }) => void;
-  updateRoomOptions: (args: { estimateOptions: number[] }) => void;
+  updateRoomOptions: (args: { possibleEstimates: number[] }) => void;
 };
 
 export type SocketOutgoingEvents = {

@@ -24,22 +24,20 @@ export const UserCard = ({ user, oddManOut }: Props) => {
       {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
         style={{
-          background: userHasEstimated
-            ? user.colour
-            : estimate > 0
-            ? user.colour
-            : undefined,
+          background: userHasEstimated ? user.colour : undefined,
         }}
         className={classNames(
           "w-10 h-16 rounded flex justify-center items-center",
-          estimate > 0 ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
+          estimate ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
           userHasEstimated ? "bg-green-200" : undefined
         )}
       >
         <span
-          className={classNames(roomStatus === "estimating" ? "hidden" : "")}
+          className={classNames(
+            roomStatus === "estimating" && estimate !== -4 ? "hidden" : "block"
+          )}
         >
-          {estimate ? numberToNewValue(estimate) || estimate : null}
+          {estimate ? numberToNewValue(estimate) : null}
         </span>
       </div>
       <span
