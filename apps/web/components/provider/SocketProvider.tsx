@@ -1,6 +1,7 @@
 import {
   Average,
   PossibleEstimates,
+  RoomOptions,
   SocketIncomingEvents,
   SocketOutgoingEvents,
   Status,
@@ -25,7 +26,7 @@ type Values = {
   reset: () => void;
   userJoin: (name: string, room: string) => void;
   estimateOptions: PossibleEstimates;
-  modifyPossibleEstimate: (estimate: number) => void;
+  updateRoomOptions: (args: RoomOptions) => void;
 };
 const initalValues: Values = {
   average: null,
@@ -34,7 +35,7 @@ const initalValues: Values = {
   user: undefined,
   users: [],
   estimateOptions: [],
-  modifyPossibleEstimate: () => undefined,
+  updateRoomOptions: () => undefined,
   changeStatus: () => undefined,
   disconnect: () => undefined,
   estimate: () => undefined,
@@ -56,7 +57,10 @@ export default function AppProvider({ children }: Props) {
   const [average, setAverage] = useState<Average>(null);
   const [roomEstimateOptions, setRoomEstimateOptions] =
     useState<PossibleEstimates>(POSSIBLE_ESTIMATES);
-  // Server goes to sleep and may take a few seconds to wake up.
+  console.log(
+    "🚀 ~ file: SocketProvider.tsx ~ line 59 ~ AppProvider ~ roomEstimateOptions",
+    roomEstimateOptions
+  );
   const [serverReady, setServerReady] = useState(false);
   const [status, setStatus] = useState<Status>("estimating");
   const [user, setUser] = useState<User>();
@@ -79,8 +83,14 @@ export default function AppProvider({ children }: Props) {
 
     newSocket.on("firstConnect", (roomId) => router.push(`/room/${roomId}`));
 
-    newSocket.on("average", (average: Average) => setAverage(average));
+    newSocket.on("average", (average: Average) => {
+      setAverage(average);
+    });
     newSocket.on("roomStatus", (status: Status) => setStatus(status));
+    newSocket.on("roomOptions", (options: RoomOptions) =>
+      setRoomEstimateOptions(options.possibleEstimates)
+    );
+
     setSocket(newSocket);
     return () => {
       newSocket.disconnect();
@@ -99,6 +109,11 @@ export default function AppProvider({ children }: Props) {
   const removeUser = () => {
     socket.emit("removeUser");
   };
+
+  const updateRoomOptions = (options: RoomOptions) => {
+    socket.emit("updateRoomOptions", options);
+  };
+
   const reset = () => {
     // TODO socket event doesn't exists yet
     // socket.emit("reset");
@@ -138,10 +153,6 @@ export default function AppProvider({ children }: Props) {
     };
   }, []);
 
-  function modifyPossibleEstimate(estimate: number) {
-    // TODO socket event doesn't exists yet
-  }
-
   return (
     <SocketContext.Provider
       value={{
@@ -151,7 +162,7 @@ export default function AppProvider({ children }: Props) {
         user: user,
         users: users,
         estimateOptions: roomEstimateOptions,
-        modifyPossibleEstimate,
+        updateRoomOptions,
         changeStatus,
         disconnect,
         estimate,

@@ -10,7 +10,6 @@ type Props = {
 };
 
 export default function CustomEstimates({ updateOptions }: Props) {
-  const firstRender = useIsFirstRender();
   const { estimateOptions } = useContext(SocketContext);
   const [newEstimates, setNewEstimate] = useState(estimateOptions);
 
@@ -23,7 +22,7 @@ export default function CustomEstimates({ updateOptions }: Props) {
   }
 
   useEffect(() => {
-    !firstRender && updateOptions({ estimateOptions: newEstimates });
+    updateOptions({ estimateOptions: newEstimates });
   }, [newEstimates]);
 
   return (

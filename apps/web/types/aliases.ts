@@ -21,6 +21,7 @@ export type SocketIncomingEvents = {
   changeStatus: (args: { status: Status }) => void;
   removeUser: () => void;
   estimate: (args: { estimate: number }) => void;
+  updateRoomOptions: (args: RoomOptions) => void;
 };
 
 export type SocketOutgoingEvents = {
@@ -28,4 +29,8 @@ export type SocketOutgoingEvents = {
   roomStatus: (status: Status) => void;
   average: (average: number) => void;
   firstConnect: (roomId: string) => void;
+};
+
+export type RoomOptions = {
+  possibleEstimates: PossibleEstimates;
 };
