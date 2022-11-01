@@ -76,7 +76,14 @@ class RoomService {
   onUpdateRoomOptions() {
     this.socket.on("updateRoomOptions", (options) => {
       this.store.room.possibleEstimates = options.possibleEstimates;
+
+      // Only reset estimates if room is in estimating state
+      if (this.store.room.status === "revealing") {
+        return this.emitRoomOptions();
+      }
+
       this.clearEstimates();
+      this.emitUsers();
       this.emitRoomOptions();
     });
   }

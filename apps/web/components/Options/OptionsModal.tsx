@@ -21,6 +21,7 @@ export default function OptionsModal(props: Props) {
       setMessage("You should at least have one estimate option!");
       return;
     }
+    setMessage("");
     updateRoomOptions(updatedOptions);
     props.close();
   }

@@ -12,12 +12,12 @@ type Props = {
 const shameEmojis = ["🤥", "🤮", "🙊", "💩"];
 
 export const UserCard = ({ user, oddManOut }: Props) => {
-  const { roomStatus, users } = useContext(SocketContext);
+  const { roomStatus } = useContext(SocketContext);
   const { estimate } = user;
 
   const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
 
-  const userHasEstimated = users[0].id === user.id && estimate !== null;
+  const userHasEstimated = estimate !== null;
 
   return (
     <div className="flex flex-col items-center">
