@@ -3,18 +3,14 @@ import { RevealBox } from "../../components/RevealBox";
 import { useRouter } from "next/router";
 import { UserPanel } from "../../components/UserPanel";
 import { SocketContext } from "../../components/Provider/SocketProvider";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import PageLayout from "../../components/PageLayout";
 import Head from "next/head";
-import OptionsModal from "../../components/Options/OptionsModal";
 
 const Room = () => {
-  const [show, setShow] = useState(false);
   const router = useRouter();
   const { room } = router.query;
   const { user } = useContext(SocketContext);
-
-  const toggleOptions = () => setShow((p) => !p);
 
   useEffect(() => {
     if (!user && router.isReady) {
