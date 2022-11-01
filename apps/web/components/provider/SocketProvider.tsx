@@ -56,7 +56,7 @@ export default function AppProvider({ children }: Props) {
     useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
   const [average, setAverage] = useState<Average>(null);
   const [roomEstimateOptions, setRoomEstimateOptions] =
-    useState<PossibleEstimates>(POSSIBLE_ESTIMATES);
+    useState<PossibleEstimates>([]);
   const [serverReady, setServerReady] = useState(false);
   const [status, setStatus] = useState<Status>("estimating");
   const [user, setUser] = useState<User>();
@@ -85,7 +85,6 @@ export default function AppProvider({ children }: Props) {
     newSocket.on("roomStatus", (status: Status) => setStatus(status));
 
     newSocket.on("roomOptions", (options: RoomOptions) => {
-      console.log("roomOptions", options);
       setRoomEstimateOptions(options.possibleEstimates.sort((a, b) => a - b));
     });
 

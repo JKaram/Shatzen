@@ -24,6 +24,7 @@ export const Nav = () => {
 
   return (
     <>
+      <OptionsModal show={show} close={closeOptions} />
       <nav
         className={classNames(
           "flex justify-between text-2xl min-h-[100px] p-2"
@@ -32,8 +33,7 @@ export const Nav = () => {
         {roomLogin && <HomeButton />}
         {!roomPage && (
           <>
-            <OptionsModal show={show} close={closeOptions} />
-            <div className="flex">
+            <div className="flex grow">
               <HomeButton />
               <BackButton />
             </div>

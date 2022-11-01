@@ -6,7 +6,7 @@ export default function OptionsButton(props: { onClick: () => void }) {
   return (
     <button
       className={classNames(
-        "flex flex-col w-28  items-center px-2 text-base text-black"
+        "flex flex-col   items-center px-2 text-base text-black"
       )}
       onClick={props.onClick}
     >
