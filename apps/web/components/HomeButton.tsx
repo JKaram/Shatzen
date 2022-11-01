@@ -8,10 +8,10 @@ export default function HomeButton() {
   const router = useRouter();
 
   function goHome() {
-    router.push("/");
     if (router.route.includes("/room/")) {
       removeUser();
     }
+    router.push("/");
   }
 
   return (

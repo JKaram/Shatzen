@@ -35,7 +35,6 @@ export const Nav = () => {
           <>
             <div className="flex grow">
               <HomeButton />
-              <BackButton />
             </div>
             <div className="flex">
               <RoomLink />
