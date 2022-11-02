@@ -1,7 +1,7 @@
 import { UserIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
-import React from "react";
 import { useSockets } from "./Provider/SocketProvider";
+import React from "react";
 
 export default function BackButton() {
   const { removeUser } = useSockets();
