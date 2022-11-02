@@ -6,7 +6,7 @@ import {
   POSSIBLE_ESTIMATES,
   valueDescriptions,
 } from "../../types/constants";
-import { SocketContext } from "../Provider/SocketProvider";
+import { SocketContext } from "../provider/SocketProvider";
 
 type Props = {
   updateOptions: (arg: Partial<RoomOptions>) => void;

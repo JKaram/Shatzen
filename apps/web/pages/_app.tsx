@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import SocketProvider, {
   useSockets,
-} from "../components/Provider/SocketProvider";
+} from "../components/provider/SocketProvider";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

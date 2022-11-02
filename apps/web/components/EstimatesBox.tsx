@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SocketContext } from "./Provider/SocketProvider";
+import { SocketContext } from "./provider/SocketProvider";
 import { UserCard } from "./UserCard";
 
 export const EstimatesBox = () => {

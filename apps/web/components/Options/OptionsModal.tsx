@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { RoomOptions } from "../../types/aliases";
 import Modal from "../Modal";
-import { SocketContext } from "../Provider/SocketProvider";
+import { SocketContext } from "../provider/SocketProvider";
 import CustomEstimates from "./CustomEstimates";
 
 type Props = {

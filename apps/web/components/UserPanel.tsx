@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { useContext } from "react";
 import { numberToNewValue } from "../types/constants";
 import { EstimateCard } from "./EstimateCard";
-import { SocketContext, useSockets } from "./Provider/SocketProvider";
+import { SocketContext, useSockets } from "./provider/SocketProvider";
 
 export const UserPanel = () => {
   const { user, estimateOptions } = useContext(SocketContext);
