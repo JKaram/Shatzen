@@ -41,6 +41,7 @@ class RoomService {
         id: this.roomId,
         average: -1,
         status: "estimating",
+        possibleEstimates: [-1, 0.5, 1, 2, 3, 5, 8, 13],
       };
       this.addToMax();
       return true;
@@ -64,8 +65,28 @@ class RoomService {
   emitFirstConnect() {
     this.emitToSelf("firstConnect", [this.roomId]);
   }
+  emitRoomOptions() {
+    this.emit("roomOptions", [
+      { possibleEstimates: this.store.room.possibleEstimates },
+    ]);
+  }
 
   // Listeners
+
+  onUpdateRoomOptions() {
+    this.socket.on("updateRoomOptions", (options) => {
+      this.store.room.possibleEstimates = options.possibleEstimates;
+
+      // Only reset estimates if room is in estimating state
+      if (this.store.room.status === "revealing") {
+        return this.emitRoomOptions();
+      }
+
+      this.clearEstimates();
+      this.emitUsers();
+      this.emitRoomOptions();
+    });
+  }
 
   onChangeStatus() {
     this.socket.on("changeStatus", ({ status }) => {

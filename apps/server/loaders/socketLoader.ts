@@ -30,7 +30,9 @@ const socketLoader = async ({ server, mongoCollection }: SocketLoaderArgs) => {
         room.emitStatus(true);
         room.emitAverage(true);
         room.emitFirstConnect();
+        room.emitRoomOptions();
 
+        room.onUpdateRoomOptions();
         room.onChangeStatus();
         room.onEstimate();
         room.onRemoveUser();

@@ -45,6 +45,7 @@ const Login = () => {
           maxLength={USER_NAME_SIZE}
         />
         <Button
+          className="w-32 mt-5"
           type="submit"
           disabled={!name || !name.trim() || name.length < USER_STRING_MIN_SIZE}
         >

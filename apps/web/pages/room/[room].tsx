@@ -26,6 +26,7 @@ const Room = () => {
         <title>Shätzen | {room}</title>
         <meta property="og:title" content="Estimating room" key="title" />
       </Head>
+
       <EstimatesBox />
       <RevealBox />
       <UserPanel />

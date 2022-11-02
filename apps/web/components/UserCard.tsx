@@ -12,34 +12,32 @@ type Props = {
 const shameEmojis = ["🤥", "🤮", "🙊", "💩"];
 
 export const UserCard = ({ user, oddManOut }: Props) => {
-  const { roomStatus, users } = useContext(SocketContext);
+  const { roomStatus } = useContext(SocketContext);
   const { estimate } = user;
 
   const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
 
-  const userHasEstimated = users[0].id === user.id && estimate !== null;
+  const userHasEstimated = estimate !== null;
 
   return (
     <div className="flex flex-col items-center">
       {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
         style={{
-          background: userHasEstimated
-            ? user.colour
-            : estimate > 0
-            ? user.colour
-            : undefined,
+          background: userHasEstimated ? user.colour : undefined,
         }}
         className={classNames(
           "w-10 h-16 rounded flex justify-center items-center",
-          estimate > 0 ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
+          estimate ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
           userHasEstimated ? "bg-green-200" : undefined
         )}
       >
         <span
-          className={classNames(roomStatus === "estimating" ? "hidden" : "")}
+          className={classNames(
+            roomStatus === "estimating" && estimate !== -4 ? "hidden" : "block"
+          )}
         >
-          {estimate ? numberToNewValue(estimate) || estimate : null}
+          {estimate ? numberToNewValue(estimate) : null}
         </span>
       </div>
       <span
