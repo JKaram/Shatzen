@@ -27,7 +27,6 @@ type Values = {
   reset: () => void;
   roomStatus: Status;
   setRoomId: Dispatch<SetStateAction<string>>;
-  serverReady: boolean;
   updateRoomOptions: (args: RoomOptions) => void;
   user: User | undefined;
   userJoin: (name: string, room: string) => void;
@@ -42,7 +41,6 @@ const initalValues: Values = {
   removeUser: () => undefined,
   reset: () => undefined,
   roomStatus: "estimating",
-  serverReady: false,
   setRoomId: () => undefined,
   updateRoomOptions: () => undefined,
   user: undefined,
@@ -63,7 +61,6 @@ export default function AppProvider({ children }: Props) {
   const [average, setAverage] = useState<Average>(null);
   const [roomEstimateOptions, setRoomEstimateOptions] =
     useState<PossibleEstimates>([]);
-  const [serverReady, setServerReady] = useState(false);
   const [status, setStatus] = useState<Status>("estimating");
   const [user, setUser] = useState<User>();
   const [users, setUsers] = useState<User[]>([]);
@@ -140,7 +137,6 @@ export default function AppProvider({ children }: Props) {
         removeUser,
         reset,
         roomStatus: status,
-        serverReady: serverReady,
         setRoomId,
         updateRoomOptions,
         user: user,
