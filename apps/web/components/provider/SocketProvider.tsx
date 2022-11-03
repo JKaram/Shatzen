@@ -8,39 +8,44 @@ import {
   User,
 } from "../../types/aliases";
 import { io, Socket } from "socket.io-client";
-import React, { createContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 
 type Values = {
   average: Average;
-  roomStatus: Status;
-  serverReady: boolean;
-  user: User | undefined;
-  users: User[];
   changeStatus: (status: string) => void;
   disconnect: () => void;
   estimate: (estimate: number) => void;
+  estimateOptions: PossibleEstimates;
   removeUser: () => void;
   reset: () => void;
-  userJoin: (name: string, room: string) => void;
-  estimateOptions: PossibleEstimates;
+  roomStatus: Status;
+  setRoomId: Dispatch<SetStateAction<string>>;
   updateRoomOptions: (args: RoomOptions) => void;
+  user: User | undefined;
+  userJoin: (name: string, room: string) => void;
+  users: User[];
 };
 const initalValues: Values = {
   average: null,
-  roomStatus: "estimating",
-  serverReady: false,
-  user: undefined,
-  users: [],
-  estimateOptions: [],
-  updateRoomOptions: () => undefined,
   changeStatus: () => undefined,
   disconnect: () => undefined,
   estimate: () => undefined,
+  estimateOptions: [],
   removeUser: () => undefined,
   reset: () => undefined,
+  roomStatus: "estimating",
+  setRoomId: () => undefined,
+  updateRoomOptions: () => undefined,
+  user: undefined,
   userJoin: () => undefined,
+  users: [],
 };
 
 export const SocketContext = createContext<Values>(initalValues);
@@ -56,13 +61,15 @@ export default function AppProvider({ children }: Props) {
   const [average, setAverage] = useState<Average>(null);
   const [roomEstimateOptions, setRoomEstimateOptions] =
     useState<PossibleEstimates>([]);
-  const [serverReady, setServerReady] = useState(false);
   const [status, setStatus] = useState<Status>("estimating");
   const [user, setUser] = useState<User>();
   const [users, setUsers] = useState<User[]>([]);
+  const [roomId, setRoomId] = useState<string>();
 
   useEffect(() => {
-    if (!serverReady) return;
+    if (!roomId) {
+      return;
+    }
     const newSocket = io(`${process.env.NEXT_PUBLIC_SERVER}`);
     newSocket.on("connect_error", (err) => console.warn("err", err));
 
@@ -91,7 +98,7 @@ export default function AppProvider({ children }: Props) {
     return () => {
       newSocket.disconnect();
     };
-  }, [serverReady]);
+  }, [roomId]);
 
   const changeStatus = (status: Status) => {
     socket.emit("changeStatus", { status });
@@ -104,6 +111,7 @@ export default function AppProvider({ children }: Props) {
   };
   const removeUser = () => {
     socket.emit("removeUser");
+    setRoomId(null);
   };
 
   const updateRoomOptions = (options: RoomOptions) => {
@@ -118,53 +126,22 @@ export default function AppProvider({ children }: Props) {
     socket.emit("userJoin", { name, room });
   };
 
-  const checkHealth = async () => {
-    const healthUrl = `${process.env.NEXT_PUBLIC_SERVER}/health`;
-    try {
-      await axios.get(healthUrl);
-      setServerReady(true);
-      return null;
-    } catch (error) {
-      let tries = 5;
-      const interval = setInterval(async () => {
-        try {
-          await axios.get(healthUrl);
-          setServerReady(true);
-          clearInterval(interval);
-        } catch (error) {
-          console.log("error", error);
-        }
-        tries -= 1;
-        if (tries < 1) clearInterval(interval);
-      }, 2000);
-      return interval;
-    }
-  };
-
-  useEffect(() => {
-    const interval = checkHealth();
-
-    return () => {
-      interval.then((inv) => clearInterval(inv));
-    };
-  }, []);
-
   return (
     <SocketContext.Provider
       value={{
         average: average,
-        roomStatus: status,
-        serverReady: serverReady,
-        user: user,
-        users: users,
-        estimateOptions: roomEstimateOptions,
-        updateRoomOptions,
         changeStatus,
         disconnect,
         estimate,
+        estimateOptions: roomEstimateOptions,
         removeUser,
         reset,
+        roomStatus: status,
+        setRoomId,
+        updateRoomOptions,
+        user: user,
         userJoin,
+        users: users,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { useSockets } from "../../components/provider/SocketProvider";
 import PageLayout from "../../components/PageLayout";
@@ -10,7 +10,11 @@ import Head from "next/head";
 const Login = () => {
   const router = useRouter();
   const { uuid } = router.query;
-  const { userJoin } = useSockets();
+  const { setRoomId, userJoin } = useSockets();
+
+  useMemo(() => {
+    setRoomId(uuid as string);
+  }, [uuid]);
 
   const [name, setName] = useState("");
 

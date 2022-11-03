@@ -1,16 +1,14 @@
 import { nanoid } from "nanoid";
 import { ROOM_STRING_SIZE, USER_NAME_SIZE } from "../types/constants";
-import { SocketContext } from "../components/provider/SocketProvider";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
 import PageLayout from "../components/PageLayout";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Input from "../components/input";
 import Head from "next/head";
 
 const App = () => {
   const router = useRouter();
-  const { serverReady } = useContext(SocketContext);
   const [roomName, setRoomName] = useState("");
 
   function generateRoomId() {
@@ -39,11 +37,7 @@ const App = () => {
       </header>
 
       <div className="flex flex-col items-center space-y-5">
-        <Button
-          disabled={!serverReady}
-          className="w-full mt-5"
-          onClick={generateRoomId}
-        >
+        <Button className="w-full mt-5" onClick={generateRoomId}>
           Create a Room
         </Button>
 
