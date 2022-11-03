@@ -1,5 +1,6 @@
 import { Server, Socket } from "socket.io";
 import {
+  Config,
   EmitFunction,
   SocketIncomingEvents,
   SocketOutgoingEvents,
@@ -15,7 +16,8 @@ class RoomService {
     private io: Server<SocketIncomingEvents, SocketOutgoingEvents>,
     private socket: Socket<SocketIncomingEvents, SocketOutgoingEvents>,
     private roomId: string,
-    private username: string
+    private username: string,
+    private config: Config | undefined
   ) {}
 
   async init() {
@@ -41,7 +43,9 @@ class RoomService {
         id: this.roomId,
         average: -1,
         status: "estimating",
-        possibleEstimates: [-1, 0.5, 1, 2, 3, 5, 8, 13],
+        possibleEstimates: this.config?.possibleEstimates || [
+          -1, 0.5, 1, 2, 3, 5, 8, 13,
+        ],
       };
       this.addToMax();
       return true;
@@ -65,26 +69,26 @@ class RoomService {
   emitFirstConnect() {
     this.emitToSelf("firstConnect", [this.roomId]);
   }
-  emitRoomOptions() {
-    this.emit("roomOptions", [
+  emitConfig() {
+    this.emit("config", [
       { possibleEstimates: this.store.room.possibleEstimates },
     ]);
   }
 
   // Listeners
 
-  onUpdateRoomOptions() {
-    this.socket.on("updateRoomOptions", (options) => {
+  onUpdateConfig() {
+    this.socket.on("updateConfig", (options) => {
       this.store.room.possibleEstimates = options.possibleEstimates;
 
       // Only reset estimates if room is in estimating state
       if (this.store.room.status === "revealing") {
-        return this.emitRoomOptions();
+        return this.emitConfig();
       }
 
       this.clearEstimates();
       this.emitUsers();
-      this.emitRoomOptions();
+      this.emitConfig();
     });
   }
 

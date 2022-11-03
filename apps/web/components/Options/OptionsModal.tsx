@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { RoomOptions } from "../../types/aliases";
+import { Config } from "../../types/aliases";
 import Modal from "../Modal";
 import { SocketContext } from "../provider/SocketProvider";
 import CustomEstimates from "./CustomEstimates";
@@ -12,22 +12,22 @@ type Props = {
 export default function OptionsModal(props: Props) {
   const { updateRoomOptions } = useContext(SocketContext);
   const [message, setMessage] = useState("");
-  const [updatedOptions, setNewOptions] = useState<RoomOptions>({
+  const [updatedConfigOptions, setNewConfigOptions] = useState<Config>({
     possibleEstimates: [],
   });
 
   function onSave() {
-    if (updatedOptions.possibleEstimates.length === 0) {
+    if (updatedConfigOptions.possibleEstimates.length === 0) {
       setMessage("You should at least have one estimate option!");
       return;
     }
     setMessage("");
-    updateRoomOptions(updatedOptions);
+    updateRoomOptions(updatedConfigOptions);
     props.close();
   }
 
-  function updateOptions(newOptions: Partial<RoomOptions>) {
-    setNewOptions({ ...updatedOptions, ...newOptions });
+  function updateConfig(newConfigOptions: Partial<Config>) {
+    setNewConfigOptions({ ...updatedConfigOptions, ...newConfigOptions });
   }
 
   return (
@@ -37,7 +37,7 @@ export default function OptionsModal(props: Props) {
       onSave={onSave}
       message={message}
     >
-      <CustomEstimates updateOptions={updateOptions} />
+      <CustomEstimates updateConfig={updateConfig} />
     </Modal>
   );
 }

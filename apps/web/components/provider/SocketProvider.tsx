@@ -1,7 +1,7 @@
 import {
   Average,
   PossibleEstimates,
-  RoomOptions,
+  Config,
   SocketIncomingEvents,
   SocketOutgoingEvents,
   Status,
@@ -16,6 +16,7 @@ import React, {
   useState,
 } from "react";
 import { useRouter } from "next/router";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 type Values = {
   average: Average;
@@ -27,7 +28,7 @@ type Values = {
   reset: () => void;
   roomStatus: Status;
   setRoomId: Dispatch<SetStateAction<string>>;
-  updateRoomOptions: (args: RoomOptions) => void;
+  updateRoomOptions: (args: Config) => void;
   user: User | undefined;
   userJoin: (name: string, room: string) => void;
   users: User[];
@@ -56,6 +57,10 @@ type Props = {
 
 export default function AppProvider({ children }: Props) {
   const router = useRouter();
+  const [config, setConfig] = useLocalStorage<Config | undefined>(
+    "config",
+    undefined
+  );
   const [socket, setSocket] =
     useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
   const [average, setAverage] = useState<Average>(null);
@@ -90,8 +95,8 @@ export default function AppProvider({ children }: Props) {
     });
     newSocket.on("roomStatus", (status: Status) => setStatus(status));
 
-    newSocket.on("roomOptions", (options: RoomOptions) => {
-      setRoomEstimateOptions(options.possibleEstimates.sort((a, b) => a - b));
+    newSocket.on("config", (config: Config) => {
+      setRoomEstimateOptions(config.possibleEstimates.sort((a, b) => a - b));
     });
 
     setSocket(newSocket);
@@ -114,8 +119,9 @@ export default function AppProvider({ children }: Props) {
     setRoomId(null);
   };
 
-  const updateRoomOptions = (options: RoomOptions) => {
-    socket.emit("updateRoomOptions", options);
+  const updateRoomOptions = (config: Config) => {
+    setConfig(config);
+    socket.emit("updateConfig", config);
   };
 
   const reset = () => {
@@ -123,7 +129,7 @@ export default function AppProvider({ children }: Props) {
     // socket.emit("reset");
   };
   const userJoin = (name: string, room: string) => {
-    socket.emit("userJoin", { name, room });
+    socket.emit("userJoin", { name, room, config });
   };
 
   return (

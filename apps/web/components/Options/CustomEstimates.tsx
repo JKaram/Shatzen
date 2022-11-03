@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { useContext, useEffect, useState } from "react";
-import { PossibleEstimate, RoomOptions } from "../../types/aliases";
+import { PossibleEstimate, Config } from "../../types/aliases";
 import {
   numberToNewValue,
   POSSIBLE_ESTIMATES,
@@ -9,10 +9,10 @@ import {
 import { SocketContext } from "../provider/SocketProvider";
 
 type Props = {
-  updateOptions: (arg: Partial<RoomOptions>) => void;
+  updateConfig: (arg: Partial<Config>) => void;
 };
 
-export default function CustomEstimates({ updateOptions }: Props) {
+export default function CustomEstimates({ updateConfig }: Props) {
   const { estimateOptions } = useContext(SocketContext);
   const [newEstimates, setNewEstimate] = useState(estimateOptions);
 
@@ -25,7 +25,7 @@ export default function CustomEstimates({ updateOptions }: Props) {
   }
 
   useEffect(() => {
-    updateOptions({ possibleEstimates: newEstimates });
+    updateConfig({ possibleEstimates: newEstimates });
   }, [newEstimates]);
 
   return (

@@ -11,7 +11,6 @@ export const Nav = () => {
   const [show, setShow] = React.useState(false);
 
   function closeOptions() {
-    console.log("close");
     setShow(false);
   }
   function openOptions() {

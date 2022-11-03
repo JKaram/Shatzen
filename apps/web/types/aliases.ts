@@ -17,11 +17,15 @@ export type Status = "estimating" | "revealing";
 export type UserColor = typeof USER_COLOURS[number];
 
 export type SocketIncomingEvents = {
-  userJoin: (args: { name: string; room: string }) => void;
+  userJoin: (args: {
+    name: string;
+    room: string;
+    config: Config | undefined;
+  }) => void;
   changeStatus: (args: { status: Status }) => void;
   removeUser: () => void;
   estimate: (args: { estimate: number }) => void;
-  updateRoomOptions: (args: RoomOptions) => void;
+  updateConfig: (args: Config) => void;
 };
 
 export type SocketOutgoingEvents = {
@@ -38,8 +42,8 @@ type KeyValue<T> = {
   };
 }[keyof T];
 
-export type RoomOptions = {
+export type Config = {
   possibleEstimates: PossibleEstimates;
 };
 
-export type RoomOption = KeyValue<RoomOptions>;
+export type RoomOption = KeyValue<Config>;
