@@ -23,7 +23,7 @@ const socketLoader = async ({ server, mongoCollection }: SocketLoaderArgs) => {
 
   io.on("connection", async (socket) => {
     socket.on("userJoin", async ({ name, room: roomId }) => {
-      const room = new RoomService(io, socket, roomId, name);
+      const room = new RoomService(io, socket, roomId.toLowerCase(), name);
       const success = await room.init();
       if (success) {
         room.emitUsers();
