@@ -1,4 +1,5 @@
 import { Server, Socket } from "socket.io";
+import { DEFAULT_POSSIBLE_ESTIMATES } from "../constants";
 import {
   Config,
   EmitFunction,
@@ -43,9 +44,8 @@ class RoomService {
         id: this.roomId,
         average: -1,
         status: "estimating",
-        possibleEstimates: this.config?.possibleEstimates || [
-          -1, 0.5, 1, 2, 3, 5, 8, 13,
-        ],
+        possibleEstimates:
+          this.config?.possibleEstimates || DEFAULT_POSSIBLE_ESTIMATES,
       };
       this.addToMax();
       return true;
