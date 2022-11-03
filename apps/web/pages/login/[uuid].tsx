@@ -20,7 +20,6 @@ const Login = () => {
 
   function updateName(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
-
     setName(value);
   }
 

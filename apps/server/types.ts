@@ -4,8 +4,12 @@ export type SocketIncomingEvents = {
   changeStatus: (args: { status: Status }) => void;
   estimate: (args: { estimate: number }) => void;
   removeUser: () => void;
-  userJoin: (args: { name: string; room: string }) => void;
-  updateRoomOptions: (args: { possibleEstimates: number[] }) => void;
+  userJoin: (args: {
+    name: string;
+    room: string;
+    config: Config | undefined;
+  }) => void;
+  updateConfig: (args: { possibleEstimates: number[] }) => void;
 };
 
 export type SocketOutgoingEvents = {
@@ -13,7 +17,7 @@ export type SocketOutgoingEvents = {
   firstConnect: (roomId: string) => void;
   roomStatus: (status: Status) => void;
   users: (users: Record<string, User>) => void;
-  roomOptions: (options: { possibleEstimates: number[] }) => void;
+  config: (config: { possibleEstimates: number[] }) => void;
 };
 
 export type EmitFunction = <T extends keyof SocketOutgoingEvents>(
@@ -40,6 +44,6 @@ export type Room = {
   possibleEstimates: number[];
 };
 
-export type RoomOptions = {
+export type Config = {
   possibleEstimates: number[];
 };

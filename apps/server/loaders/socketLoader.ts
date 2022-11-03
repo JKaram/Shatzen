@@ -22,17 +22,23 @@ const socketLoader = async ({ server, mongoCollection }: SocketLoaderArgs) => {
   io.adapter(createAdapter(mongoCollection));
 
   io.on("connection", async (socket) => {
-    socket.on("userJoin", async ({ name, room: roomId }) => {
-      const room = new RoomService(io, socket, roomId.toLowerCase(), name);
+    socket.on("userJoin", async ({ name, room: roomId, config }) => {
+      const room = new RoomService(
+        io,
+        socket,
+        roomId.toLowerCase(),
+        name,
+        config
+      );
       const success = await room.init();
       if (success) {
         room.emitUsers();
         room.emitStatus(true);
         room.emitAverage(true);
         room.emitFirstConnect();
-        room.emitRoomOptions();
+        room.emitConfig();
 
-        room.onUpdateRoomOptions();
+        room.onUpdateConfig();
         room.onChangeStatus();
         room.onEstimate();
         room.onRemoveUser();
