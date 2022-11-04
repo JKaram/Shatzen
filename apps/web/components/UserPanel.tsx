@@ -12,9 +12,7 @@ export const UserPanel = () => {
 
   return (
     <div
-      className={classNames(
-        "flex flex-wrap my-2 space-x-1 w-full justify-center"
-      )}
+      className={classNames("flex flex-wrap my-2 gap-2 w-full justify-center")}
     >
       {estimateOptions.map((possibleEstimate) => {
         return (

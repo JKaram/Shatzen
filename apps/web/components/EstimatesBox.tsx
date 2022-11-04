@@ -35,7 +35,7 @@ export const EstimatesBox = () => {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center space-x-4 p-7 ">
+    <div className="flex flex-wrap items-center justify-center gap-2 p-7 ">
       {users.map((user) => {
         return (
           <UserCard
