@@ -33,7 +33,7 @@ type Values = {
   userJoin: (name: string, room: string) => void;
   users: User[];
 };
-const initalValues: Values = {
+const initialValues: Values = {
   average: null,
   changeStatus: () => undefined,
   disconnect: () => undefined,
@@ -49,7 +49,7 @@ const initalValues: Values = {
   users: [],
 };
 
-export const SocketContext = createContext<Values>(initalValues);
+export const SocketContext = createContext<Values>(initialValues);
 
 type Props = {
   children: React.ReactNode;
