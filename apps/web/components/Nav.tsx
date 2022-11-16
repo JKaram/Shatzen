@@ -111,7 +111,7 @@ function NavButton({
           {NavButtonTypes[type].icon}
         </button>
         {type === "share" ? (
-          <span className="text-sm absolute top-12">
+          <span className="text-sm text-center absolute top-12">
             {copied ? "Link Copied!" : null}
           </span>
         ) : null}

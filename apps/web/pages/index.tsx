@@ -27,21 +27,21 @@ const App = () => {
   }
 
   return (
-    <PageLayout>
+    <PageLayout className="flex flex-col ">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <h2 className="font-bold text-4xl">
-        <br></br> Scrum Poker made <TextAnimation />
+      <h2 className="font-bold text-5xl transition-all">
+        <br /> Scrum Poker <br /> made <TextAnimation />
       </h2>
 
-      <span className="leading-loose text-center">
-        Customize the way you estimate that works best
+      <span className="text-lg ">
+        A free tool for planning poker. <br /> No sign up required.
       </span>
 
-      <div className="flex flex-col bg-white items-center space-y-5 border-2 border-black p-4 rounded-lg shadow-base">
+      <div className="flex flex-col mt-5 bg-white items-center gap-5 border-2 border-black p-8 rounded-lg shadow-base">
         <Button className="w-full mt-5" onClick={generateRoomId}>
           Create a Room
         </Button>
