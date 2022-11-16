@@ -29,4 +29,7 @@ export const USER_COLOURS = [
   "#CAFCFF",
   "#F09C5F",
   "#FFCAEA",
+  "#CBCAFF",
+  "#FF5B5B",
+  "#5B93FF",
 ] as const;

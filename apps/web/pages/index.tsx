@@ -6,6 +6,7 @@ import PageLayout from "../components/PageLayout";
 import React, { useState } from "react";
 import Input from "../components/input";
 import Head from "next/head";
+import TextAnimation from "../components/TextAnimation";
 
 const App = () => {
   const router = useRouter();
@@ -26,17 +27,21 @@ const App = () => {
   }
 
   return (
-    <PageLayout>
+    <PageLayout className="flex flex-col ">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
-      <header className="flex flex-col items-center">
-        <h1 className="text-6xl">Shätzen</h1>
-        <h2 className="text-lg">Scrum Poker</h2>
-      </header>
 
-      <div className="flex flex-col items-center space-y-5">
+      <h2 className="font-bold text-5xl transition-all">
+        <br /> Scrum Poker <br /> made <TextAnimation />
+      </h2>
+
+      <span className="text-lg ">
+        A free tool for planning poker. <br /> No sign up required.
+      </span>
+
+      <div className="flex flex-col mt-5 bg-white items-center gap-5 border-2 border-black p-8 rounded-lg shadow-base">
         <Button className="w-full mt-5" onClick={generateRoomId}>
           Create a Room
         </Button>
