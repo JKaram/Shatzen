@@ -33,28 +33,33 @@ const Login = () => {
         <title>Shätzen | Login</title>
         <meta property="og:title" content="Room login" key="title" />
       </Head>
-      <span className="text-lg">Enter your name</span>
-      <form
-        className="flex flex-col w-full mt-5 space-y-4"
-        onSubmit={(e) => {
-          e.preventDefault();
-          userJoin(name, sanitizeUuid);
-        }}
-      >
-        <Input
-          autoFocus
-          onChange={updateName}
-          placeholder="Name"
-          maxLength={USER_NAME_SIZE}
-        />
-        <Button
-          className="w-32 mt-5"
-          type="submit"
-          disabled={!name || !name.trim() || name.length < USER_STRING_MIN_SIZE}
+      <div className="flex flex-col bg-white items-center space-y-5 border-2 border-black p-8 rounded-lg shadow-base">
+        <span className="text-lg">Enter your name</span>
+
+        <form
+          className="flex flex-col w-full mt-5 space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            userJoin(name, sanitizeUuid);
+          }}
         >
-          Join Room
-        </Button>
-      </form>
+          <Input
+            autoFocus
+            onChange={updateName}
+            placeholder="Name"
+            maxLength={USER_NAME_SIZE}
+          />
+          <Button
+            className="w-32 mt-5"
+            type="submit"
+            disabled={
+              !name || !name.trim() || name.length < USER_STRING_MIN_SIZE
+            }
+          >
+            Join Room
+          </Button>
+        </form>
+      </div>
     </PageLayout>
   );
 };

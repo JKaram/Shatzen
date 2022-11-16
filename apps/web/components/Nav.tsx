@@ -1,13 +1,11 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import HomeButton from "./HomeButton";
 import OptionsModal from "./Options/OptionsModal";
-import OptionsButton from "./OptionsButton";
-import RoomLink from "./RoomLink";
 import { CogIcon, ShareIcon } from "@heroicons/react/solid";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import { useSockets } from "./provider/SocketProvider";
+import { motion } from "framer-motion";
 
 export const Nav = () => {
   const { removeUser } = useSockets();
@@ -28,27 +26,39 @@ export const Nav = () => {
     router.push("/");
   }
 
-  const roomLogin = router.pathname.includes("/login/");
   const roomPage = !router.pathname.includes("/room/");
 
   return (
     <>
       <OptionsModal show={show} close={closeOptions} />
-      <nav
-        className={classNames(
-          "flex justify-between text-2xl min-h-[100px] p-2"
-        )}
-      >
-        <h1 className="cursor-pointer" onClick={goHome}>
+
+      <nav className={classNames("flex justify-between text-2xl  p-2")}>
+        <h1 className="cursor-pointer font-bold text-3xl" onClick={goHome}>
           Shatzën
         </h1>
 
         {!roomPage && (
           <>
-            <div className="flex gap-2">
+            <motion.div
+              className="flex gap-2"
+              key={router.route}
+              initial="initial"
+              animate="animate"
+              variants={{
+                initial: {
+                  opacity: 0,
+                  x: 100,
+                },
+                animate: {
+                  opacity: 1,
+                  x: 0,
+                },
+              }}
+              exit={{ opacity: 0, x: 100 }}
+            >
               <NavButton type="options" onClick={openOptions} />
               <NavButton type="share" />
-            </div>
+            </motion.div>
           </>
         )}
       </nav>
