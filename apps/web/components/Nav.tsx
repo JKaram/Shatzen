@@ -32,7 +32,11 @@ export const Nav = () => {
     <>
       <OptionsModal show={show} close={closeOptions} />
 
-      <nav className={classNames("flex justify-between text-2xl  p-2")}>
+      <nav
+        className={classNames(
+          "flex justify-between text-2xl fixed h-12 left-0 top-0 w-full p-2"
+        )}
+      >
         <h1 className="cursor-pointer font-bold text-3xl" onClick={goHome}>
           Shatzën
         </h1>

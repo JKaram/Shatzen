@@ -7,6 +7,27 @@ import React, { useState } from "react";
 import Input from "../components/input";
 import Head from "next/head";
 import TextAnimation from "../components/TextAnimation";
+import { PlusIcon, ShareIcon, StarIcon } from "@heroicons/react/outline";
+
+const iconStyle = "h-10 w-10";
+
+const steps = [
+  {
+    label: "Create",
+    icon: <PlusIcon className={iconStyle} />,
+    description: "Create a room and invite your team.",
+  },
+  {
+    label: "Share",
+    icon: <ShareIcon className={iconStyle} />,
+    description: "Send the link to your team.",
+  },
+  {
+    label: "Vote",
+    icon: <StarIcon className={iconStyle} />,
+    description: "Start Estimating, in real time.",
+  },
+];
 
 const App = () => {
   const router = useRouter();
@@ -27,27 +48,35 @@ const App = () => {
   }
 
   return (
-    <PageLayout className="flex flex-col ">
+    <PageLayout className="flex flex-col">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <h2 className="font-bold text-5xl transition-all">
-        <br /> Scrum Poker <br /> made <TextAnimation />
-      </h2>
+      <div className="mt-2">
+        <h2 className="font-bold text-5xl transition-all">
+          Scrum Poker <br /> made <TextAnimation />
+        </h2>
 
-      <span className="text-lg ">
-        A free tool for planning poker. <br /> No sign up required.
-      </span>
+        <span className="text-lg">A free tool. No sign up required.</span>
+      </div>
 
-      <div className="flex flex-col mt-5 bg-white items-center gap-5 border-2 border-black p-8 rounded-lg shadow-base">
-        <Button className="w-full mt-5" onClick={generateRoomId}>
+      <ul className="flex flex-col flex-grow mt-4 w-full justify-around">
+        {steps.map((step) => (
+          <ListItem
+            label={step.label}
+            icon={step.icon}
+            description={step.description}
+          />
+        ))}
+      </ul>
+
+      <div className="flex flex-col justify-center bg-white items-center gap-5 border-2 border-black p-8 rounded-lg shadow-base">
+        <Button className="w-full mt-5 bg-amber-200" onClick={generateRoomId}>
           Create a Room
         </Button>
-
         <span>Or</span>
-
         <form
           className="flex flex-col"
           onSubmit={(e) => {
@@ -79,3 +108,19 @@ const App = () => {
 };
 
 export default App;
+
+export const ListItem = (props: {
+  label: string;
+  icon: any;
+  description: string;
+}) => {
+  return (
+    <li className="flex items-center">
+      {props.icon}
+      <div className="flex flex-col leading-3 ml-2">
+        <h1 className="font-bold text-lg">{props.label}</h1>
+        <span className="text-sm">{props.description}</span>
+      </div>
+    </li>
+  );
+};

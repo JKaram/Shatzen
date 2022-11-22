@@ -26,7 +26,7 @@ export default function TextAnimation() {
         background:
           USER_COLOURS[Math.floor(Math.random() * USER_COLOURS.length)],
       }}
-      className=" bg-red-500 px-1 rounded"
+      className="px-1 rounded"
     >
       {textArray.map((item, index) => (
         <span key={index}>{item}</span>

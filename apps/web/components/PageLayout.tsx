@@ -3,6 +3,7 @@ import { Nav } from "./Nav";
 import { useRouter } from "next/router";
 import React from "react";
 import classNames from "classnames";
+import Footer from "./Footer";
 
 type Props = { children: React.ReactNode; className?: string };
 
@@ -34,13 +35,14 @@ export default function PageLayout({ children, className = undefined }: Props) {
       >
         <main
           className={classNames(
-            "px-2 flex flex-col flex-grow h-screen mt-4",
+            "px-2 h-[calc(100vh-96px)] mt-[44px]",
             className
           )}
         >
           {children}
         </main>
       </motion.div>
+      <Footer />
     </div>
   );
 }
