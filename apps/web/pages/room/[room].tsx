@@ -21,7 +21,7 @@ const Room = () => {
   if (!router.isReady) return <div>Loading</div>;
 
   return (
-    <PageLayout>
+    <PageLayout className="flex flex-col justify-center">
       <Head>
         <title>Shätzen | {room}</title>
         <meta property="og:title" content="Estimating room" key="title" />

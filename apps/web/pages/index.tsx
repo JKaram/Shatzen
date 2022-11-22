@@ -48,32 +48,34 @@ const App = () => {
   }
 
   return (
-    <PageLayout className="flex flex-col">
+    <PageLayout className="flex flex-col items-center align-middle md:flex-row md:justify-between item">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="mt-2">
-        <h2 className="font-bold text-5xl transition-all">
-          Scrum Poker <br /> made <TextAnimation />
-        </h2>
+      <div className="flex flex-col flex-grow justify-center">
+        <div className="mt-2">
+          <h2 className="font-bold text-5xl transition-all">
+            Scrum Poker <br /> made <TextAnimation />
+          </h2>
 
-        <span className="text-lg">A free tool. No sign up required.</span>
+          <span className="text-lg">A free tool. No sign up required.</span>
+        </div>
+
+        <ul className="flex flex-col gap-5 mt-4 w-full justify-around">
+          {steps.map((step) => (
+            <ListItem
+              label={step.label}
+              icon={step.icon}
+              description={step.description}
+            />
+          ))}
+        </ul>
       </div>
 
-      <ul className="flex flex-col flex-grow mt-4 w-full justify-around">
-        {steps.map((step) => (
-          <ListItem
-            label={step.label}
-            icon={step.icon}
-            description={step.description}
-          />
-        ))}
-      </ul>
-
-      <div className="flex flex-col justify-center bg-white items-center gap-5 border-2 border-black p-8 rounded-lg shadow-base">
-        <Button className="w-full mt-5 bg-amber-200" onClick={generateRoomId}>
+      <div className="flex flex-col flex-grow justify-center bg-white items-center gap-5 border-2 border-black p-8 rounded-lg shadow-base">
+        <Button className="w-full h-16  bg-amber-200" onClick={generateRoomId}>
           Create a Room
         </Button>
         <span>Or</span>

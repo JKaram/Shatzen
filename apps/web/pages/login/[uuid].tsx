@@ -28,7 +28,7 @@ const Login = () => {
   if (!sanitizeUuid) return "UUID Error!";
 
   return (
-    <PageLayout className="">
+    <PageLayout className="flex flex-col justify-center">
       <Head>
         <title>Shätzen | Login</title>
         <meta property="og:title" content="Room login" key="title" />

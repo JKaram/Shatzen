@@ -98,7 +98,7 @@ function NavButton({
 
   if (type === "share")
     return (
-      <div className="flex flex-col items-center">
+      <div className="">
         <button
           onClick={() => {
             setCopied(true);
@@ -115,8 +115,14 @@ function NavButton({
           {NavButtonTypes[type].icon}
         </button>
         {type === "share" ? (
-          <span className="text-sm text-center absolute top-12">
-            {copied ? "Link Copied!" : null}
+          <span className="text-sm text-center absolute right-1 top-12">
+            {copied ? (
+              <>
+                Link
+                <br />
+                Copied!
+              </>
+            ) : null}
           </span>
         ) : null}
       </div>
