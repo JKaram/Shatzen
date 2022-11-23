@@ -1,8 +1,8 @@
-# Shatzen
+# Shatzën
 
 ## Scrum poker
 
-Monorepo for shatzen scrum poker app.
+Monorepo for Shatzën scrum poker app.
 
 More docs to come
 
