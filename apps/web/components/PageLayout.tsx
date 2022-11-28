@@ -13,7 +13,7 @@ export default function PageLayout({ children, className = undefined }: Props) {
   return (
     <div
       className={classNames(
-        "max-w-md text-primary min-h-screen m-auto overflow-hidden transition-all md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl"
+        "max-w-md text-primary min-h-screen m-auto transition-all md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl"
       )}
     >
       <Nav />

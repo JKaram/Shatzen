@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import OptionsModal from "./Options/OptionsModal";
-import { CogIcon, ShareIcon } from "@heroicons/react/solid";
+import { CogIcon, ShareIcon, ArrowUpIcon } from "@heroicons/react/solid";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import { useSockets } from "./provider/SocketProvider";
 import { motion } from "framer-motion";
@@ -34,7 +34,7 @@ export const Nav = () => {
 
       <nav
         className={classNames(
-          "flex justify-between text-2xl fixed h-12 left-0 top-0 w-full p-2"
+          "flex justify-between bg-[#efefef] text-2xl fixed h-12 left-0 top-0 w-full p-2"
         )}
       >
         <h1 className="cursor-pointer font-bold text-3xl" onClick={goHome}>
@@ -85,6 +85,7 @@ function NavButton({
   type: ButtonTypes;
 }) {
   const router = useRouter();
+  const { users } = useSockets();
   const [, copy] = useCopyToClipboard();
   const [copied, setCopied] = useState(false);
 
@@ -98,7 +99,17 @@ function NavButton({
 
   if (type === "share")
     return (
-      <div className="">
+      <div className="relative">
+        {users.length <= 1 && (
+          <div className="absolute -bottom-20 text-center right-16 flex">
+            <span className="whitespace-nowrap text-lg leading-tight">
+              You look lonely
+              <br />
+              Invite your team
+            </span>
+            <ArrowUpIcon className="h-6 w-6 absolute -right-5 -top-5 animate-arrow-anim rotate-45" />
+          </div>
+        )}
         <button
           onClick={() => {
             setCopied(true);

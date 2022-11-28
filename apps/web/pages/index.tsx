@@ -48,7 +48,7 @@ const App = () => {
   }
 
   return (
-    <PageLayout className="flex flex-col items-center align-middle md:flex-row md:justify-between item">
+    <PageLayout className="flex flex-col items-center align-middle md:flex-row md:justify-between">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />

@@ -19,9 +19,17 @@ module.exports = {
           "90%": { opacity: "1" },
           "100%": { opacity: "0" },
         },
+        arrow: {
+          "0%": { transform: "translateY(.2em) translateX(0) rotate(45deg)" },
+          "50%": {
+            transform: "translateY(0) translateX(.2em) rotate(45deg)",
+          },
+          "100%": { transform: "translateY(.2em) translateX(0) rotate(45deg)" },
+        },
       },
       animation: {
         "text-anim": "text 6s ease infinite",
+        "arrow-anim": "arrow 1s ease infinite",
       },
     },
   },
