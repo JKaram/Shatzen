@@ -3,6 +3,7 @@ import { SocketContext } from "./provider/SocketProvider";
 import { User } from "../types/aliases";
 import React, { useContext } from "react";
 import classNames from "classnames";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Props = {
   user: User;
