@@ -42,7 +42,10 @@ class RoomService {
       };
       this.store.room = {
         id: this.roomId,
-        average: -1,
+        calculations: {
+          average: -1,
+          mode: null,
+        },
         status: "estimating",
         possibleEstimates:
           this.config?.possibleEstimates || DEFAULT_POSSIBLE_ESTIMATES,
@@ -63,8 +66,8 @@ class RoomService {
   emitStatus(toSelf?: boolean) {
     this.emit("roomStatus", [this.store.room.status], toSelf);
   }
-  emitAverage(toSelf?: boolean) {
-    this.emit("average", [this.store.room.average], toSelf);
+  emitCalculations(toSelf?: boolean) {
+    this.emit("calculations", [this.store.room.calculations], toSelf);
   }
   emitFirstConnect() {
     this.emitToSelf("firstConnect", [this.roomId]);
@@ -97,17 +100,42 @@ class RoomService {
       this.store.room.status = status;
 
       let totalCount = 0;
+      const modeMap = {};
+
       const total = Object.values(
         this.store.users as Record<string, User>
       ).reduce<number>((acc, cur) => {
         if (!cur.estimate || cur.estimate <= 0) return acc;
         totalCount += 1;
+
+        if (modeMap[cur.estimate]) {
+          modeMap[cur.estimate] += 1;
+        } else {
+          modeMap[cur.estimate] = 1;
+        }
+
         return acc + cur.estimate;
       }, 0);
-      this.store.room.average = total / totalCount;
+
+      this.store.room.calculations.average = total / totalCount;
+
+      let highestValue = 0;
+      let highestValueKey = -Infinity;
+
+      for (const key in modeMap) {
+        const value = modeMap[key];
+        if (value >= highestValue && Number(key) > highestValueKey) {
+          highestValue = value;
+          highestValueKey = Number(key);
+        }
+      }
+
+      this.store.room.calculations.mode = Object.keys(modeMap)
+        .filter((mode) => modeMap[mode] === highestValue)
+        .map((mode) => Number(mode));
 
       if (status === "revealing") {
-        this.emitAverage();
+        this.emitCalculations();
       } else {
         this.clearEstimates();
       }

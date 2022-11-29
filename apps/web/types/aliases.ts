@@ -13,6 +13,10 @@ export type PossibleEstimates = PossibleEstimate[];
 export type AppStatus = "loading" | "ready";
 export type Estimate = number | null;
 export type Average = number | null;
+export type Calculations = {
+  average: Average;
+  mode: number[] | null;
+};
 export type Status = "estimating" | "revealing";
 export type UserColor = typeof USER_COLOURS[number];
 

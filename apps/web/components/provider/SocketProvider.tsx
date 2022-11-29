@@ -1,7 +1,7 @@
 import {
-  Average,
-  PossibleEstimates,
+  Calculations,
   Config,
+  PossibleEstimates,
   SocketIncomingEvents,
   SocketOutgoingEvents,
   Status,
@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 type Values = {
-  average: Average;
+  calculations: Calculations;
   changeStatus: (status: string) => void;
   disconnect: () => void;
   estimate: (estimate: number) => void;
@@ -34,7 +34,10 @@ type Values = {
   users: User[];
 };
 const initialValues: Values = {
-  average: null,
+  calculations: {
+    average: null,
+    mode: null,
+  },
   changeStatus: () => undefined,
   disconnect: () => undefined,
   estimate: () => undefined,
@@ -63,7 +66,10 @@ export default function AppProvider({ children }: Props) {
   );
   const [socket, setSocket] =
     useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
-  const [average, setAverage] = useState<Average>(null);
+  const [calculations, setCalculations] = useState<Calculations>({
+    average: null,
+    mode: null,
+  });
   const [roomEstimateOptions, setRoomEstimateOptions] =
     useState<PossibleEstimates>([]);
   const [status, setStatus] = useState<Status>("estimating");
@@ -90,8 +96,8 @@ export default function AppProvider({ children }: Props) {
 
     newSocket.on("firstConnect", (roomId) => router.push(`/room/${roomId}`));
 
-    newSocket.on("average", (average: Average) => {
-      setAverage(average);
+    newSocket.on("calculations", (updatedCalculations: Calculations) => {
+      setCalculations((prev) => ({ ...prev, ...updatedCalculations }));
     });
     newSocket.on("roomStatus", (status: Status) => setStatus(status));
 
@@ -135,7 +141,7 @@ export default function AppProvider({ children }: Props) {
   return (
     <SocketContext.Provider
       value={{
-        average: average,
+        calculations,
         changeStatus,
         disconnect,
         estimate,

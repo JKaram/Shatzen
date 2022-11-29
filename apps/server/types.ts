@@ -13,7 +13,7 @@ export type SocketIncomingEvents = {
 };
 
 export type SocketOutgoingEvents = {
-  average: (average: number) => void;
+  calculations: (calculations: Calculations) => void;
   firstConnect: (roomId: string) => void;
   roomStatus: (status: Status) => void;
   users: (users: Record<string, User>) => void;
@@ -37,8 +37,13 @@ export type User = {
   name: string;
 };
 
-export type Room = {
+export type Calculations = {
   average: number | null;
+  mode: number[] | null;
+};
+
+export type Room = {
+  calculations: Calculations;
   id: string;
   status: Status;
   possibleEstimates: number[];
