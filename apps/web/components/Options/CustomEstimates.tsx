@@ -30,12 +30,12 @@ export default function CustomEstimates({ updateConfig }: Props) {
 
   return (
     <div>
-      <h1 className="">Customize Options</h1>
-      <h2 className="text-sm mb-2">
+      <h1 className="text-lg">Customize Estimates</h1>
+      <h2 className="mb-2 text-sm text">
         Mix and match which options work best for your team
       </h2>
 
-      <ul className="flex flex-wrap gap-2 justify-center">
+      <ul className="flex flex-wrap justify-center gap-2">
         {POSSIBLE_ESTIMATES.filter((e) => e >= 0).map((estimate) => (
           <li key={estimate} onClick={() => modifyPossibleEstimate(estimate)}>
             <EstimateCard
@@ -78,8 +78,8 @@ function EstimateCard(props: {
     <div
       onClick={() => props.onClick(props.estimate)}
       className={classNames(
-        "w-10 h-16 rounded flex justify-center items-center border-2 border-slate-900",
-        props.selected ? "bg-sky-300" : undefined
+        " cursor-pointer w-9 h-12 rounded flex justify-center items-center border-black border",
+        props.selected ? "bg-green-200" : undefined
       )}
     >
       {numberToNewValue(props.estimate)}

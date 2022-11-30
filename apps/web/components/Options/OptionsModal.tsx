@@ -36,7 +36,9 @@ export default function OptionsModal(props: Props) {
       show={props.show}
       onSave={onSave}
       message={message}
+      cbOnClose={() => setMessage("")}
     >
+      <h2 className="mb-1 text-xl font-semibold">Room Options</h2>
       <CustomEstimates updateConfig={updateConfig} />
     </Modal>
   );

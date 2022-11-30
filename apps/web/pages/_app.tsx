@@ -5,6 +5,7 @@ import SocketProvider, {
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { ModalProvider } from "../components/provider/ModalProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -25,7 +26,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <SocketProvider>
-      <Component {...pageProps} />
+      <ModalProvider>
+        <Component {...pageProps} />
+      </ModalProvider>
     </SocketProvider>
   );
 }

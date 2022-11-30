@@ -25,7 +25,7 @@ export default function Button({
         "py-2 bg-white border-2 border-black rounded-md w-full transition active:translate-y-0 hover:-translate-y-0.5 mx-auto",
         disabled ? "opacity-50 hover:translate-y-0" : "",
         variant === "secondary"
-          ? "border-0 hover:translate-y-0 hover:bg-slate-50"
+          ? "border-0 hover:translate-y-0 hover:bg-slate-100"
           : undefined,
         className
       )}

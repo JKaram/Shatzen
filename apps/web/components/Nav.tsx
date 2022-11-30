@@ -1,23 +1,16 @@
 import classNames from "classnames";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import OptionsModal from "./Options/OptionsModal";
 import { CogIcon, ShareIcon, ArrowUpIcon } from "@heroicons/react/solid";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
 import { useSockets } from "./provider/SocketProvider";
 import { motion } from "framer-motion";
+import { useModal } from "./provider/ModalProvider";
 
 export const Nav = () => {
   const { removeUser } = useSockets();
+  const { open } = useModal();
   const router = useRouter();
-  const [show, setShow] = React.useState(false);
-
-  function closeOptions() {
-    setShow(false);
-  }
-  function openOptions() {
-    setShow(true);
-  }
 
   function goHome() {
     if (router.route.includes("/room/")) {
@@ -29,50 +22,46 @@ export const Nav = () => {
   const roomPage = !router.pathname.includes("/room/");
 
   return (
-    <>
-      <OptionsModal show={show} close={closeOptions} />
+    <nav
+      className={classNames(
+        "flex justify-between bg-[#efefef] text-2xl fixed h-12 left-0 top-0 w-full p-2"
+      )}
+    >
+      <h1 className="text-3xl font-bold cursor-pointer" onClick={goHome}>
+        Shatzën
+      </h1>
 
-      <nav
-        className={classNames(
-          "flex justify-between bg-[#efefef] text-2xl fixed h-12 left-0 top-0 w-full p-2"
-        )}
-      >
-        <h1 className="cursor-pointer font-bold text-3xl" onClick={goHome}>
-          Shatzën
-        </h1>
-
-        {!roomPage && (
-          <>
-            <motion.div
-              className="flex gap-2"
-              key={router.route}
-              initial="initial"
-              animate="animate"
-              variants={{
-                initial: {
-                  opacity: 0,
-                  x: 100,
-                },
-                animate: {
-                  opacity: 1,
-                  x: 0,
-                },
-              }}
-              exit={{ opacity: 0, x: 100 }}
-            >
-              <NavButton type="options" onClick={openOptions} />
-              <NavButton type="share" />
-            </motion.div>
-          </>
-        )}
-      </nav>
-    </>
+      {!roomPage && (
+        <>
+          <motion.div
+            className="flex gap-2"
+            key={router.route}
+            initial="initial"
+            animate="animate"
+            variants={{
+              initial: {
+                opacity: 0,
+                x: 100,
+              },
+              animate: {
+                opacity: 1,
+                x: 0,
+              },
+            }}
+            exit={{ opacity: 0, x: 100 }}
+          >
+            <NavButton type="options" onClick={open} />
+            <NavButton type="share" />
+          </motion.div>
+        </>
+      )}
+    </nav>
   );
 };
 
 const NavButtonTypes = {
-  options: { icon: <CogIcon className="h-6 w-6" />, title: "Options" },
-  share: { icon: <ShareIcon className="h-6 w-6" />, title: "Copy room link." },
+  options: { icon: <CogIcon className="w-6 h-6" />, title: "Options" },
+  share: { icon: <ShareIcon className="w-6 h-6" />, title: "Copy room link." },
 };
 
 type ButtonTypes = keyof typeof NavButtonTypes;
@@ -101,13 +90,13 @@ function NavButton({
     return (
       <div className="relative">
         {users.length <= 1 && (
-          <div className="absolute -bottom-20 text-center right-16 flex">
-            <span className="whitespace-nowrap text-lg leading-tight">
+          <div className="absolute flex text-center -bottom-20 right-16">
+            <span className="text-lg leading-tight whitespace-nowrap">
               You look lonely
               <br />
               Invite your team
             </span>
-            <ArrowUpIcon className="h-6 w-6 absolute -right-5 -top-5 animate-arrow-anim rotate-45" />
+            <ArrowUpIcon className="absolute w-6 h-6 rotate-45 -right-5 -top-5 animate-arrow-anim" />
           </div>
         )}
         <button
@@ -126,7 +115,7 @@ function NavButton({
           {NavButtonTypes[type].icon}
         </button>
         {type === "share" ? (
-          <span className="text-sm text-center absolute right-1 top-12">
+          <span className="absolute text-sm text-center right-1 top-12">
             {copied ? (
               <>
                 Link
@@ -143,7 +132,7 @@ function NavButton({
     <button
       onClick={onClick}
       title={NavButtonTypes[type].title}
-      className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white border-2 border-black"
+      className="inline-flex items-center justify-center w-10 h-10 bg-white border-2 border-black rounded-full"
     >
       {NavButtonTypes[type].icon}
     </button>
