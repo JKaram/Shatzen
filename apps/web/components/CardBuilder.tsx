@@ -25,6 +25,7 @@ export default function CardBuilder(props: Props) {
       <div className="flex justify-evenly">
         {USER_COLOURS.map((colour) => (
           <div
+            key={colour}
             onClick={() => setSelected({ ...selected, colour })}
             style={{ backgroundColor: colour }}
             className={classNames(

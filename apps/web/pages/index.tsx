@@ -54,18 +54,19 @@ const App = () => {
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="flex flex-col flex-grow justify-center">
+      <div className="flex flex-col justify-center flex-grow">
         <div className="mt-2">
-          <h2 className="font-bold text-5xl transition-all">
+          <h2 className="text-5xl font-bold transition-all">
             Scrum Poker <br /> made <TextAnimation />
           </h2>
 
           <span className="text-lg">A free tool. No sign up required.</span>
         </div>
 
-        <ul className="flex flex-col gap-5 mt-4 w-full justify-around">
+        <ul className="flex flex-col justify-around w-full gap-5 mt-4">
           {steps.map((step) => (
             <ListItem
+              key={step.label}
               label={step.label}
               icon={step.icon}
               description={step.description}
@@ -74,8 +75,8 @@ const App = () => {
         </ul>
       </div>
 
-      <div className="flex flex-col flex-grow justify-center bg-white items-center gap-5 border-2 border-black p-8 rounded-lg shadow-base">
-        <Button className="w-full h-16  bg-amber-200" onClick={generateRoomId}>
+      <div className="flex flex-col items-center justify-center flex-grow gap-5 p-8 bg-white border-2 border-black rounded-lg shadow-base">
+        <Button className="w-full h-16 bg-amber-200" onClick={generateRoomId}>
           Create a Room
         </Button>
         <span>Or</span>
@@ -119,8 +120,8 @@ export const ListItem = (props: {
   return (
     <li className="flex items-center">
       {props.icon}
-      <div className="flex flex-col leading-3 ml-2">
-        <h1 className="font-bold text-lg">{props.label}</h1>
+      <div className="flex flex-col ml-2 leading-3">
+        <h1 className="text-lg font-bold">{props.label}</h1>
         <span className="text-sm">{props.description}</span>
       </div>
     </li>
