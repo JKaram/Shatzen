@@ -21,7 +21,7 @@ export const RevealBox = () => {
       <AnimatePresence>
         {roomStatus === "revealing" && (
           <motion.div
-            className="w-full mb-4 grid grid-cols-2 overflow-hidden"
+            className="inline-flex gap-4 mb-4 overflow-hidden "
             initial="initial"
             animate="animate"
             key="calculations"
@@ -36,15 +36,15 @@ export const RevealBox = () => {
             }}
             exit={{ height: 0, transition: { duration: 0.1 } }}
           >
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center">
               <span className="">Average</span>
-              <span className="text-4xl  font-bold">
+              <span className="text-4xl font-bold">
                 {Math.round(calculations.average * 10) / 10}
               </span>
             </div>
-            <div className="flex flex-col justify-center items-center">
+            <div className="flex flex-col items-center">
               <span className="">Mode</span>
-              <span className="flex text-4xl text-center font-bold">
+              <span className="flex text-4xl font-bold text-center">
                 {calculations.mode.map((mode, index) => (
                   <p key={index}>
                     {mode}

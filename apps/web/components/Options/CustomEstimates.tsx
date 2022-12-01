@@ -74,12 +74,14 @@ function EstimateCard(props: {
   estimate: PossibleEstimate;
   selected: boolean;
 }) {
+  const { user } = useContext(SocketContext);
+
   return (
     <div
+      style={{ background: props.selected ? user.colour : undefined }}
       onClick={() => props.onClick(props.estimate)}
       className={classNames(
-        " cursor-pointer w-9 h-12 rounded flex justify-center items-center border-black border",
-        props.selected ? "bg-green-200" : undefined
+        "cursor-pointer w-9 h-12 rounded flex justify-center items-center border-black border-2"
       )}
     >
       {numberToNewValue(props.estimate)}
