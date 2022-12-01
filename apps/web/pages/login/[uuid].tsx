@@ -62,8 +62,8 @@ const Login = () => {
             Join Room
           </Button>
         </form>
+        <CardBuilder selected={selected} setSelected={setSelected} />
       </div>
-      <CardBuilder selected={selected} setSelected={setSelected} />
     </PageLayout>
   );
 };

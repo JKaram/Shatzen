@@ -65,6 +65,8 @@ export default function AppProvider({ children }: Props) {
     "config",
     undefined
   );
+  const [, setUserStorage] = useLocalStorage("user", undefined);
+
   const [socket, setSocket] =
     useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
   const [calculations, setCalculations] = useState<Calculations>({
@@ -92,6 +94,10 @@ export default function AppProvider({ children }: Props) {
       const currentUser = users[newSocket.id];
       if (currentUser) sortedUsers.unshift({ ...currentUser });
       setUser({ ...currentUser });
+      setUserStorage({
+        colour: currentUser.colour,
+        pattern: currentUser.pattern,
+      });
       setUsers(sortedUsers);
     });
 

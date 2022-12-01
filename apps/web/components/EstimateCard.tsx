@@ -31,7 +31,9 @@ export const EstimateCard = ({ children, isSelected, onClick }: Props) => {
           : undefined
       )}
     >
-      {children}
+      <span className="w-10 h-10 font-bold text-center bg-white rounded-full">
+        {children}
+      </span>
     </button>
   );
 };

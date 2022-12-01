@@ -37,6 +37,7 @@ export const UserCard = ({ user, oddManOut }: Props) => {
       >
         <span
           className={classNames(
+            "h-6 w-6 rounded-full bg-white text-center font-bold",
             roomStatus === "estimating" && estimate !== -4 ? "hidden" : "block"
           )}
         >

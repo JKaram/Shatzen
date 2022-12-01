@@ -11,13 +11,16 @@ export default function CardBuilder(props: Props) {
   const { selected, setSelected } = props;
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <h1 className="text-center ">Build A Card</h1>
       <div
         style={{
           backgroundColor: selected.colour,
           backgroundImage: `url("${USER_CARD_PATTERNS[selected.pattern]}")`,
         }}
-        className={classNames("w-10 h-16 border-2 border-black rounded-lg")}
+        className={classNames(
+          "w-10 m-auto h-16 border-2 border-black rounded-lg"
+        )}
       />
       <div className="flex justify-evenly">
         {USER_COLOURS.map((colour) => (
@@ -32,6 +35,14 @@ export default function CardBuilder(props: Props) {
         ))}
       </div>
       <div className="flex justify-evenly">
+        <div
+          onClick={() => setSelected({ ...selected, pattern: -1 })}
+          className={classNames(
+            "w-10 h-16 border-2 bg-white rounded-lg",
+            selected.pattern === -1 ? " border-black" : "border-white"
+          )}
+        />
+
         {USER_CARD_PATTERNS.map((pattern, index) => (
           <div
             onClick={() => setSelected({ ...selected, pattern: index })}
@@ -39,7 +50,7 @@ export default function CardBuilder(props: Props) {
             key={pattern}
             className={classNames(
               "w-10 h-16 border-2 bg-white rounded-lg",
-              selected.pattern === pattern ? " border-black" : "border-white"
+              selected.pattern === index ? " border-black" : "border-white"
             )}
           />
         ))}
