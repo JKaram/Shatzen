@@ -37,8 +37,10 @@ export const UserCard = ({ user, oddManOut }: Props) => {
       >
         <span
           className={classNames(
-            "h-6 w-6 rounded-full bg-white text-center font-bold",
-            roomStatus === "estimating" && estimate !== -4 ? "hidden" : "block"
+            "text-center font-bold text-xl",
+            userHasEstimated && roomStatus === "estimating"
+              ? "opacity-60"
+              : "opacity-100"
           )}
         >
           {estimate ? numberToNewValue(estimate) : null}

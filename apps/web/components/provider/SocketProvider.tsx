@@ -158,9 +158,9 @@ export default function AppProvider({ children }: Props) {
         roomStatus: status,
         setRoomId,
         updateRoomOptions,
-        user: user,
+        user,
         userJoin,
-        users: users,
+        users,
       }}
     >
       {children}
