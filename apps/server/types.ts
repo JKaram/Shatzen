@@ -1,11 +1,13 @@
 import { UserColour } from "./utils/chooseUserColour";
 
+export type UserPayload = { name: string; colour: string; pattern: number };
+
 export type SocketIncomingEvents = {
   changeStatus: (args: { status: Status }) => void;
   estimate: (args: { estimate: number }) => void;
   removeUser: () => void;
   userJoin: (args: {
-    name: string;
+    user: UserPayload;
     room: string;
     config: Config | undefined;
   }) => void;
@@ -31,7 +33,8 @@ export type Average = number | null;
 export type Status = "estimating" | "revealing";
 
 export type User = {
-  colour: UserColour;
+  colour: string;
+  pattern: number;
   estimate: Estimate;
   id: string;
   name: string;

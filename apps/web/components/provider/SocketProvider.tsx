@@ -6,6 +6,7 @@ import {
   SocketOutgoingEvents,
   Status,
   User,
+  UserPayload,
 } from "../../types/aliases";
 import { io, Socket } from "socket.io-client";
 import React, {
@@ -30,7 +31,7 @@ type Values = {
   setRoomId: Dispatch<SetStateAction<string>>;
   updateRoomOptions: (args: Config) => void;
   user: User | undefined;
-  userJoin: (name: string, room: string) => void;
+  userJoin: (user: UserPayload, room: string) => void;
   users: User[];
 };
 const initialValues: Values = {
@@ -89,8 +90,8 @@ export default function AppProvider({ children }: Props) {
         .filter((estimate) => estimate.id !== newSocket.id)
         .sort((a, b) => (a.id === b.id ? 1 : 0));
       const currentUser = users[newSocket.id];
-      if (currentUser) sortedUsers.unshift(currentUser);
-      setUser(currentUser);
+      if (currentUser) sortedUsers.unshift({ ...currentUser });
+      setUser({ ...currentUser });
       setUsers(sortedUsers);
     });
 
@@ -134,8 +135,8 @@ export default function AppProvider({ children }: Props) {
     // TODO socket event doesn't exists yet
     // socket.emit("reset");
   };
-  const userJoin = (name: string, room: string) => {
-    socket.emit("userJoin", { name, room, config });
+  const userJoin = (user: UserPayload, room: string) => {
+    socket.emit("userJoin", { user, room, config });
   };
 
   return (

@@ -51,7 +51,7 @@ export const EstimatesBox = () => {
           duration: 5,
         },
       }}
-      className="flex flex-wrap items-center justify-center gap-2  "
+      className="flex flex-wrap items-center justify-center gap-2 "
     >
       <AnimatePresence initial={false}>
         {users.map((user) => {

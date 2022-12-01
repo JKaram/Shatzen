@@ -1,9 +1,8 @@
-import { numberToNewValue } from "../types/constants";
-import { SocketContext } from "./provider/SocketProvider";
+import { numberToNewValue, USER_CARD_PATTERNS } from "../types/constants";
+import { useSockets } from "./provider/SocketProvider";
 import { User } from "../types/aliases";
-import React, { useContext } from "react";
+import React from "react";
 import classNames from "classnames";
-import { motion, AnimatePresence } from "framer-motion";
 
 type Props = {
   user: User;
@@ -13,7 +12,7 @@ type Props = {
 const shameEmojis = ["🤥", "🤮", "🙊", "💩"];
 
 export const UserCard = ({ user, oddManOut }: Props) => {
-  const { roomStatus } = useContext(SocketContext);
+  const { roomStatus } = useSockets();
   const { estimate } = user;
 
   const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
@@ -24,14 +23,17 @@ export const UserCard = ({ user, oddManOut }: Props) => {
     <div className="flex flex-col items-center">
       {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
-        style={{
-          background: userHasEstimated ? user.colour : undefined,
-        }}
         className={classNames(
           "w-10 h-16 rounded flex justify-center items-center",
-          estimate ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]",
-          userHasEstimated ? "bg-green-200" : undefined
+          estimate ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]"
         )}
+        style={{
+          backgroundImage:
+            user.pattern >= 0 && userHasEstimated
+              ? `url("${USER_CARD_PATTERNS[user.pattern]}")`
+              : undefined,
+          backgroundColor: userHasEstimated ? user?.colour : undefined,
+        }}
       >
         <span
           className={classNames(

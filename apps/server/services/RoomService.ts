@@ -7,7 +7,6 @@ import {
   SocketOutgoingEvents,
 } from "../types";
 import { Room, User } from "../types";
-import { chooseUserColour } from "../utils/chooseUserColour";
 
 class RoomService {
   private maxUsers = 0;
@@ -18,7 +17,9 @@ class RoomService {
     private socket: Socket<SocketIncomingEvents, SocketOutgoingEvents>,
     private roomId: string,
     private username: string,
-    private config: Config | undefined
+    private config: Config | undefined,
+    private colour: string,
+    private pattern: number
   ) {}
 
   async init() {
@@ -31,10 +32,11 @@ class RoomService {
     this.store = this.io.of("/").adapter.rooms.get(this.roomId) as any;
 
     const user: User = {
-      colour: chooseUserColour(),
+      colour: this.colour,
       estimate: null,
       id: this.socket.id,
       name: this.username,
+      pattern: this.pattern,
     };
     if (clients.length === 0) {
       this.store.users = {

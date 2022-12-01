@@ -6,11 +6,14 @@ import Button from "../../components/Button";
 import Input from "../../components/input";
 import { USER_NAME_SIZE, USER_STRING_MIN_SIZE } from "../../types/constants";
 import Head from "next/head";
+import CardBuilder from "../../components/CardBuilder";
+import { useCardBuilder } from "../../hooks/useCardBuilder";
 
 const Login = () => {
   const router = useRouter();
   const { uuid } = router.query;
   const { setRoomId, userJoin } = useSockets();
+  const { selected, setSelected } = useCardBuilder();
 
   useMemo(() => {
     setRoomId(uuid as string);
@@ -33,14 +36,14 @@ const Login = () => {
         <title>Shätzen | Login</title>
         <meta property="og:title" content="Room login" key="title" />
       </Head>
-      <div className="flex flex-col bg-white items-center space-y-5 border-2 border-black p-8 rounded-lg shadow-base">
+      <div className="flex flex-col items-center p-8 space-y-5 bg-white border-2 border-black rounded-lg shadow-base">
         <span className="text-lg">Enter your name</span>
 
         <form
           className="flex flex-col w-full mt-5 space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
-            userJoin(name, sanitizeUuid);
+            userJoin({ name, ...selected }, sanitizeUuid);
           }}
         >
           <Input
@@ -60,6 +63,7 @@ const Login = () => {
           </Button>
         </form>
       </div>
+      <CardBuilder selected={selected} setSelected={setSelected} />
     </PageLayout>
   );
 };

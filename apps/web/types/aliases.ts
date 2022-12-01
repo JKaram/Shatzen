@@ -4,6 +4,7 @@ export type User = {
   id: string;
   name: string;
   colour: string;
+  pattern: number;
   estimate: Estimate;
 };
 
@@ -20,9 +21,11 @@ export type Calculations = {
 export type Status = "estimating" | "revealing";
 export type UserColor = typeof USER_COLOURS[number];
 
+export type UserPayload = { name: string; colour: string; pattern: number };
+
 export type SocketIncomingEvents = {
   userJoin: (args: {
-    name: string;
+    user: UserPayload;
     room: string;
     config: Config | undefined;
   }) => void;
