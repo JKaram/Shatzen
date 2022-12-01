@@ -13,6 +13,7 @@ const shameEmojis = ["🤥", "🤮", "🙊", "💩"];
 
 export const UserCard = ({ user, oddManOut }: Props) => {
   const { roomStatus } = useSockets();
+  const { user: currentUser } = useSockets();
   const { estimate } = user;
 
   const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
@@ -38,9 +39,13 @@ export const UserCard = ({ user, oddManOut }: Props) => {
         <span
           className={classNames(
             "text-center font-bold text-xl",
-            userHasEstimated && roomStatus === "estimating"
-              ? "opacity-60"
-              : "opacity-100"
+            userHasEstimated &&
+              roomStatus === "estimating" &&
+              user.id === currentUser?.id &&
+              "opacity-60",
+            user.id !== currentUser?.id && roomStatus === "estimating"
+              ? "hidden"
+              : "block"
           )}
         >
           {estimate ? numberToNewValue(estimate) : null}
