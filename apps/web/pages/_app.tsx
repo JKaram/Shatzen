@@ -1,11 +1,9 @@
 import "../styles/globals.css";
-import SocketProvider, {
-  useSockets,
-} from "../components/provider/SocketProvider";
+import SocketProvider, { useSockets } from "../providers/SocketProvider";
 import { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { ModalProvider } from "../components/provider/ModalProvider";
+import { ModalProvider } from "../providers/ModalProvider";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();

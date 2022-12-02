@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { SocketContext } from "./provider/SocketProvider";
+import { SocketContext } from "../providers/SocketProvider";
 import { UserCard } from "./UserCard";
 import { AnimatePresence, motion } from "framer-motion";
 

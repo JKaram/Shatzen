@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-import OptionsModal from "../Options/OptionsModal";
+import OptionsModal from "../components/Options/OptionsModal";
 
 const initalValues = {
   open: () => undefined,

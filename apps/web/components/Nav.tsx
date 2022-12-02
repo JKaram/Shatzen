@@ -3,9 +3,9 @@ import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { CogIcon, ShareIcon, ArrowUpIcon } from "@heroicons/react/solid";
 import useCopyToClipboard from "../hooks/useCopyToClipboard";
-import { useSockets } from "./provider/SocketProvider";
+import { useSockets } from "../providers/SocketProvider";
 import { motion } from "framer-motion";
-import { useModal } from "./provider/ModalProvider";
+import { useModal } from "../providers/ModalProvider";
 
 export const Nav = () => {
   const { removeUser } = useSockets();

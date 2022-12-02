@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSockets } from "../components/provider/SocketProvider";
+import { useSockets } from "../providers/SocketProvider";
 import { UserCustoms } from "../types/aliases";
 import { USER_COLOURS } from "../types/constants";
 import useLocalStorage from "./useLocalStorage";

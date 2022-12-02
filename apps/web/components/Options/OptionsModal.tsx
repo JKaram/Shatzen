@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Config } from "../../types/aliases";
 import Modal from "../Modal";
-import { SocketContext } from "../provider/SocketProvider";
+import { SocketContext } from "../../providers/SocketProvider";
 import CustomEstimates from "./CustomEstimates";
 
 type Props = {

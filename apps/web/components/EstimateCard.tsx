@@ -1,4 +1,4 @@
-import { useSockets } from "./provider/SocketProvider";
+import { useSockets } from "../providers/SocketProvider";
 import classNames from "classnames";
 import React from "react";
 import { USER_CARD_PATTERNS } from "../types/constants";

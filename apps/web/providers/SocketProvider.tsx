@@ -8,7 +8,7 @@ import {
   User,
   UserCustoms,
   UserPayload,
-} from "../../types/aliases";
+} from "../types/aliases";
 import { io, Socket } from "socket.io-client";
 import React, {
   createContext,
@@ -18,7 +18,7 @@ import React, {
   useState,
 } from "react";
 import { useRouter } from "next/router";
-import useLocalStorage from "../../hooks/useLocalStorage";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 type Values = {
   calculations: Calculations;

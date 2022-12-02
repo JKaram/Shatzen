@@ -1,5 +1,5 @@
 import { numberToNewValue, USER_CARD_PATTERNS } from "../types/constants";
-import { useSockets } from "./provider/SocketProvider";
+import { useSockets } from "../providers/SocketProvider";
 import { User } from "../types/aliases";
 import React from "react";
 import classNames from "classnames";

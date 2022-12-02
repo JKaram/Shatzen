@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { useSockets } from "../../components/provider/SocketProvider";
+import { useSockets } from "../../providers/SocketProvider";
 import PageLayout from "../../components/PageLayout";
 import Button from "../../components/Button";
 import Input from "../../components/input";
