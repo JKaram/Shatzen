@@ -1,10 +1,11 @@
 import classNames from "classnames";
 import React from "react";
+import { UserCustoms } from "../types/aliases";
 import { USER_CARD_PATTERNS, USER_COLOURS } from "../types/constants";
 
 type Props = {
-  selected: any;
-  setSelected: any;
+  selected: UserCustoms;
+  setSelected: (User) => void;
 };
 
 export default function CardBuilder(props: Props) {

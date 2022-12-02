@@ -6,23 +6,16 @@ import classNames from "classnames";
 
 type Props = {
   user: User;
-  oddManOut: boolean;
 };
 
-const shameEmojis = ["🤥", "🤮", "🙊", "💩"];
-
-export const UserCard = ({ user, oddManOut }: Props) => {
-  const { roomStatus } = useSockets();
-  const { user: currentUser } = useSockets();
+export const UserCard = ({ user }: Props) => {
+  const { roomStatus, user: currentUser } = useSockets();
   const { estimate } = user;
-
-  const randomIndex = () => Math.floor(Math.random() * shameEmojis.length);
 
   const userHasEstimated = estimate !== null;
 
   return (
     <div className="flex flex-col items-center">
-      {roomStatus === "revealing" && oddManOut && shameEmojis[randomIndex()]}
       <div
         className={classNames(
           "w-10 h-16 rounded flex justify-center items-center",

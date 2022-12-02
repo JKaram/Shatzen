@@ -11,7 +11,6 @@ export type User = {
 export type PossibleEstimate = typeof POSSIBLE_ESTIMATES[number];
 export type PossibleEstimates = PossibleEstimate[];
 
-export type AppStatus = "loading" | "ready";
 export type Estimate = number | null;
 export type Average = number | null;
 export type Calculations = {
@@ -20,8 +19,8 @@ export type Calculations = {
 };
 export type Status = "estimating" | "revealing";
 export type UserColor = typeof USER_COLOURS[number];
-
-export type UserPayload = { name: string; colour: string; pattern: number };
+export type UserCustoms = { colour: string; pattern: number };
+export type UserPayload = { name: string } & UserCustoms;
 
 export type SocketIncomingEvents = {
   userJoin: (args: {

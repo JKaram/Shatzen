@@ -6,6 +6,7 @@ import {
   SocketOutgoingEvents,
   Status,
   User,
+  UserCustoms,
   UserPayload,
 } from "../../types/aliases";
 import { io, Socket } from "socket.io-client";
@@ -26,7 +27,6 @@ type Values = {
   estimate: (estimate: number) => void;
   estimateOptions: PossibleEstimates;
   removeUser: () => void;
-  reset: () => void;
   roomStatus: Status;
   setRoomId: Dispatch<SetStateAction<string>>;
   updateRoomOptions: (args: Config) => void;
@@ -44,7 +44,6 @@ const initialValues: Values = {
   estimate: () => undefined,
   estimateOptions: [],
   removeUser: () => undefined,
-  reset: () => undefined,
   roomStatus: "estimating",
   setRoomId: () => undefined,
   updateRoomOptions: () => undefined,
@@ -65,7 +64,10 @@ export default function AppProvider({ children }: Props) {
     "config",
     undefined
   );
-  const [, setUserStorage] = useLocalStorage("user", undefined);
+  const [, setUserStorage] = useLocalStorage<UserCustoms | undefined>(
+    "user",
+    undefined
+  );
 
   const [socket, setSocket] =
     useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
@@ -137,10 +139,6 @@ export default function AppProvider({ children }: Props) {
     socket.emit("updateConfig", config);
   };
 
-  const reset = () => {
-    // TODO socket event doesn't exists yet
-    // socket.emit("reset");
-  };
   const userJoin = (user: UserPayload, room: string) => {
     socket.emit("userJoin", { user, room, config });
   };
@@ -154,7 +152,6 @@ export default function AppProvider({ children }: Props) {
         estimate,
         estimateOptions: roomEstimateOptions,
         removeUser,
-        reset,
         roomStatus: status,
         setRoomId,
         updateRoomOptions,

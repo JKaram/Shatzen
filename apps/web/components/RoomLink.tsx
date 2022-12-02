@@ -27,7 +27,7 @@ export default function RoomLink() {
         copy(`https://${window.location.hostname}/login/${router.query.room}`);
       }}
     >
-      <ClipboardCopyIcon className={`relative h-9 w-9 text-black}`} />
+      <ClipboardCopyIcon className="relative text-black h-9 w-9" />
       {copied && <span className="min-w-full">Copied!</span>}
       {!copied && <span className="min-w-full">Share room</span>}
     </button>
