@@ -1,7 +1,6 @@
 import {
   Calculations,
   Config,
-  PossibleEstimates,
   SocketIncomingEvents,
   SocketOutgoingEvents,
   Status,
@@ -19,37 +18,28 @@ import React, {
 } from "react";
 import { useRouter } from "next/router";
 import useLocalStorage from "../hooks/useLocalStorage";
+import useAppReducer from "../hooks/useAppReducer";
+import { AppState, APP_STATE } from "../reducers/appReducer";
 
 type Values = {
-  calculations: Calculations;
   changeStatus: (status: string) => void;
   disconnect: () => void;
   estimate: (estimate: number) => void;
-  estimateOptions: PossibleEstimates;
   removeUser: () => void;
-  roomStatus: Status;
   setRoomId: Dispatch<SetStateAction<string>>;
   updateRoomOptions: (args: Config) => void;
-  user: User | undefined;
   userJoin: (user: UserPayload, room: string) => void;
-  users: User[];
-};
+} & AppState;
+
 const initialValues: Values = {
-  calculations: {
-    average: null,
-    mode: null,
-  },
   changeStatus: () => undefined,
   disconnect: () => undefined,
   estimate: () => undefined,
-  estimateOptions: [],
   removeUser: () => undefined,
-  roomStatus: "estimating",
   setRoomId: () => undefined,
   updateRoomOptions: () => undefined,
-  user: undefined,
   userJoin: () => undefined,
-  users: [],
+  ...APP_STATE,
 };
 
 export const SocketContext = createContext<Values>(initialValues);
@@ -60,10 +50,15 @@ type Props = {
 
 export default function AppProvider({ children }: Props) {
   const router = useRouter();
+  const [appState, appDispatch] = useAppReducer();
+  const { calculations, roomStatus, roomId, user, users, estimateOptions } =
+    appState;
+
   const [config, setConfig] = useLocalStorage<Config | undefined>(
     "config",
     undefined
   );
+
   const [, setUserStorage] = useLocalStorage<UserCustoms | undefined>(
     "user",
     undefined
@@ -71,16 +66,6 @@ export default function AppProvider({ children }: Props) {
 
   const [socket, setSocket] =
     useState<Socket<SocketOutgoingEvents, SocketIncomingEvents>>();
-  const [calculations, setCalculations] = useState<Calculations>({
-    average: null,
-    mode: null,
-  });
-  const [roomEstimateOptions, setRoomEstimateOptions] =
-    useState<PossibleEstimates>([]);
-  const [status, setStatus] = useState<Status>("estimating");
-  const [user, setUser] = useState<User>();
-  const [users, setUsers] = useState<User[]>([]);
-  const [roomId, setRoomId] = useState<string>();
 
   useEffect(() => {
     if (!roomId) {
@@ -93,25 +78,38 @@ export default function AppProvider({ children }: Props) {
       const sortedUsers = Object.values(users)
         .filter((estimate) => estimate.id !== newSocket.id)
         .sort((a, b) => (a.id === b.id ? 1 : 0));
+
       const currentUser = users[newSocket.id];
+
       if (currentUser) sortedUsers.unshift({ ...currentUser });
-      setUser({ ...currentUser });
+
+      appDispatch({ type: "UPDATE_USER", payload: currentUser });
+
       setUserStorage({
         colour: currentUser.colour,
         pattern: currentUser.pattern,
       });
-      setUsers(sortedUsers);
+
+      appDispatch({ type: "UPDATE_USERS", payload: sortedUsers });
     });
 
     newSocket.on("firstConnect", (roomId) => router.push(`/room/${roomId}`));
 
     newSocket.on("calculations", (updatedCalculations: Calculations) => {
-      setCalculations((prev) => ({ ...prev, ...updatedCalculations }));
+      appDispatch({
+        type: "UPDATE_CALCULATIONS",
+        payload: updatedCalculations,
+      });
     });
-    newSocket.on("roomStatus", (status: Status) => setStatus(status));
+    newSocket.on("roomStatus", (status: Status) => {
+      appDispatch({ type: "UPDATE_STATUS", payload: status });
+    });
 
     newSocket.on("config", (config: Config) => {
-      setRoomEstimateOptions(config.possibleEstimates.sort((a, b) => a - b));
+      appDispatch({
+        type: "UPDATE_ESTIMATE_OPTIONS",
+        payload: config.possibleEstimates.sort((a, b) => a - b),
+      });
     });
 
     setSocket(newSocket);
@@ -131,7 +129,7 @@ export default function AppProvider({ children }: Props) {
   };
   const removeUser = () => {
     socket.emit("removeUser");
-    setRoomId(null);
+    appDispatch({ type: "SET_ROOM_ID", payload: null });
   };
 
   const updateRoomOptions = (config: Config) => {
@@ -143,6 +141,9 @@ export default function AppProvider({ children }: Props) {
     socket.emit("userJoin", { user, room, config });
   };
 
+  const setRoomId = (roomId: string) =>
+    appDispatch({ type: "SET_ROOM_ID", payload: roomId });
+
   return (
     <SocketContext.Provider
       value={{
@@ -150,9 +151,10 @@ export default function AppProvider({ children }: Props) {
         changeStatus,
         disconnect,
         estimate,
-        estimateOptions: roomEstimateOptions,
+        estimateOptions,
         removeUser,
-        roomStatus: status,
+        roomId,
+        roomStatus,
         setRoomId,
         updateRoomOptions,
         user,
