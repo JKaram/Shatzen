@@ -1,16 +1,22 @@
-import { Server } from "http";
-import { Collection } from "mongodb";
+import type { Express } from "express";
+import type { Server } from "http";
+import type { Collection } from "mongodb";
 import { Server as SocketServer } from "socket.io";
 import { createAdapter } from "@socket.io/mongo-adapter";
 import RoomService from "../services/RoomService";
-import { SocketIncomingEvents, SocketOutgoingEvents } from "../types";
+import type { SocketIncomingEvents, SocketOutgoingEvents } from "../types";
 
 export type SocketLoaderArgs = {
+  app: Express;
   server: Server;
   mongoCollection: Collection;
 };
 
-const socketLoader = async ({ server, mongoCollection }: SocketLoaderArgs) => {
+const socketLoader = async ({
+  app,
+  server,
+  mongoCollection,
+}: SocketLoaderArgs) => {
   const io = new SocketServer<SocketIncomingEvents, SocketOutgoingEvents>(
     server,
     {
@@ -47,6 +53,10 @@ const socketLoader = async ({ server, mongoCollection }: SocketLoaderArgs) => {
       }
       room.onDisconnect();
     });
+  });
+
+  app.get("/rooms/count", (_req, res) => {
+    res.json({ roomCount: io.of("/").adapter.rooms.size });
   });
 };
 

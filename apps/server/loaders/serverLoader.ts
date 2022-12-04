@@ -15,7 +15,7 @@ const serverLoader = () => {
   app.get("/health", (_req, res) => {
     res.send(true);
   });
-  return server;
+  return { app, server };
 };
 
 export default serverLoader;

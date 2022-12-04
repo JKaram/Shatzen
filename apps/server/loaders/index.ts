@@ -3,10 +3,10 @@ import serverLoader from "./serverLoader";
 import socketLoader from "./socketLoader";
 
 const mainLoader = async () => {
-  const server = serverLoader();
+  const { app, server } = serverLoader();
   const mongoCollection = await mongoLoader();
   console.log("Mongo Loaded...");
-  await socketLoader({ mongoCollection, server });
+  await socketLoader({ app, mongoCollection, server });
   console.log("Socket loaded...");
   return server;
 };
