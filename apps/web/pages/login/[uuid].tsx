@@ -8,6 +8,7 @@ import { USER_NAME_SIZE, USER_STRING_MIN_SIZE } from "../../types/constants";
 import Head from "next/head";
 import CardBuilder from "../../components/CardBuilder";
 import { useCardBuilder } from "../../hooks/useCardBuilder";
+import Container from "../../components/Container";
 
 const Login = () => {
   const router = useRouter();
@@ -36,24 +37,26 @@ const Login = () => {
         <title>Shätzen | Login</title>
         <meta property="og:title" content="Room login" key="title" />
       </Head>
-      <div className="flex flex-col items-center p-8 space-y-5 bg-white border-2 border-black rounded-lg shadow-base">
-        <span className="text-lg">Enter your name</span>
-
+      <Container>
         <form
-          className="flex flex-col w-full mt-5 space-y-4"
+          className="flex flex-col items-center gap-4"
           onSubmit={(e) => {
             e.preventDefault();
             userJoin({ name, ...selected }, sanitizeUuid);
           }}
         >
+          <span className="text-lg">Enter your name</span>
           <Input
             autoFocus
             onChange={updateName}
             placeholder="Name"
             maxLength={USER_NAME_SIZE}
+            className="w-48"
           />
+
+          <CardBuilder selected={selected} setSelected={setSelected} />
+
           <Button
-            className="w-32 mt-5"
             type="submit"
             disabled={
               !name || !name.trim() || name.length < USER_STRING_MIN_SIZE
@@ -62,8 +65,7 @@ const Login = () => {
             Join Room
           </Button>
         </form>
-        <CardBuilder selected={selected} setSelected={setSelected} />
-      </div>
+      </Container>
     </PageLayout>
   );
 };

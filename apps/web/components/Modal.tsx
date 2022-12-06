@@ -18,7 +18,7 @@ export default function Modal(props: Props) {
   }
 
   return (
-    <Dialog open={props.show} onClose={onClose}>
+    <Dialog className="" open={props.show} onClose={onClose}>
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <motion.div
         initial="initial"
@@ -33,15 +33,17 @@ export default function Modal(props: Props) {
             x: 0,
           },
         }}
-        className="fixed inset-x-0 inset-y-0 m-auto h-3/4"
+        className="fixed inset-x-0 inset-y-0 flex items-center justify-center"
       >
         <Dialog.Panel className="flex flex-col max-w-2xl p-2 m-auto overflow-y-auto bg-white border-2 border-black rounded-lg shadow-base">
           <Dialog.Title className="text-2xl font-bold">OPTIONS</Dialog.Title>
           <div className="p-4">{props.children}</div>
           <div className="sticky bottom-0 flex flex-col justify-end flex-grow w-full gap-1 pt-1 bg-white ">
             <div className="text-center text-red-500">{props.message}</div>
-            <Button onClick={props.onSave}>Save</Button>
-            <Button variant="secondary" onClick={onClose}>
+            <Button className="w-full" onClick={props.onSave}>
+              Save
+            </Button>
+            <Button className="w-full" variant="secondary" onClick={onClose}>
               Cancel
             </Button>
           </div>

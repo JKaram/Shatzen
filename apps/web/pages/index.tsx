@@ -8,6 +8,7 @@ import Input from "../components/input";
 import Head from "next/head";
 import TextAnimation from "../components/TextAnimation";
 import { PlusIcon, ShareIcon, StarIcon } from "@heroicons/react/outline";
+import Container from "../components/Container";
 
 const iconStyle = "h-10 w-10";
 
@@ -48,13 +49,13 @@ const App = () => {
   }
 
   return (
-    <PageLayout className="flex flex-col items-center align-middle md:flex-row md:justify-between">
+    <PageLayout className="flex flex-col">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="flex flex-col justify-center flex-grow">
+      <div className="flex flex-col">
         <div className="mt-2">
           <h2 className="text-5xl font-bold transition-all">
             Scrum Poker <br /> made <TextAnimation />
@@ -63,7 +64,7 @@ const App = () => {
           <span className="text-lg">A free tool. No sign up required.</span>
         </div>
 
-        <ul className="flex flex-col justify-around w-full gap-5 mt-4">
+        <ul className="flex flex-col gap-5">
           {steps.map((step) => (
             <ListItem
               key={step.label}
@@ -75,8 +76,11 @@ const App = () => {
         </ul>
       </div>
 
-      <div className="flex flex-col items-center justify-center flex-grow gap-5 p-8 bg-white border-2 border-black rounded-lg shadow-base">
-        <Button className="w-full h-16 bg-amber-200" onClick={generateRoomId}>
+      <Container className="flex flex-col items-center gap-4">
+        <Button
+          className="h-16 font-bold w-72 bg-amber-300 "
+          onClick={generateRoomId}
+        >
           Create a Room
         </Button>
         <span>Or</span>
@@ -105,7 +109,7 @@ const App = () => {
             Enter Room
           </Button>
         </form>
-      </div>
+      </Container>
     </PageLayout>
   );
 };

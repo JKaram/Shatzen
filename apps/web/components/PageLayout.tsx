@@ -12,9 +12,7 @@ export default function PageLayout({ children, className = undefined }: Props) {
 
   return (
     <div
-      className={classNames(
-        "max-w-md text-primary min-h-screen m-auto transition-all md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl"
-      )}
+      className={classNames(" max-w-7xl text-primary m-auto transition-all")}
     >
       <Nav />
       <motion.div
@@ -34,10 +32,7 @@ export default function PageLayout({ children, className = undefined }: Props) {
         }}
       >
         <main
-          className={classNames(
-            "px-2 h-[calc(100vh-96px)] mt-[44px]",
-            className
-          )}
+          className={classNames("h-[calc(100vh-96px)] mt-[48px]", className)}
         >
           {children}
         </main>
