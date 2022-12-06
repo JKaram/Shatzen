@@ -1,14 +1,13 @@
 import { nanoid } from "nanoid";
-import { ROOM_STRING_SIZE, USER_NAME_SIZE } from "../types/constants";
+import { ROOM_STRING_SIZE } from "../types/constants";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
 import PageLayout from "../components/PageLayout";
-import React, { useState } from "react";
-import Input from "../components/input";
+import React from "react";
 import Head from "next/head";
 import TextAnimation from "../components/TextAnimation";
 import { PlusIcon, ShareIcon, StarIcon } from "@heroicons/react/outline";
-import Container from "../components/Container";
+import { Spacer } from "../components/Spacer";
 
 const iconStyle = "h-10 w-10";
 
@@ -32,39 +31,38 @@ const steps = [
 
 const App = () => {
   const router = useRouter();
-  const [roomName, setRoomName] = useState("");
 
   function generateRoomId() {
     const roomId = nanoid(ROOM_STRING_SIZE);
     router.push(`/login/${roomId}`);
   }
 
-  function goToLogin() {
-    router.push(`/login/${roomName.trim()}`);
-  }
-
-  function roomInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    setRoomName(value);
-  }
-
   return (
-    <PageLayout className="flex flex-col">
+    <PageLayout className="relative flex flex-col transition-all">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="flex flex-col">
-        <div className="mt-2">
-          <h2 className="text-5xl font-bold transition-all">
-            Scrum Poker <br /> made <TextAnimation />
-          </h2>
+      <div className="w-[500px] lg:w-[600px] rounded-lg m-auto overflow-hidden ">
+        <video height="100%" width="100%" autoPlay loop muted playsInline>
+          <source src="/mov_bbb.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-          <span className="text-lg">A free tool. No sign up required.</span>
+      <div className="w-full px-2 m-auto bottom-7">
+        <div>
+          <h1 className="text-5xl font-bold lg:text-7xl xl:text-8xl">
+            Scrum Poker made <TextAnimation />
+          </h1>
+          <Spacer />
+          <span className="text-2xl md:text-3xl lg:text-4xl">
+            A free tool. No sign up required.
+          </span>
         </div>
+        <Spacer size="small" />
 
-        <ul className="flex flex-col gap-5">
+        <ul className="flex flex-col gap-5 xl:flex-row">
           {steps.map((step) => (
             <ListItem
               key={step.label}
@@ -74,42 +72,15 @@ const App = () => {
             />
           ))}
         </ul>
-      </div>
+        <Spacer size="small" />
 
-      <Container className="flex flex-col items-center gap-4">
         <Button
-          className="h-16 font-bold w-72 bg-amber-300 "
+          className="w-full h-16 text-2xl font-bold md:text-3xl lg:text-4xl"
           onClick={generateRoomId}
         >
           Create a Room
         </Button>
-        <span>Or</span>
-        <form
-          className="flex flex-col"
-          onSubmit={(e) => {
-            e.preventDefault();
-            goToLogin();
-          }}
-        >
-          <Input
-            onChange={roomInput}
-            minLength={ROOM_STRING_SIZE}
-            maxLength={USER_NAME_SIZE}
-            placeholder="Enter a room name"
-          />
-          <Button
-            type="submit"
-            disabled={
-              !roomName ||
-              !roomName.trim() ||
-              roomName.length < ROOM_STRING_SIZE
-            }
-            className="w-32 mt-5"
-          >
-            Enter Room
-          </Button>
-        </form>
-      </Container>
+      </div>
     </PageLayout>
   );
 };
@@ -125,8 +96,8 @@ export const ListItem = (props: {
     <li className="flex items-center">
       {props.icon}
       <div className="flex flex-col ml-2 leading-3">
-        <h1 className="text-lg font-bold">{props.label}</h1>
-        <span className="text-sm">{props.description}</span>
+        <h1 className="text-2xl font-bold">{props.label}</h1>
+        <span className="text-sm md:text-lg">{props.description}</span>
       </div>
     </li>
   );
