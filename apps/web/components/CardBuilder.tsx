@@ -13,7 +13,7 @@ export default function CardBuilder(props: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-center ">Build A Card</h1>
+      <h1 className="text-center ">Customize your card back</h1>
       <div
         style={{
           backgroundColor: selected.colour,
@@ -41,7 +41,7 @@ export default function CardBuilder(props: Props) {
           onClick={() => setSelected({ ...selected, pattern: -1 })}
           className={classNames(
             "w-10 h-16 border-2 bg-white rounded-lg",
-            selected.pattern === -1 ? " border-black" : "border-white"
+            selected.pattern === -1 ? "border-black" : "border-gray"
           )}
         />
 
@@ -52,7 +52,7 @@ export default function CardBuilder(props: Props) {
             key={pattern}
             className={classNames(
               "w-10 h-16 border-2 bg-white rounded-lg",
-              selected.pattern === index ? " border-black" : "border-white"
+              selected.pattern === index ? "border-black" : "border-gray"
             )}
           />
         ))}
