@@ -12,7 +12,7 @@ export const Spacer = (props: Props) => {
         "w-full h-10",
         props.size === "small" && "h-6",
         props.size === "medium" && "h-10",
-        props.size === "large" && "h-10"
+        props.size === "large" && "h-12"
       )}
     />
   );

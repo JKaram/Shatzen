@@ -13,7 +13,9 @@ export default function CardBuilder(props: Props) {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1 className="text-center ">Customize your card back</h1>
+      <h1 className="block text-sm font-medium text-gray-700">
+        Customize your card back
+      </h1>
       <div
         style={{
           backgroundColor: selected.colour,
