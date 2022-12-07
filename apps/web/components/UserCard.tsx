@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const UserCard = ({ user }: Props) => {
-  const { roomStatus, user: currentUser } = useSockets();
+  const { roomStatus } = useSockets();
   const { estimate } = user;
 
   const userHasEstimated = estimate !== null;
