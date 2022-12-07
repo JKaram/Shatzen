@@ -38,24 +38,26 @@ const App = () => {
   }
 
   return (
-    <PageLayout className="relative flex flex-col transition-all">
+    <PageLayout className="flex flex-col transition-all xl:flex-row-reverse xl:items-center">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="w-[500px] lg:w-[600px] rounded-lg m-auto overflow-hidden ">
+      <div className="w-[350px] sm:w-[450px] md:w-[500px] md:border-black lg:w-[700px] xl:w-[800px] relative rounded-lg m-auto overflow-hidden transition-all">
+        <span className="absolute text-2xl text-white">
+          Mind Blowing video coming soon!
+        </span>
         <video height="100%" width="100%" autoPlay loop muted playsInline>
           <source src="/mov_bbb.mp4" type="video/mp4" />
         </video>
       </div>
 
-      <div className="w-full px-2 m-auto bottom-7">
+      <div className="p-2">
         <div>
-          <h1 className="text-5xl font-bold lg:text-7xl xl:text-8xl">
+          <h1 className="text-5xl font-bold lg:text-6xl ">
             Scrum Poker made <TextAnimation />
           </h1>
-          <Spacer />
           <span className="text-2xl md:text-3xl lg:text-4xl">
             A free tool. No sign up required.
           </span>
@@ -72,10 +74,9 @@ const App = () => {
             />
           ))}
         </ul>
-        <Spacer size="small" />
-
+        <Spacer size="large" />
         <Button
-          className="w-full h-16 text-2xl font-bold md:text-3xl lg:text-4xl"
+          className="w-full h-16 text-2xl font-bold bg-amber-300 hover:bg-amber-200 md:text-3xl lg:text-4xl xl:w-1/2"
           onClick={generateRoomId}
         >
           Create a Room
@@ -93,7 +94,7 @@ export const ListItem = (props: {
   description: string;
 }) => {
   return (
-    <li className="flex items-center">
+    <li className="flex items-center xl:items-start">
       {props.icon}
       <div className="flex flex-col ml-2 leading-3">
         <h1 className="text-2xl font-bold">{props.label}</h1>

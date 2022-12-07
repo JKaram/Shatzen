@@ -22,7 +22,7 @@ export default function Button({
     <button
       {...rest}
       className={classNames(
-        "p-2 border-2 border-black rounded-md transition active:translate-y-0 hover:-translate-y-0.5 mx-auto",
+        "p-2 border-2 border-black rounded-md transition active:translate-y-0 hover:-translate-y-0.5",
         disabled ? "opacity-50 hover:translate-y-0" : "",
         variant === "secondary"
           ? "border-0 hover:translate-y-0 hover:bg-slate-100"

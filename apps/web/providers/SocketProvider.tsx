@@ -5,7 +5,7 @@ import {
   SocketOutgoingEvents,
   Status,
   User,
-  UserCustoms,
+  UserStorage,
   UserPayload,
 } from "../types/aliases";
 import { io, Socket } from "socket.io-client";
@@ -59,7 +59,7 @@ export default function AppProvider({ children }: Props) {
     undefined
   );
 
-  const [, setUserStorage] = useLocalStorage<UserCustoms | undefined>(
+  const [, setUserStorage] = useLocalStorage<UserStorage | undefined>(
     "user",
     undefined
   );
@@ -88,6 +88,7 @@ export default function AppProvider({ children }: Props) {
       setUserStorage({
         colour: currentUser.colour,
         pattern: currentUser.pattern,
+        name: currentUser.name,
       });
 
       appDispatch({ type: "UPDATE_USERS", payload: sortedUsers });

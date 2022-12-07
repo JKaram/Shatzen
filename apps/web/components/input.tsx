@@ -18,7 +18,7 @@ export default function Input({
     <input
       {...rest}
       className={classNames(
-        "p-2 mx-auto text-center border-2 border-black rounded-lg focus:border-red-500 focus:outline-none",
+        "p-2 text-center border-2 border-black rounded-lg focus:border-red-500 focus:outline-none",
         className
       )}
       onChange={onChange}

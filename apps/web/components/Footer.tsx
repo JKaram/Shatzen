@@ -2,11 +2,11 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="h-12 flex p-1 justify-end items-end fixed w-full bottom-0 left-0 text-gray-500">
+    <footer className="bottom-0 left-0 flex items-end justify-end w-full h-12 p-1 text-gray-500">
       <span>
         Contact me at&nbsp;
         <a
-          className="hover:text-black transition"
+          className="transition hover:text-black"
           href="mailto:hello@jamiekaram.dev"
         >
           hello@jamiekaram.dev

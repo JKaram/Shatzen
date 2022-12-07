@@ -31,7 +31,7 @@ export default function PageLayout({ children, className = undefined }: Props) {
           }}
         >
           <main
-            className={classNames("min-h-[calc(100vh-48px)]  mt-12", className)}
+            className={classNames("min-h-[calc(100vh-96px)]  mt-12", className)}
           >
             {children}
           </main>
