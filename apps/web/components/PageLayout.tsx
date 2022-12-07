@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Nav } from "./Nav";
 import { useRouter } from "next/router";
 import React from "react";
@@ -11,37 +11,32 @@ export default function PageLayout({ children, className = undefined }: Props) {
   const router = useRouter();
 
   return (
-    <div
-      className={classNames(
-        "max-w-md text-primary min-h-screen m-auto transition-all md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl"
-      )}
-    >
+    <div className="m-auto transition-all text-primary max-w-7xl">
       <Nav />
-      <motion.div
-        animate="animate"
-        exit={{ opacity: 0, x: 100 }}
-        initial="initial"
-        key={router.route}
-        variants={{
-          initial: {
-            opacity: 1,
-            x: -100,
-          },
-          animate: {
-            opacity: 1,
-            x: 0,
-          },
-        }}
-      >
-        <main
-          className={classNames(
-            "px-2 h-[calc(100vh-96px)] mt-[44px]",
-            className
-          )}
+      <AnimatePresence>
+        <motion.div
+          animate="animate"
+          exit={{ opacity: 0 }}
+          initial="initial"
+          key={router.route}
+          variants={{
+            initial: {
+              opacity: 1,
+              x: -100,
+            },
+            animate: {
+              opacity: 1,
+              x: 0,
+            },
+          }}
         >
-          {children}
-        </main>
-      </motion.div>
+          <main
+            className={classNames("min-h-[calc(100vh-96px)]  mt-12", className)}
+          >
+            {children}
+          </main>
+        </motion.div>
+      </AnimatePresence>
       <Footer />
     </div>
   );

@@ -1,10 +1,10 @@
 import classNames from "classnames";
 import React from "react";
-import { UserCustoms } from "../types/aliases";
+import { UserStorage } from "../types/aliases";
 import { USER_CARD_PATTERNS, USER_COLOURS } from "../types/constants";
 
 type Props = {
-  selected: UserCustoms;
+  selected: UserStorage;
   setSelected: (User) => void;
 };
 

@@ -9,18 +9,26 @@ import Head from "next/head";
 import CardBuilder from "../../components/CardBuilder";
 import { useCardBuilder } from "../../hooks/useCardBuilder";
 import useLocalStorage from "../../hooks/useLocalStorage";
+import { UserStorage } from "../../types/aliases";
+
 
 const Login = () => {
   const router = useRouter();
   const { uuid } = router.query;
   const { setRoomId, userJoin } = useSockets();
   const { selected, setSelected } = useCardBuilder();
+  const [userStorage] = useLocalStorage<UserStorage | undefined>(
+    "user",
+    undefined
+  );
 
   useMemo(() => {
     setRoomId(uuid as string);
   }, [uuid]);
 
-  const [name, setName] = useLocalStorage<string>("displayName", "");
+
+  const [name, setName] = useState(userStorage?.name || "");
+
 
   function updateName(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
@@ -37,8 +45,26 @@ const Login = () => {
         <title>Shätzen | Login</title>
         <meta property="og:title" content="Room login" key="title" />
       </Head>
-      <div className="flex flex-col items-center p-8 space-y-5 bg-white border-2 border-black rounded-lg shadow-base">
+      <form
+        className="flex flex-col items-center gap-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          userJoin(
+            { name, pattern: selected.pattern, colour: selected.colour },
+            sanitizeUuid
+          );
+        }}
+      >
         <span className="text-lg">Enter your name</span>
+        <Input
+          autoFocus
+          value={name}
+          onChange={updateName}
+          placeholder="Name"
+          maxLength={USER_NAME_SIZE}
+          className="w-48"
+        />
+
 
         <form
           className="flex flex-col w-full mt-5 space-y-4"
@@ -64,8 +90,16 @@ const Login = () => {
             Join Room
           </Button>
         </form>
+
         <CardBuilder selected={selected} setSelected={setSelected} />
-      </div>
+
+        <Button
+          type="submit"
+          disabled={!name || !name.trim() || name.length < USER_STRING_MIN_SIZE}
+        >
+          Join Room
+        </Button>
+      </form>
     </PageLayout>
   );
 };
