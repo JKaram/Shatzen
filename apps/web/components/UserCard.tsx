@@ -18,25 +18,22 @@ export const UserCard = ({ user }: Props) => {
     <div className="flex flex-col items-center">
       <div
         className={classNames(
-          "w-10 h-16 rounded flex justify-center items-center",
+          "w-10 h-16 bg-white rounded flex justify-center items-center",
           estimate ? "border-2 border-black" : "shadow-inset bg-[#d0d0d0]"
         )}
         style={{
           backgroundImage:
-            user.pattern >= 0 && userHasEstimated
+            user.pattern >= 0 && userHasEstimated && roomStatus === 'estimating'
               ? `url("${USER_CARD_PATTERNS[user.pattern]}")`
               : undefined,
-          backgroundColor: userHasEstimated ? user?.colour : undefined,
+          backgroundColor: userHasEstimated && roomStatus === 'estimating' ? user?.colour : undefined,
+          borderColor: roomStatus === 'revealing' ? user?.colour : undefined
         }}
       >
         <span
           className={classNames(
             "text-center font-bold text-xl",
-            userHasEstimated &&
-              roomStatus === "estimating" &&
-              user.id === currentUser?.id &&
-              "opacity-60",
-            user.id !== currentUser?.id && roomStatus === "estimating"
+            roomStatus === "estimating"
               ? "hidden"
               : "block"
           )}
