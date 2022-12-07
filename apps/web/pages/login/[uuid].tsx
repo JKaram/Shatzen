@@ -8,6 +8,7 @@ import { USER_NAME_SIZE, USER_STRING_MIN_SIZE } from "../../types/constants";
 import Head from "next/head";
 import CardBuilder from "../../components/CardBuilder";
 import { useCardBuilder } from "../../hooks/useCardBuilder";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 const Login = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const Login = () => {
     setRoomId(uuid as string);
   }, [uuid]);
 
-  const [name, setName] = useState("");
+  const [name, setName] = useLocalStorage<string>("displayName", "");
 
   function updateName(e: React.ChangeEvent<HTMLInputElement>) {
     const value = e.target.value;
@@ -49,6 +50,7 @@ const Login = () => {
           <Input
             autoFocus
             onChange={updateName}
+            value={name}
             placeholder="Name"
             maxLength={USER_NAME_SIZE}
           />
