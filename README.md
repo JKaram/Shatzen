@@ -1,28 +1,32 @@
-# Shatzën
+# Shatzën Scrum Poker
 
-## Scrum poker
+Shatzën is a Scrum poker app that allows distributed teams to run Scrum poker estimation sessions with ease.
 
-Monorepo for Shatzën scrum poker app.
+<!-- TOC -->
 
-More docs to come
+- [Shatzën Scrum Poker](#shatzën-scrum-poker)
+  - [Develop](#develop)
+  - [Environment setup](#environment-setup)
+    - [MongoDB](#mongodb)
+      - [Connect to MongoDB](#connect-to-mongodb)
+  - [Adding dependencies](#adding-dependencies)
+  - [Commits](#commits)
+
+<!-- /TOC -->
 
 ## Develop
 
-To develop all apps and packages, run the following command:
+For full-stack development:
 
-```
+```sh
 npm run dev
 ```
 
-## Install dependencies
+## Environment setup
 
-```
-npm install <package name> -w=<workspace to install in>
-```
-
-```
-npm update <package> --workspace=<workspace>
-```
+1. Install dependencies for all packages: `npm install`
+2. Initialize default `.env` files: `npm run init-env`
+3. Install and start up the MongoDB service
 
 ### MongoDB
 
@@ -30,22 +34,32 @@ To install mongoDB instance please follow these [instructions](https://www.mongo
 
 To run MongoDB (i.e. the mongod process) as a macOS service, run:
 
-```
+```sh
 brew services start mongodb-community@6.0
 ```
 
 To stop a mongod running as a macOS service, use the following command as needed:
 
-```
+```sh
 brew services stop mongodb-community@6.0
 ```
 
-#### Connect and Use MongoDB
+#### Connect to MongoDB
 
 To begin using MongoDB, connect mongosh to the running instance. From a new terminal, issue the following:
 
-```
+```sh
 mongosh
+```
+
+## Adding dependencies
+
+```sh
+npm install <package name> -w=<workspace to install in>
+```
+
+```sh
+npm update <package> --workspace=<workspace>
 ```
 
 ## Commits
