@@ -1,13 +1,13 @@
 import { nanoid } from "nanoid";
-import { ROOM_STRING_SIZE, USER_NAME_SIZE } from "../types/constants";
+import { ROOM_STRING_SIZE } from "../types/constants";
 import { useRouter } from "next/router";
 import Button from "../components/Button";
 import PageLayout from "../components/PageLayout";
-import React, { useState } from "react";
-import Input from "../components/input";
+import React from "react";
 import Head from "next/head";
 import TextAnimation from "../components/TextAnimation";
 import { PlusIcon, ShareIcon, StarIcon } from "@heroicons/react/outline";
+import { Spacer } from "../components/Spacer";
 
 const iconStyle = "h-10 w-10";
 
@@ -31,39 +31,40 @@ const steps = [
 
 const App = () => {
   const router = useRouter();
-  const [roomName, setRoomName] = useState("");
 
   function generateRoomId() {
     const roomId = nanoid(ROOM_STRING_SIZE);
     router.push(`/login/${roomId}`);
   }
 
-  function goToLogin() {
-    router.push(`/login/${roomName.trim()}`);
-  }
-
-  function roomInput(e: React.ChangeEvent<HTMLInputElement>) {
-    const value = e.target.value;
-    setRoomName(value);
-  }
-
   return (
-    <PageLayout className="flex flex-col items-center align-middle md:flex-row md:justify-between">
+    <PageLayout className="flex flex-col transition-all xl:flex-row-reverse xl:items-center">
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="flex flex-col justify-center flex-grow">
-        <div className="mt-2">
-          <h2 className="text-5xl font-bold transition-all">
-            Scrum Poker <br /> made <TextAnimation />
-          </h2>
+      <div className="w-[350px] sm:w-[450px] md:w-[500px] md:border-black lg:w-[700px] xl:w-[800px] relative rounded-lg m-auto overflow-hidden transition-all">
+        <span className="absolute text-2xl text-white">
+          Mind Blowing video coming soon!
+        </span>
+        <video height="100%" width="100%" autoPlay loop muted playsInline>
+          <source src="/mov_bbb.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-          <span className="text-lg">A free tool. No sign up required.</span>
+      <div className="p-2">
+        <div>
+          <h1 className="text-5xl font-bold lg:text-6xl ">
+            Scrum Poker made <TextAnimation />
+          </h1>
+          <span className="text-2xl md:text-3xl lg:text-4xl">
+            A free tool. No sign up required.
+          </span>
         </div>
+        <Spacer size="small" />
 
-        <ul className="flex flex-col justify-around w-full gap-5 mt-4">
+        <ul className="flex flex-col gap-5 xl:flex-row">
           {steps.map((step) => (
             <ListItem
               key={step.label}
@@ -73,38 +74,13 @@ const App = () => {
             />
           ))}
         </ul>
-      </div>
-
-      <div className="flex flex-col items-center justify-center flex-grow gap-5 p-8 bg-white border-2 border-black rounded-lg shadow-base">
-        <Button className="w-full h-16 bg-amber-200" onClick={generateRoomId}>
+        <Spacer size="large" />
+        <Button
+          className="w-full h-16 text-2xl font-bold bg-amber-300 hover:bg-amber-200 md:text-3xl lg:text-4xl xl:w-1/2"
+          onClick={generateRoomId}
+        >
           Create a Room
         </Button>
-        <span>Or</span>
-        <form
-          className="flex flex-col"
-          onSubmit={(e) => {
-            e.preventDefault();
-            goToLogin();
-          }}
-        >
-          <Input
-            onChange={roomInput}
-            minLength={ROOM_STRING_SIZE}
-            maxLength={USER_NAME_SIZE}
-            placeholder="Enter a room name"
-          />
-          <Button
-            type="submit"
-            disabled={
-              !roomName ||
-              !roomName.trim() ||
-              roomName.length < ROOM_STRING_SIZE
-            }
-            className="w-32 mt-5"
-          >
-            Enter Room
-          </Button>
-        </form>
       </div>
     </PageLayout>
   );
@@ -118,11 +94,11 @@ export const ListItem = (props: {
   description: string;
 }) => {
   return (
-    <li className="flex items-center">
+    <li className="flex items-center xl:items-start">
       {props.icon}
       <div className="flex flex-col ml-2 leading-3">
-        <h1 className="text-lg font-bold">{props.label}</h1>
-        <span className="text-sm">{props.description}</span>
+        <h1 className="text-2xl font-bold">{props.label}</h1>
+        <span className="text-sm md:text-lg">{props.description}</span>
       </div>
     </li>
   );

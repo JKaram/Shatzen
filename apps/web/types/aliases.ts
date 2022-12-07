@@ -19,8 +19,8 @@ export type Calculations = {
 };
 export type Status = "estimating" | "revealing";
 export type UserColor = typeof USER_COLOURS[number];
-export type UserCustoms = { colour: string; pattern: number };
-export type UserPayload = { name: string } & UserCustoms;
+export type UserStorage = { colour: string; pattern: number; name: string };
+export type UserPayload = UserStorage;
 
 export type SocketIncomingEvents = {
   userJoin: (args: {
