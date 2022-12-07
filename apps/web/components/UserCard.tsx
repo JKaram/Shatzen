@@ -42,7 +42,6 @@ export const UserCard = ({ user }: Props) => {
         </span>
       </div>
       <span
-        style={{ background: user.colour }}
         className={classNames("px-2 mt-2")}
         title={`User ID: ${user.id}`}
       >
