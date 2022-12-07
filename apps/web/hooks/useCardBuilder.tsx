@@ -13,6 +13,7 @@ export const useCardBuilder = () => {
   const [selected, setSelected] = useState({
     colour: previous?.colour || user?.colour || USER_COLOURS[Math.floor(Math.random() * USER_COLOURS.length)],
     pattern: previous?.pattern || user?.pattern || Math.floor(Math.random() * (USER_CARD_PATTERNS.length + 1)) - 1,
+    name: ""
   });
 
   return { selected, setSelected };
