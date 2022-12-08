@@ -19,7 +19,7 @@ export default function Modal(props: Props) {
 
   return (
     <Dialog className="" open={props.show} onClose={onClose}>
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+      <div className="fixed inset-0 z-30 bg-black/30" aria-hidden="true" />
       <motion.div
         initial="initial"
         animate="animate"
@@ -33,7 +33,7 @@ export default function Modal(props: Props) {
             x: 0,
           },
         }}
-        className="fixed inset-x-0 inset-y-0 flex items-center justify-center"
+        className="fixed inset-x-0 inset-y-0 z-30 flex items-center justify-center"
       >
         <Dialog.Panel className="flex flex-col max-w-2xl p-2 m-auto overflow-y-auto bg-white border-2 border-black rounded-lg shadow-base">
           <Dialog.Title className="text-2xl font-bold">OPTIONS</Dialog.Title>

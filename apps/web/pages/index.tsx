@@ -44,7 +44,7 @@ const App = () => {
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="w-[350px] sm:w-[450px] md:w-[500px] md:border-black lg:w-[700px] xl:w-[800px] relative rounded-lg m-auto overflow-hidden transition-all">
+      <div className="w-[350px] shadow-2xl sm:w-[450px] md:w-[500px] md:border-black  xl:w-[800px] relative rounded-lg m-auto overflow-hidden transition-all">
         <span className="absolute text-2xl text-white">
           Mind Blowing video coming soon!
         </span>

@@ -7,3 +7,12 @@
     font-family: Roboto;
   }
 }
+
+@layer components {
+  .base-button {
+    @apply p-2 border-2 bg-white border-black rounded-md transition active:translate-y-0 hover:-translate-y-0.5;
+  }
+  .disabled-button {
+    @apply opacity-50 hover:translate-y-0;
+  }
+}
