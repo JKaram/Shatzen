@@ -45,11 +45,19 @@ const App = () => {
       </Head>
 
       <div className="w-[350px] shadow-2xl sm:w-[450px] md:w-[500px] md:border-black  xl:w-[800px] relative rounded-lg m-auto overflow-hidden transition-all">
-        <span className="absolute text-2xl text-white">
-          Mind Blowing video coming soon!
+        <span className="absolute z-10 text-2xl text-black transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+          Placeholder for video
         </span>
-        <video height="100%" width="100%" autoPlay loop muted playsInline>
-          <source src="/mov_bbb.mp4" type="video/mp4" />
+        <video
+          className="blur-sm"
+          height="100%"
+          width="100%"
+          autoPlay
+          loop
+          muted
+          playsInline
+        >
+          <source src="/hero_vid.mp4" type="video/mp4" />
         </video>
       </div>
 
