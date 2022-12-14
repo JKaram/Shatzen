@@ -24,19 +24,8 @@ const App = () => {
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="w-[350px] heroDropShadow sm:w-[450px] md:w-[500px] md:border-black  xl:w-[800px] relative rounded-lg m-auto transition-all">
-        <span className="absolute z-10 text-2xl text-black transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-          Placeholder for video
-        </span>
-        <video
-          className="blur-sm"
-          height="100%"
-          width="100%"
-          autoPlay
-          loop
-          muted
-          playsInline
-        >
+      <div className="w-[350px] shadow-xl sm:w-[450px] md:w-[500px] md:border-black  xl:w-[800px] relative m-auto transition-all">
+        <video height="100%" width="100%" autoPlay loop muted playsInline>
           <source src="/hero_vid.mp4" type="video/mp4" />
         </video>
       </div>
