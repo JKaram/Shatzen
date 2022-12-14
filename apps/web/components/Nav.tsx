@@ -24,7 +24,7 @@ export const Nav = () => {
   return (
     <nav
       className={classNames(
-        "flex z-20 justify-between bg-[#fefefe] text-2xl fixed h-12 left-0 top-0 w-full p-2"
+        "flex z-20 justify-between bg-transparent text-2xl fixed h-12 left-0 top-0 w-full p-2"
       )}
     >
       <h1 className="text-3xl font-bold cursor-pointer" onClick={goHome}>

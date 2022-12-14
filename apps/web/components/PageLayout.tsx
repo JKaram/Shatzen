@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import classNames from "classnames";
 import Footer from "./Footer";
+import { pageTransitionVariants } from "../utils/motion";
 
 type Props = { children: React.ReactNode; className?: string };
 
@@ -11,30 +12,13 @@ export default function PageLayout({ children, className = undefined }: Props) {
   const router = useRouter();
 
   return (
-    <div
-      // style={{
-      //   backgroundColor: "#fff",
-      //   backgroundImage:
-      //     'url("https://www.transparenttextures.com/patterns/absurdity.png")',
-      // }}
-      className="m-auto transition-all text-primary max-w-7xl"
-    >
+    <div className="m-auto transition-all text-primary max-w-7xl">
       <Nav />
       <motion.div
         animate="animate"
-        exit={{ opacity: 0 }}
         initial="initial"
         key={router.route}
-        variants={{
-          initial: {
-            opacity: 1,
-            x: -100,
-          },
-          animate: {
-            opacity: 1,
-            x: 0,
-          },
-        }}
+        variants={pageTransitionVariants}
       >
         <main
           className={classNames(

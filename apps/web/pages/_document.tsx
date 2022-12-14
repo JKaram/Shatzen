@@ -10,7 +10,12 @@ export default function Document() {
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
         rel="stylesheet"
       />
-      <body className="bg-[#fefefe]">
+      <body
+        style={{
+          backgroundImage: 'url("bg_pattern.png")',
+        }}
+        className="bg-repeat"
+      >
         <Main />
         <NextScript />
       </body>

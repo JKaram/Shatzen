@@ -1,5 +1,6 @@
 import { Dialog } from "@headlessui/react";
 import { motion } from "framer-motion";
+import { modalTransitionVariants } from "../utils/motion";
 import Button from "./Button";
 
 type Props = {
@@ -23,16 +24,7 @@ export default function Modal(props: Props) {
       <motion.div
         initial="initial"
         animate="animate"
-        variants={{
-          initial: {
-            opacity: 50,
-            x: -100,
-          },
-          animate: {
-            opacity: 1,
-            x: 0,
-          },
-        }}
+        variants={modalTransitionVariants}
         className="fixed inset-x-0 inset-y-0 z-30 flex items-center justify-center"
       >
         <Dialog.Panel className="flex flex-col max-w-2xl p-2 m-auto overflow-y-auto bg-white border-2 border-black rounded-lg shadow-base">

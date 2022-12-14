@@ -6,28 +6,8 @@ import PageLayout from "../components/PageLayout";
 import React from "react";
 import Head from "next/head";
 import TextAnimation from "../components/TextAnimation";
-import { PlusIcon, ShareIcon, StarIcon } from "@heroicons/react/outline";
 import { Spacer } from "../components/Spacer";
-
-const iconStyle = "h-10 w-10";
-
-const steps = [
-  {
-    label: "Create",
-    icon: <PlusIcon className={iconStyle} />,
-    description: "Create a room and invite your team.",
-  },
-  {
-    label: "Share",
-    icon: <ShareIcon className={iconStyle} />,
-    description: "Send the link to your team.",
-  },
-  {
-    label: "Vote",
-    icon: <StarIcon className={iconStyle} />,
-    description: "Start Estimating, in real time.",
-  },
-];
+import { StepItem } from "../components/StepItem";
 
 const App = () => {
   const router = useRouter();
@@ -44,7 +24,7 @@ const App = () => {
         <meta property="og:title" content="Shätzen" key="title" />
       </Head>
 
-      <div className="w-[350px] shadow-2xl sm:w-[450px] md:w-[500px] md:border-black  xl:w-[800px] relative rounded-lg m-auto overflow-hidden transition-all">
+      <div className="w-[350px] heroDropShadow sm:w-[450px] md:w-[500px] md:border-black  xl:w-[800px] relative rounded-lg m-auto transition-all">
         <span className="absolute z-10 text-2xl text-black transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
           Placeholder for video
         </span>
@@ -73,13 +53,8 @@ const App = () => {
         <Spacer size="small" />
 
         <ul className="flex flex-col gap-5 xl:flex-row">
-          {steps.map((step) => (
-            <ListItem
-              key={step.label}
-              label={step.label}
-              icon={step.icon}
-              description={step.description}
-            />
+          {steps.map((step, index) => (
+            <StepItem key={step.label} index={index} {...step} />
           ))}
         </ul>
         <Spacer size="large" />
@@ -96,18 +71,20 @@ const App = () => {
 
 export default App;
 
-export const ListItem = (props: {
-  label: string;
-  icon: any;
-  description: string;
-}) => {
-  return (
-    <li className="flex items-center xl:items-start">
-      {props.icon}
-      <div className="flex flex-col ml-2 leading-3">
-        <h1 className="text-2xl font-bold">{props.label}</h1>
-        <span className="text-sm md:text-lg">{props.description}</span>
-      </div>
-    </li>
-  );
-};
+const steps = [
+  {
+    label: "Create",
+    icon: "PlusIcon",
+    description: "Create a room and invite your team.",
+  },
+  {
+    label: "Share",
+    icon: "ShareIcon",
+    description: "Send the link to your team.",
+  },
+  {
+    label: "Vote",
+    icon: "StarIcon",
+    description: "Start Estimating, in real time.",
+  },
+];
