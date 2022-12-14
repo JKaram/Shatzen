@@ -52,7 +52,7 @@ const App = () => {
         </div>
         <Spacer size="small" />
 
-        <ul className="flex flex-col gap-5 xl:flex-row">
+        <ul className="flex flex-col gap-5 overflow-hidden xl:flex-row">
           {steps.map((step, index) => (
             <StepItem key={step.label} index={index} {...step} />
           ))}
