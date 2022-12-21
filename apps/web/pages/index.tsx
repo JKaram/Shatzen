@@ -22,6 +22,10 @@ const App = () => {
       <Head>
         <title>Shätzen</title>
         <meta property="og:title" content="Shätzen" key="title" />
+        <meta
+          property="og:image"
+          content="https://shatzen.jamiekaram.dev/api/og"
+        />
       </Head>
 
       <div className="w-[350px] shadow-xl sm:w-[450px] md:w-[500px] md:border-black  xl:w-[800px] relative m-auto transition-all">
