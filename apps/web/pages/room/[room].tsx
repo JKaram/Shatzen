@@ -10,13 +10,19 @@ import Head from "next/head";
 const Room = () => {
   const router = useRouter();
   const { room } = router.query;
-  const { user } = useContext(SocketContext);
+  const { user, disconnect } = useContext(SocketContext);
 
   useEffect(() => {
     if (!user && router.isReady) {
       router.push(`/login/${room}`);
     }
   }, [user, router.isReady]);
+
+  useEffect(() => {
+    return () => {
+      disconnect();
+    };
+  }, []);
 
   if (!router.isReady) return <div>Loading</div>;
 

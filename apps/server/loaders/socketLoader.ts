@@ -28,6 +28,7 @@ const socketLoader = async ({
   io.adapter(createAdapter(mongoCollection));
 
   io.on("connection", async (socket) => {
+    console.log("New connection", socket.id);
     socket.on("userJoin", async ({ user, room: roomId, config }) => {
       const room = new RoomService(
         io,

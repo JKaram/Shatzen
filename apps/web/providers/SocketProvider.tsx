@@ -71,6 +71,7 @@ export default function AppProvider({ children }: Props) {
     if (!roomId) {
       return;
     }
+
     const newSocket = io(`${process.env.NEXT_PUBLIC_SERVER}`);
     newSocket.on("connect_error", (err) => console.warn("err", err));
 
@@ -124,6 +125,7 @@ export default function AppProvider({ children }: Props) {
   };
   const disconnect = () => {
     socket.disconnect();
+    appDispatch({ type: "RESET" });
   };
   const estimate = (estimate: number) => {
     socket.emit("estimate", { estimate });
@@ -138,12 +140,13 @@ export default function AppProvider({ children }: Props) {
     socket.emit("updateConfig", config);
   };
 
-  const userJoin = (user: UserPayload, room: string) => {
+  const userJoin = async (user: UserPayload, room: string) => {
     socket.emit("userJoin", { user, room, config });
   };
 
-  const setRoomId = (roomId: string) =>
+  const setRoomId = (roomId: string) => {
     appDispatch({ type: "SET_ROOM_ID", payload: roomId });
+  };
 
   return (
     <SocketContext.Provider
