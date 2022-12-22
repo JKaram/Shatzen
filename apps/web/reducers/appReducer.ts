@@ -11,7 +11,8 @@ type Action =
   | { type: "UPDATE_USERS"; payload: User[] }
   | { type: "SET_ROOM_ID"; payload: string }
   | { type: "UPDATE_STATUS"; payload: Status }
-  | { type: "UPDATE_ESTIMATE_OPTIONS"; payload: PossibleEstimates };
+  | { type: "UPDATE_ESTIMATE_OPTIONS"; payload: PossibleEstimates }
+  | { type: "RESET" };
 
 export type AppState = {
   calculations: Calculations;
@@ -32,38 +33,40 @@ export const APP_STATE: AppState = {
 };
 
 export const appReducer = (state: AppState, action: Action) => {
-  const { type, payload } = action;
-  switch (type) {
+  switch (action.type) {
     case "UPDATE_USER":
       return {
         ...state,
-        user: payload,
+        user: action.payload,
       };
     case "UPDATE_USERS":
       return {
         ...state,
-        users: payload,
+        users: action.payload,
       };
     case "UPDATE_CALCULATIONS":
       return {
         ...state,
-        calculations: payload,
+        calculations: action.payload,
       };
     case "SET_ROOM_ID":
       return {
         ...state,
-        roomId: payload,
+        roomId: action.payload,
       };
     case "UPDATE_STATUS":
       return {
         ...state,
-        roomStatus: payload,
+        roomStatus: action.payload,
       };
     case "UPDATE_ESTIMATE_OPTIONS":
       return {
         ...state,
-        estimateOptions: payload,
+        estimateOptions: action.payload,
       };
+    case "RESET": {
+      return APP_STATE;
+    }
     default:
       return state;
   }

@@ -15,15 +15,21 @@ import { Spacer } from "../../components/Spacer";
 const Login = () => {
   const router = useRouter();
   const { uuid } = router.query;
-  const { setRoomId, userJoin } = useSockets();
+  const { userJoin, setRoomId } = useSockets();
   const { selected, setSelected } = useCardBuilder();
+  const [locked, setLocked] = useState(true);
   const [userStorage] = useLocalStorage<UserStorage | undefined>(
     "user",
     undefined
   );
 
   useMemo(() => {
-    setRoomId(uuid as string);
+    // This is a hack to prevent the user from joining the room before the socket is connected. This is a temporary solution.
+    // TODO: Find a better way to handle this.
+    setTimeout(() => {
+      setRoomId(uuid as string);
+      setLocked(false);
+    }, 500);
   }, [uuid]);
 
   const [name, setName] = useState(userStorage?.name || "");
@@ -76,7 +82,12 @@ const Login = () => {
         <Button
           className="w-full h-16 text-2xl font-bold bg-blue-300 hover:bg-blue-400 md:text-3xl lg:text-4xl"
           type="submit"
-          disabled={!name || !name.trim() || name.length < USER_STRING_MIN_SIZE}
+          disabled={
+            !name ||
+            !name.trim() ||
+            name.length < USER_STRING_MIN_SIZE ||
+            locked
+          }
         >
           Join Room
         </Button>
