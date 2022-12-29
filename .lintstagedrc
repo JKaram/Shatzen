@@ -1,7 +1,7 @@
 {
   "*.{js,ts,tsx,scss,css}": [
-    "npm run eslint",
-    "npm run prettier --write"
+    "eslint",
+    "prettier --write"
   ],
   "*.md": [
     "prettier --write"
