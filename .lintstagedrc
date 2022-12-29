@@ -1,5 +1,8 @@
 {
-  "*.{js,ts,tsx,scss,css}": [],
+  "*.{js,ts,tsx,scss,css}": [
+    "npm run eslint",
+    "npm run prettier --write"
+  ],
   "*.md": [
     "prettier --write"
   ]
