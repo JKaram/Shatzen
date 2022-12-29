@@ -124,6 +124,7 @@ export default function AppProvider({ children }: Props) {
     socket.emit("changeStatus", { status });
   };
   const disconnect = () => {
+    if (!socket) return;
     socket.disconnect();
     appDispatch({ type: "RESET" });
   };
